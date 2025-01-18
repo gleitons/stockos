@@ -17,18 +17,19 @@ export default function BaseOs({ apresentacao }) {
                 </div>
             </div>
             <div className="flex">
-                <div className="bg-gray-400 w-fit px-12 h-screen">
-                    {menu.length}
+                <div className="bg-gray-400 w-1/4 px-12 h-screen">
+                    <div>
+                        <h3>Menu</h3>
+                    </div>                    
                     {menu.map((e, index) => (
-                        <div key={index}>
-                            <p>{e.nome}</p>
-                            <Link href={e.link}>Cadastrar</Link>
+                        <div key={index}>                           
+                            <Link href={e.link}>{e.nome}</Link>
                         </div>
                     ))}
 
                   
                 </div>
-                <div>
+                <div className="w-full">
                     {apresentacao}
                 </div>
             </div>

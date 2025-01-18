@@ -13,10 +13,22 @@ export default function page() {
                 CNPJ: <input type="text" name="" id="" placeholder="00.000.000/0000-00" /> <button>Continuar</button>
 
                 <div>
-                    Nome da Empresa: <input type="text" name="" id="" placeholder="Insira o nome da empresa" />
+                    Nome da Empresa: *<input type="text" name="" id="" placeholder="Insira o nome da empresa" />
                 </div>
                 <div>
-                Endereço (obrigatório): <input type="text" name="" id="" placeholder="Insira o endereço completo da empresa" />
+                    Endereço: *<input type="text" name="" id="" placeholder="Insira o endereço completo da empresa" />
+                </div>
+                <div>
+                    Telefone: *<input type="text" name="" id="" placeholder="Insira o endereço completo da empresa" />
+                </div>
+                <div>
+                    E-mail: *<input type="text" name="" id="" placeholder="exemplo@fornecedor.com" />
+                </div>
+                <div>
+                    Contato Principal: *<input type="text" name="" id="" placeholder="Nome do contato principal" />
+                </div>
+                <div>
+                    <input type="submit" name="" id=""  />
                 </div>
             </div>
 
