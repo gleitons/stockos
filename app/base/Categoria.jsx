@@ -1,0 +1,1 @@
+export const categoria = [ "Limpeza", "Saúde", "Educação", "Eletrônicos", "Alimentos", "Vestuário"]

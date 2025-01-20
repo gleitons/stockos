@@ -17,7 +17,7 @@ export default function BaseOs({ apresentacao }) {
                 </div>
             </div>
             <div className="flex">
-                <div className="bg-gray-400 w-1/4 px-12 h-screen">
+                <div className="bg-gray-400 w-1/5 px-2 h-screen">
                     <div>
                         <h3>Menu</h3>
                     </div>                    

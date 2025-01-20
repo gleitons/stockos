@@ -10,5 +10,9 @@ export const menu = [
     {
         nome: 'Cadastrar Produtos',
         link: '/cadastrar-produto'
+    },
+    {
+        nome: 'Cadastrar Categoria',
+        link: '/cadastrar-categoria'
     }
 ]
