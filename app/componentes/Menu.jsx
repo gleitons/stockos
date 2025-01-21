@@ -12,6 +12,10 @@ export const menu = [
         link: '/cadastrar-produto'
     },
     {
+        nome: 'Editar Produtos',
+        link: '/editar-produto'
+    },
+    {
         nome: 'Cadastrar Categoria',
         link: '/cadastrar-categoria'
     }

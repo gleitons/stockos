@@ -13,6 +13,7 @@ export default function CadastrarCategoria() {
         try {
             const response = await fetch('/api/categories');
             const data = await response.json();
+            data.sort((a,b) => a.nome.localeCompare(b.nome))
             if (response.ok) {
                 setCategorias(data);
                 setIsLoading(false) // Define as categorias no estado
@@ -30,6 +31,7 @@ export default function CadastrarCategoria() {
     }, []);
 
     const cadastroCategoria = async () => {
+       
         try {
             const response = await fetch('/api/categories', {
                 method: 'POST',
@@ -65,14 +67,14 @@ export default function CadastrarCategoria() {
                             ) : (
                                 <ul>
                                     {categorias.map((e, index) => (
-                                        <EditCategory key={index} category={e} existingCategories={categorias} />
+                                        <EditCategory key={index} category={e} existingCategories={categorias} onDelete={e._id} />
                                     ))}
                                 </ul>
                             )}
                         </div>
                     </div>
                 </div>
-                <div>
+                <form onSubmit={cadastroCategoria}>
                     <div>
                         <h2>Nova Categoria</h2>
                     </div>
@@ -82,12 +84,13 @@ export default function CadastrarCategoria() {
                             value={newCategoryName}
                             onChange={(e) => setNewCategoryName(e.target.value)}
                             placeholder="Digite a nova categoria"
+                            required
                         />
                     </div>
                     <div>
-                        <button onClick={cadastroCategoria}>Cadastrar Categoria</button>
+                        <button >Cadastrar Categoria</button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     );

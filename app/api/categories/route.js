@@ -1,5 +1,9 @@
+import { NextResponse } from 'next/server';
 import connectToDatabase from '../../lib/mongodb';
 import Category from '../../models/Category';
+
+
+
 
 export async function GET() {
     await connectToDatabase();
@@ -7,14 +11,14 @@ export async function GET() {
     return new Response(JSON.stringify(categories), { status: 200 });
 }
 
-export async function POST(request) {
+export async function POST(req) {
     await connectToDatabase();
-    const { nome } = await request.json();
-    console.log(nome)
+    const { nome } = await req.json();
+
     const category = new Category({ nome });
     console.log(category)
     await category.save();
-    return new Response(JSON.stringify(category), { status: 201 });
+    return new NextResponse(JSON.stringify(category), { status: 201 });
 }
 
 export async function PUT(request) {
@@ -24,9 +28,14 @@ export async function PUT(request) {
     return new Response(JSON.stringify({ message: 'Category updated' }), { status: 200 });
 }
 
-export async function DELETE(request) {
+export async function DELETE(req) {
+    
+    console.log('comecou')
+    console.log(req)
     await connectToDatabase();
-    const { id } = await request.json();
+    const id = await req
+    console.log(req)
     await Category.findByIdAndDelete(id);
-    return new Response(JSON.stringify({ message: 'Category deleted' }), { status: 200 });
+    return new NextResponse(JSON.stringify({ message: 'Categoria Deletada' }), { status: 200 });
 }
+

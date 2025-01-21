@@ -26,27 +26,33 @@ export default function EditCategory({ category, existingCategories, onDelete })
     };
 
     const deleteCategory = async () => {
-        // const confirmation = confirm("Confirmar a exclusão!");
-        // if (confirmation) {
-        //     try {
-        //         const response = await fetch(`/api/categories`, {
-        //             method: 'DELETE',
-        //         });
-        //         if (response.ok) {
-        //             alert("Deletado com sucesso!");
-        //             onDelete(category._id); // Callback para remover a categoria da lista
-        //         } else {
-        //             alert("Erro ao deletar categoria.");
-        //         }
-        //     } catch (error) {
-        //         console.error('Erro ao deletar categoria:', error);
-        //         alert("Erro de rede ao deletar categoria.");
-        //     }
-        // } else  {
-        //     alert('cancelado a exclusão')
-        // }
+        const confirmation = confirm("Confirmar a exclusão!");
+        
+        if (confirmation) {
+            try {
+                const response = await fetch(`/api/categories/${category._id}`, { 
+                    method: 'DELETE',
+                    headers: {
+                        'Content-Type': 'application/json'
+                    },
+                });
+    
+                if (response.ok) {
+                    alert("Deletado com sucesso!");
+                    onDelete(category._id); 
+                } else {
+                    const errorData = await response.json();
+                    alert(`Erro ao deletar categoria: ${errorData.error}`);
+                }
+            } catch (error) {
+                console.error('Erro ao deletar categoria:', error);
+                alert("Erro de rede ao deletar categoria.");
+            }
+        } else {
+            alert('Cancelado a exclusão');
+        }
     };
-
+    
     const saveCategory = async (newCategoryName) => {
         // try {
         //     const response = await fetch('/api/save-category', {

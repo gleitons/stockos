@@ -68,7 +68,7 @@ export default function page() {
                         Numero: * <input type="number" name="numero" value={dadosFornecedor.numero} onChange={adicionaInfo} placeholder="Insira o numero" />
                     </div>
                     <div>
-                        Bairro: *<input type="text" name="numero" value={dadosFornecedor.numero} onChange={adicionaInfo} placeholder="Insira o endereço completo da empresa" />
+                        Bairro: *<input type="text" name="bairro" value={dadosFornecedor.bairro} onChange={adicionaInfo} placeholder="Insira o bairro da empresa" />
                     </div>
                     <div>
                         CEP: *<input type="text" name="cep" value={dadosFornecedor.cep} onChange={adicionaInfo} placeholder="Insira o endereço completo da empresa" />
@@ -89,9 +89,7 @@ export default function page() {
                     <div>
                         <button type="submit">Cadastrar</button>
                     </div>
-                    {/* <div>
-                        Produtos Vinculados: *<input type="text" name='produtosViculados' value={"0"}  readOnly placeholder="Insira o nome da empresa" />
-                    </div> */}
+                
                 </form>
 
                 {/* CNPJ: <input type="text" value={cnpj} placeholder="00.000.000/0000-00" /> <button>Continuar</button>

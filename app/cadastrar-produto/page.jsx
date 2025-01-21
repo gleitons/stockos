@@ -3,6 +3,7 @@ import CadastrarCategoria from "../componentes/CadastrarCategoria";
 import TitlePage from "../componentes/TitlePage";
 import { useState, useEffect } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
+import Image from "next/image";
 // import { categoria } from "../base/Categoria";
 // export const metadata = {
 //     title: "StockOs - Cadastrar Produto",
@@ -14,6 +15,7 @@ export default function page() {
     const [previewImage, setPreviewImage] = useState(null);
     const [categoria, setCategoria] = useState([]);
     const [newCategory, setNewCategory] = useState(false);
+    const [baseImagem, setBaseImagem] = useState('')
 
     const [produto, setProduto] = useState({
         codigoDeBarras: '',
@@ -22,7 +24,7 @@ export default function page() {
         estoque: '',
         category: '',
         dataValidade: '',
-        imagem: ''
+        imagem: baseImagem
     })
 
     const geraObjeto = (e) => {
@@ -35,16 +37,28 @@ export default function page() {
         if (file) {
             setSelectedImage(file);
             const reader = new FileReader();
+    
             reader.onloadend = () => {
                 setPreviewImage(reader.result);
+                setBaseImagem(reader.result);
+                setProduto(prevState => ({
+                    ...prevState,
+                    imagem: reader.result
+                }));
             };
+    
             reader.readAsDataURL(file);
         }
     };
+    
+
+
+
     const pegaCategorias = async () => {
         try {
             const response = await fetch('/api/categories');
             const data = await response.json();
+            data.sort((a,b) => a.nome.localeCompare(b.nome))
             if (response.ok) {
                 setCategoria(data); // Define as categorias no estado
             } else {
@@ -57,20 +71,25 @@ export default function page() {
     }
 
 
-    const handleSubmit = async (e) => {
+    const cadastraProduto = async (e) => {
         e.preventDefault();
-        const formData = new FormData();
-        formData.append('image', selectedImage);
-
         try {
-            const response = await fetch('/upload', {
+            const resp = await fetch('/api/produto', {
                 method: 'POST',
-                body: formData
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(produto)
+               
             });
-            const result = await response.json();
-            console.log(result);
+            const data = await resp.json();
+            if (resp.ok) {
+                alert('Produto cadastrado com sucesso');
+            } else {
+                alert('Erro ao cadastrar Produto: ' + data.error);
+            }
         } catch (error) {
-            console.error('Erro ao fazer upload da imagem:', error);
+            
         }
     };
 
@@ -78,23 +97,25 @@ export default function page() {
 
     useEffect(() => {
         pegaCategorias();
-    }, [])
-    const novaCat = () => {
+    }, []);
+
+
+
+    const novaCat = (e) => {
+        e.preventDefault()
         const verifica = !newCategory ? true : false;
         setNewCategory(verifica)
     }
-    const cadastraProduto = () => {
-        console.log('Completo')
-    }
+  
 
     return (
         <div className="relative">
             <TitlePage titulo='Cadastro de Produtos' />
 
             <div>
-                Código de Barras: <input type="number" name="" id="" placeholder="789123" /> <button>Continuar</button>
+                Código de Barras: <input type="number" name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto}placeholder="789123" /> <button>Continuar</button>
                 {/* onSubmit={cadastraProduto} */}
-                <form >
+                <form onSubmit={cadastraProduto} >
                     <div>
                         Nome do Produto: *<input type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
                     </div>
@@ -117,18 +138,32 @@ export default function page() {
                                 ))
                             }
                         </select>
-                        
+
                         <button onClick={novaCat}>Nova Categoria</button>
                     </div>
 
+                    <div>
+                        Data de Validade: <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" />
+                    </div>
+                    <div>
+
+                        Imagem do Produto:
+                        <input type="file" accept=".png, .jpg, .gif, .webp" onChange={handleImageChange} />
+                        <input className="invisible" type="text" name="dataValidade"   value={baseImagem} />
+                        {previewImage &&
+                            <div>
+                                <Image src={previewImage} width={24} height={24} alt="Preview" className="w-24 h-24 object-cover" />
+                                
+                            </div>
+
+                        }
+                    </div>
+
+                    <div>
+                        <input type="submit" value="Cadastrar" />
+                    </div>
 
                 </form>
-                {produto.nomeDoProduto}
-                {produto.category}
-
-
-
-
                 {
                     newCategory && (
                         <div className="w-full absolute left-0 top-0 p-10 bg-white  h-screen">
@@ -138,17 +173,9 @@ export default function page() {
                     )
                 }
 
-                <div>
-                    Data de Validade: <input type="date" name="" id="" placeholder="Nome do contato principal" />
-                </div>
-                <div>
-                    Imagem do Produto:
-                    <input type="file" accept=".png, .jpg, .gif" onChange={handleImageChange} />
-                    {previewImage && <img src={previewImage} alt="Preview" className="w-64 h-64 object-cover" />}
-                </div>
-                <div>
-                    <input type="submit" value="Cadastrar" />
-                </div>
+
+
+
             </div>
 
         </div>

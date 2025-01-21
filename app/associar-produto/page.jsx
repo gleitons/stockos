@@ -1,7 +1,7 @@
 'use client'
 import { useEffect, useState } from "react";
 import TitlePage from "../componentes/TitlePage";
-import { empresas } from '../base/Empresas';
+// import { empresas } from '../base/Empresas';
 import { produtos } from "../base/Produtos";
 import { FaEye } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
@@ -14,6 +14,7 @@ export default function Page() {
     const [visualizador, setVisualizador] = useState(false)
     const [produtosViculados, setProdutosViculados] = useState([]);
     const [mostraEmpresas, setMostraEmpresas] = useState([])
+    const [mostraProdutos, setMostraProdutos] = useState([])
 
     // Função para selecionar a empresa
     const selecionaEmpresa = (nomeEmpresa, productViculados) => {
@@ -23,6 +24,7 @@ export default function Page() {
                 .filter((produto) => productViculados.includes(produto.codBarras))
                 .map((produto) => produto.codBarras);
 
+           // const produtoV = `${produtosFiltrados} - ${e.nomeDoProduto}`
             setEmpresa(nomeEmpresa);
             setProdutosViculados(produtosFiltrados);
         }
@@ -34,7 +36,8 @@ export default function Page() {
     const selecionaProduto = (produto) => {
         setProdutosViculados((prev) => {
             if (prev.includes(produto)) {
-                return prev.filter((item) => item !== produto);
+                const cod = prev.filter((item) => item !== produto);
+                return cod
             } else {
                 return [...prev, produto];
             }
@@ -44,10 +47,10 @@ export default function Page() {
     const abrirVisualizador = (e) => {
         setDetalhes(
             <div>
-                <p>{e.codBarras}</p>
-                <p>{e.nomeProduto}</p>
+                <p>{e.codigoDeBarras}</p>
+                <p>{e.nomeDoProduto}</p>
                 <div className="w-full">
-                    <Image className="m-auto" src={e.imagemProduto} width={300} height={200} alt={e.nomeProduto} />
+                    <Image className="m-auto" src={e.imagem} width={300} height={200} alt={e.nomeDoProduto} />
                 </div>
                 <p>Estoque: {e.estoque}</p>
                 <p>Validade: {e.validade}</p>
@@ -62,9 +65,7 @@ export default function Page() {
         console.log("Produtos:", produtosViculados);
     };
 
-    const verificaSeTemProduto = () => {
-
-    }
+   
     const fecharBanner = () => {
         setVisualizador(false)
     }
@@ -78,14 +79,25 @@ export default function Page() {
                 console.log('mostra erro')
             }
         } catch (error) {
-
+            console.log(error)
         }
-
-
-        setMostraEmpresas(data)
+        
+        // setMostraEmpresas(data)
+    }
+    const produtosCadastrados = async () => {
+        try {
+            const resp = await fetch('/api/produto');
+            const produt = await resp.json();
+            if(resp.ok) {
+                setMostraProdutos(produt)
+            }
+        } catch (error) {
+            
+        }
     }
     useEffect(() => {
-        empresasCadastradas()
+        empresasCadastradas();
+        produtosCadastrados();
     }, [])
     return (
         <div>
@@ -130,18 +142,18 @@ export default function Page() {
                             </div>
                         </div>
 
-                        {produtos.map((e, index) => (
+                        {mostraProdutos.map((e, index) => (
                             <div key={index}>
                                 <div className="flex items-center gap-2">
                                     <div className="bg-gray-300 px-1">
                                         <input
                                             type="checkbox"
-                                            onChange={() => selecionaProduto(e.codBarras)}
-                                            checked={produtosViculados.includes(e.codBarras)}
+                                            onChange={() => selecionaProduto(e.codigoDeBarras)}
+                                            checked={produtosViculados.includes(e.codigoDeBarras)}
                                         />
                                     </div>
                                     <label onClick={() => abrirVisualizador(e)} className="flex items-center gap-2 hover:cursor-pointer">
-                                        {e.codBarras} - {e.nomeProduto} <FaEye />
+                                        {e.codigoDeBarras} - {e.nomeDoProduto} <FaEye />
                                     </label>
                                 </div>
                             </div>
@@ -171,6 +183,7 @@ export default function Page() {
                     </div>
                     <div>
                         <p>Produtos Associados</p>
+                        <p>Quantidade: {produtosViculados.length}</p>
                         <textarea rows={7} cols={40} value={produtosViculados.join(', ')} readOnly />
                     </div>
 
