@@ -37,7 +37,7 @@ export default function page() {
         if (file) {
             setSelectedImage(file);
             const reader = new FileReader();
-    
+
             reader.onloadend = () => {
                 setPreviewImage(reader.result);
                 setBaseImagem(reader.result);
@@ -46,11 +46,11 @@ export default function page() {
                     imagem: reader.result
                 }));
             };
-    
+
             reader.readAsDataURL(file);
         }
     };
-    
+
 
 
 
@@ -58,7 +58,7 @@ export default function page() {
         try {
             const response = await fetch('/api/categories');
             const data = await response.json();
-            data.sort((a,b) => a.nome.localeCompare(b.nome))
+            data.sort((a, b) => a.nome.localeCompare(b.nome))
             if (response.ok) {
                 setCategoria(data); // Define as categorias no estado
             } else {
@@ -80,7 +80,7 @@ export default function page() {
                     'Content-Type': 'application/json'
                 },
                 body: JSON.stringify(produto)
-               
+
             });
             const data = await resp.json();
             if (resp.ok) {
@@ -89,7 +89,7 @@ export default function page() {
                 alert('Erro ao cadastrar Produto: ' + data.error);
             }
         } catch (error) {
-            
+
         }
     };
 
@@ -104,30 +104,29 @@ export default function page() {
     const novaCat = (e) => {
         e.preventDefault()
         const verifica = !newCategory ? true : false;
-        setNewCategory(verifica)
+
+        if (verifica) {
+            const aviso = "*ATENÇÃO* - Cadastrar uma nova categoria nessa página apagará os dados preenchidos. Deseja continuar?"
+            if (confirm(aviso) == true) {
+                setNewCategory(verifica)
+               
+            }
+        } else {
+            setNewCategory(verifica)
+        }
+
+
     }
-  
+
 
     return (
         <div className="relative">
             <TitlePage titulo='Cadastro de Produtos' />
 
             <div>
-                Código de Barras: <input type="number" name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto}placeholder="789123" /> <button>Continuar</button>
+                Código de Barras: <input type="number" name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" /> <button>Continuar</button>
                 {/* onSubmit={cadastraProduto} */}
                 <form onSubmit={cadastraProduto} >
-                    <div>
-                        Nome do Produto: *<input type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
-                    </div>
-
-                    <div>
-                        Descrição: *<input type="text" name="descricao" value={produto.descricao} onChange={geraObjeto} placeholder="Descreva brevemente o produto" />
-                    </div>
-
-                    <div>
-                        Quantidade em Estoque: *<input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" />
-                    </div>
-
                     <div>
                         Categoria: *
                         <select name="category" value={produto.categoy} onChange={geraObjeto}>
@@ -143,17 +142,30 @@ export default function page() {
                     </div>
 
                     <div>
+                        Nome do Produto: *<input type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
+                    </div>
+
+                    <div>
+                        Descrição: *<input type="text" name="descricao" value={produto.descricao} onChange={geraObjeto} placeholder="Descreva brevemente o produto" />
+                    </div>
+
+                    <div>
+                        Quantidade em Estoque: *<input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" />
+                    </div>
+
+
+                    <div>
                         Data de Validade: <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" />
                     </div>
                     <div>
 
                         Imagem do Produto:
                         <input type="file" accept=".png, .jpg, .gif, .webp" onChange={handleImageChange} />
-                        <input className="invisible" type="text" name="dataValidade"   value={baseImagem} />
+                        <input className="invisible" type="text" name="dataValidade" value={baseImagem} />
                         {previewImage &&
                             <div>
                                 <Image src={previewImage} width={24} height={24} alt="Preview" className="w-24 h-24 object-cover" />
-                                
+
                             </div>
 
                         }

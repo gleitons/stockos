@@ -39,7 +39,7 @@ export default function Page() {
                 const cod = prev.filter((item) => item !== produto);
                 return cod
             } else {
-                return [...prev, produto];
+                return [...prev, produto ];
             }
         });
     };

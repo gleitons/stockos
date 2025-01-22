@@ -18,3 +18,10 @@ export async function GET() {
     return new NextResponse(JSON.stringify(produto), { status: 200 });
 
 }
+
+export async function PUT(req) {    
+    await connectToDatabase();
+    const  dado = await req.json();
+    await Produto.findByIdAndUpdate(dado._id, dado);
+    return new NextResponse(JSON.stringify({ message: 'Atualizando produto' }), { status: 200 });
+}
