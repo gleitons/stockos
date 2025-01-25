@@ -4,8 +4,9 @@ import { useState } from "react";
 import { BsFillPencilFill } from "react-icons/bs";
 import { IoSave } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
+import { BsPencilFill } from "react-icons/bs";
 
-export default function EditCategory({ category, existingCategories, onDelete }) {
+export default function EditCategory({  category, existingCategories }) {
     const [isEditing, setIsEditing] = useState(false);
     const [valor, setValor] = useState(category.nome);
     const [icon, setIcon] = useState();
@@ -13,7 +14,7 @@ export default function EditCategory({ category, existingCategories, onDelete })
 
 
     const atualizarCategory = async (newCategoryName) => {
-        
+
         try {
             const response = await fetch(`/api/categories/`, {
                 method: 'PUT',
@@ -24,8 +25,9 @@ export default function EditCategory({ category, existingCategories, onDelete })
             });
 
             if (response.ok) {
-                // const data = await response.json();
                 alert('Categoria atualizada com sucesso');
+                toggleEditMode();
+                setIcon('')
             } else {
                 const errorData = await response.json();
                 console.error('Erro ao atualizar categoria:', errorData.error);
@@ -42,9 +44,10 @@ export default function EditCategory({ category, existingCategories, onDelete })
         if (isEditing) {
             if (existingCategories.includes(valor)) {
                 alert('Categoria Existente ou não alterada!');
+
             } else {
 
-                setIcon(<BsFillPencilFill />);
+                setIcon('');
                 setIsEditing(false);
             }
         } else {
@@ -64,13 +67,12 @@ export default function EditCategory({ category, existingCategories, onDelete })
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify({ _id: categoryId }), // Envia o ID da categoria
+                    body: JSON.stringify(categoryId), // Envia o ID da categoria
                 });
-        
+
                 if (response.ok) {
-                    const data = await response.json();
-                    console.log("Categoria excluída com sucesso:", data);
                     alert("Categoria excluída com sucesso!");
+                    atualiza();
                 } else {
                     const errorData = await response.json();
                     console.error("Erro ao excluir categoria:", errorData.error);
@@ -89,18 +91,19 @@ export default function EditCategory({ category, existingCategories, onDelete })
 
     return (
         <li className="flex items-center gap-2">
+           <BsPencilFill />
             <input onClick={toggleEditMode}
                 type="text"
                 value={valor}
                 readOnly={!isEditing}
                 onChange={(e) => setValor(e.target.value)}
                 className={isEditing ? 'border' : 'bg-slate-100'}
-            />{valor}
-       
+            />
+
             <div onClick={() => atualizarCategory({ _id: category._id, nome: valor })} className="cursor-pointer">
                 {icon}
             </div>
-            <div onClick={deleteCategory} className="cursor-pointer">
+            <div onClick={() => deleteCategory(category)} className="cursor-pointer">
                 <MdDelete />
             </div>
         </li>

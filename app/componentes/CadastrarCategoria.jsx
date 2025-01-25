@@ -1,6 +1,7 @@
 'use client'
 import { useState, useEffect } from "react";
 import EditCategory from "./EditCategory";
+import { FetchDados } from "./FetchDados";
 
 export default function CadastrarCategoria() {
     // Estados para armazenar a nova categoria e as categorias existentes
@@ -8,30 +9,22 @@ export default function CadastrarCategoria() {
     const [categorias, setCategorias] = useState([]); // Novo estado para armazenar as categorias
     const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
 
-    // Função para buscar categorias do backend
-    const fetchCategories = async () => {
-        try {
-            const response = await fetch('/api/categories');
-            const data = await response.json();
-            data.sort((a,b) => a.nome.localeCompare(b.nome))
-            if (response.ok) {
-                setCategorias(data);
-                setIsLoading(false) // Define as categorias no estado
-            } else {
-                console.error('Erro ao buscar categorias:', data);
-            }
-        } catch (error) {
-            console.error('Erro de rede ao buscar categorias:', error);
-        }
-    };
 
     // UseEffect para buscar categorias ao montar o componente
-    useEffect(() => {
-        fetchCategories();
+    useEffect( () => {
+        const pegaDa = async () => {
+            const SolicitaCategoria = await FetchDados();
+            console.log(await FetchDados());
+            setCategorias(SolicitaCategoria);
+            setIsLoading(false) // 
+        }
+        // fetchCategories();
+        pegaDa()
+       
     }, []);
 
-    const cadastroCategoria = async () => {
-       
+    const cadastroCategoria = async (e) => {
+        e.preventDefault(); // Evita o recarregamento da página
         try {
             const response = await fetch('/api/categories', {
                 method: 'POST',
@@ -40,9 +33,10 @@ export default function CadastrarCategoria() {
                 },
                 body: JSON.stringify({ nome: newCategoryName })
             });
+            console.log(newCategoryName)
             const data = await response.json();
             if (response.ok) {
-                alert('Categoria salva com sucesso:', data);
+                alert('Categoria salva com sucesso');
                 setNewCategoryName('');
                 fetchCategories(); // Recarrega as categorias após o cadastro
             } else {
@@ -62,12 +56,12 @@ export default function CadastrarCategoria() {
                     <div>
                         <h2>Editar Categorias</h2>
                         <div>
-                        {isLoading ? (
+                            {isLoading ? (
                                 <p>Carregando categorias...</p> // Mensagem de carregamento
                             ) : (
                                 <ul>
                                     {categorias.map((e, index) => (
-                                        <EditCategory key={index} category={e} existingCategories={categorias} onDelete={e._id} />
+                                        <EditCategory key={index} category={e} existingCategories={categorias} />
                                     ))}
                                 </ul>
                             )}
