@@ -1,15 +1,16 @@
 'use client'
 
 import { useState } from "react";
-import { BsFillPencilFill } from "react-icons/bs";
 import { IoSave } from "react-icons/io5";
 import { MdDelete } from "react-icons/md";
 import { BsPencilFill } from "react-icons/bs";
 
-export default function EditCategory({  category, existingCategories }) {
+
+export default function EditCategory({ atualiza, category, existingCategories }) {
     const [isEditing, setIsEditing] = useState(false);
     const [valor, setValor] = useState(category.nome);
     const [icon, setIcon] = useState();
+
     //<BsFillPencilFill />
 
 
@@ -24,10 +25,17 @@ export default function EditCategory({  category, existingCategories }) {
                 body: JSON.stringify(newCategoryName)
             });
 
+
+
             if (response.ok) {
+                setLoading(<p> Atualizando categorias...</p >)
                 alert('Categoria atualizada com sucesso');
+
                 toggleEditMode();
-                setIcon('')
+                setIcon('');
+                setLoading(false)
+
+
             } else {
                 const errorData = await response.json();
                 console.error('Erro ao atualizar categoria:', errorData.error);
@@ -70,9 +78,10 @@ export default function EditCategory({  category, existingCategories }) {
                     body: JSON.stringify(categoryId), // Envia o ID da categoria
                 });
 
-                if (response.ok) {
+                if (response.ok) {                   
                     alert("Categoria excluída com sucesso!");
                     atualiza();
+                   
                 } else {
                     const errorData = await response.json();
                     console.error("Erro ao excluir categoria:", errorData.error);
@@ -91,7 +100,7 @@ export default function EditCategory({  category, existingCategories }) {
 
     return (
         <li className="flex items-center gap-2">
-           <BsPencilFill />
+            <BsPencilFill />
             <input onClick={toggleEditMode}
                 type="text"
                 value={valor}
@@ -107,5 +116,8 @@ export default function EditCategory({  category, existingCategories }) {
                 <MdDelete />
             </div>
         </li>
-    );
+
+
+
+    )
 }

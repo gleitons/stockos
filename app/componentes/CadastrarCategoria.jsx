@@ -7,20 +7,18 @@ export default function CadastrarCategoria() {
     // Estados para armazenar a nova categoria e as categorias existentes
     const [newCategoryName, setNewCategoryName] = useState('');
     const [categorias, setCategorias] = useState([]); // Novo estado para armazenar as categorias
-    const [isLoading, setIsLoading] = useState(true); // Estado de carregamento
+    const [isLoading, setIsLoading] = useState(false); // Estado de carregamento
 
 
-    // UseEffect para buscar categorias ao montar o componente
-    useEffect( () => {
-        const pegaDa = async () => {
-            const SolicitaCategoria = await FetchDados();
-            console.log(await FetchDados());
-            setCategorias(SolicitaCategoria);
-            setIsLoading(false) // 
-        }
-        // fetchCategories();
-        pegaDa()
-       
+    const pegaDa = async () => {
+        setIsLoading(true)
+        const SolicitaCategoria = await FetchDados();
+        console.log(await FetchDados());
+        setCategorias(SolicitaCategoria);
+        setIsLoading(false) // 
+    }
+    useEffect(() => {
+        pegaDa();
     }, []);
 
     const cadastroCategoria = async (e) => {
@@ -38,7 +36,7 @@ export default function CadastrarCategoria() {
             if (response.ok) {
                 alert('Categoria salva com sucesso');
                 setNewCategoryName('');
-                fetchCategories(); // Recarrega as categorias após o cadastro
+                pegaDa(); // Recarrega as categorias após o cadastro
             } else {
                 alert('Erro ao salvar categoria: Contate o suporte', data);
             }
@@ -61,7 +59,7 @@ export default function CadastrarCategoria() {
                             ) : (
                                 <ul>
                                     {categorias.map((e, index) => (
-                                        <EditCategory key={index} category={e} existingCategories={categorias} />
+                                        <EditCategory key={index} atualiza={() => pegaDa()} category={e} existingCategories={categorias} />
                                     ))}
                                 </ul>
                             )}
@@ -75,6 +73,7 @@ export default function CadastrarCategoria() {
                     <div>
                         Título: <input
                             type="text"
+                            autoFocus
                             value={newCategoryName}
                             onChange={(e) => setNewCategoryName(e.target.value)}
                             placeholder="Digite a nova categoria"

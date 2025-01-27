@@ -4,7 +4,8 @@ import TitlePage from "../componentes/TitlePage";
 import { useState, useEffect } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import Image from "next/image";
-import ImageOs from "../componentes/ImageOs";
+import GifLoad from "../componentes/GifLoad";
+
 
 export default function Page() {
     const [selectedImage, setSelectedImage] = useState(null);
@@ -13,6 +14,7 @@ export default function Page() {
     const [newCategory, setNewCategory] = useState(false);
     const [showProduto, setShowProduto] = useState([]);
     const [baseImagem, setBaseImagem] = useState('');
+    const [show, setShow] = useState(true)
     const [isSubmitting, setIsSubmitting] = useState(false); // Estado para controlar o botão de submissão
 
     const [produto, setProduto] = useState({
@@ -68,12 +70,14 @@ export default function Page() {
             data.sort((a, b) => a.nome.localeCompare(b.nome));
             if (response.ok) {
                 setCategoria(data);
+                // setShow(false)
             } else {
                 console.error('Erro ao buscar categorias:', data);
             }
         } catch (error) {
             console.error('Erro ao buscar categorias:', error);
         }
+        setShow(false)
     };
 
     const atualizarProduto = async (e) => {
@@ -142,6 +146,7 @@ export default function Page() {
     const fundoImagem = {
         backgroundImage: 'url(/logo.png)',
         backgroundSize: 'cover'
+
     }
     const fundoProduto = {
         backgroundImage: `url(${produto.imagem})`,
@@ -151,14 +156,17 @@ export default function Page() {
     };
     return (
         <div className="relative">
+
             <TitlePage titulo='Editar Produto' />
             <div className="flex gap-10 w-full">
                 <div className="w-1/3">
                     <h2>SELECIONE O PRODUTO</h2>
                     <div>
                         <input type="text" placeholder="Pesquise um Produto" />
-                        <ul>
-                            {showProduto.map((e) => (
+                        <ul className="relative">
+                            {show ? (
+                                <GifLoad /> // Mensagem de carregamento
+                            ) : showProduto.map((e) => (
                                 <li className="hover:cursor-pointer" onClick={() => insereInformacoesProduct(e)} key={e._id}>{e.nomeDoProduto}</li>
                             ))}
                         </ul>
@@ -205,7 +213,7 @@ export default function Page() {
                             <input type="file" accept=".png, .jpeg, .jpg, .gif, .webp" onChange={handleImageChange} />
                             {previewImage && (
                                 <div>
-                                    <Image src={previewImage != '' ? produto.imagem : previewImage } width={24} height={24} alt="Preview" className="w-24 h-24 object-cover" />
+                                    <Image src={previewImage != '' ? produto.imagem : previewImage} width={24} height={24} alt="Preview" className="w-24 h-24 object-cover" />
                                 </div>
                             )}
                         </div>
@@ -227,12 +235,12 @@ export default function Page() {
                     <div>
                         <p>Código de Barras: {produto.codigoDeBarras}</p>
                         <p>{produto.nomeDoProduto}</p>
-                        <div style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[360px] h-[200px] m-auto">
+                        <div style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[360px] h-[200px] m-auto cover">
                         </div>
                         <p>Descrição:</p>
-                        <div className="overflow-auto  h-[150px]">
-                        <p> {produto.descricao}</p>
-                        </div>                        
+                        <div className="overflow-auto text-justify py-2 h-[150px]">
+                            <p> {produto.descricao}</p>
+                        </div>
                         <p>Estoque: {produto.estoque}</p>
                         <p>Validade: {produto.dataValidade}</p>
                     </div>

@@ -22,7 +22,7 @@ export async function POST(req) {
 
 export async function PUT(req) {
     try {
-        console.log("Iniciando atualização...");
+        
 
         await connectToDatabase(); // Certifique-se de que a conexão está ativa
 

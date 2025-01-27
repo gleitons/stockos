@@ -7,6 +7,7 @@ import { FaEye } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import Image from "next/image";
 
+
 export default function Page() {
 
     const [empresa, setEmpresa] = useState("Selecione a Empresa");
@@ -24,7 +25,7 @@ export default function Page() {
                 .filter((produto) => productViculados.includes(produto.codBarras))
                 .map((produto) => produto.codBarras);
 
-           // const produtoV = `${produtosFiltrados} - ${e.nomeDoProduto}`
+            // const produtoV = `${produtosFiltrados} - ${e.nomeDoProduto}`
             setEmpresa(nomeEmpresa);
             setProdutosViculados(produtosFiltrados);
         }
@@ -39,7 +40,7 @@ export default function Page() {
                 const cod = prev.filter((item) => item !== produto);
                 return cod
             } else {
-                return [...prev, produto ];
+                return [...prev, produto];
             }
         });
     };
@@ -60,12 +61,45 @@ export default function Page() {
         setVisualizador(true)
     }
 
-    const handleSubmit = () => {
-        console.log("Empresa:", empresa);
-        console.log("Produtos:", produtosViculados);
+    const handleSubmit = async () => {
+        try {
+            // Extrair o CNPJ da empresa selecionada
+            const cnpj = empresa.split(" - ")[0];
+            if (!cnpj || produtosViculados.length === 0) {
+                alert("Selecione uma empresa e pelo menos um produto!");
+                return;
+            }
+
+            // Configurar os dados para envio à API
+            const payload = {
+                cnpj,
+                produtosViculados, // Enviar os IDs dos produtos vinculados
+            };
+
+            // Fazer a requisição para atualizar a empresa no backend
+            const response = await fetch('/api/fornecedor/update', {
+                method: 'PUT',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify(payload),
+            });
+
+            if (response.ok) {
+                const data = await response.json();
+                alert('Produtos associados com sucesso!');
+                console.log('Resposta da API:', data);
+            } else {
+                const error = await response.json();
+                alert(`Erro ao associar produtos: ${error.message}`);
+            }
+        } catch (error) {
+            console.error("Erro ao enviar os dados:", error);
+            alert("Ocorreu um erro ao associar os produtos. Tente novamente.");
+        }
     };
 
-   
+
     const fecharBanner = () => {
         setVisualizador(false)
     }
@@ -73,7 +107,7 @@ export default function Page() {
         try {
             const resp = await fetch('/api/fornecedor');
             const data = await resp.json();
-            if(resp.ok) {
+            if (resp.ok) {
                 setMostraEmpresas(data)
             } else {
                 console.log('mostra erro')
@@ -81,18 +115,18 @@ export default function Page() {
         } catch (error) {
             console.log(error)
         }
-        
+
         // setMostraEmpresas(data)
     }
     const produtosCadastrados = async () => {
         try {
             const resp = await fetch('/api/produto');
             const produt = await resp.json();
-            if(resp.ok) {
+            if (resp.ok) {
                 setMostraProdutos(produt)
             }
         } catch (error) {
-            
+
         }
     }
     useEffect(() => {
@@ -111,6 +145,7 @@ export default function Page() {
                     </div>
                     <div className="h-screen overflow-auto relative mt-2">
                         {mostraEmpresas.map((e, index) => (
+
                             <div key={index} className="flex items-center gap-2">
                                 <input
                                     type="radio"
@@ -119,9 +154,15 @@ export default function Page() {
                                     onChange={() => selecionaEmpresa(`${e.cnpj} - ${e.nomeEmpresa}`, e.produtosViculados)}
                                 />
                                 <label onClick={() => selecionaEmpresa(`${e.cnpj} - ${e.nomeEmpresa}`, e.produtosViculados)}>
-                                    {e.cnpj} - {e.nomeEmpresa}
+                                    {e.nomeEmpresa}
                                 </label>
+                                <abbr title={`${e.cnpj} - ${e.nomeEmpresa}`}>
+                                    <div>
+                                        < FaEye />
+                                    </div>
+                                </abbr>
                             </div>
+
                         ))}
                     </div>
                 </div>
@@ -184,6 +225,9 @@ export default function Page() {
                     <div>
                         <p>Produtos Associados</p>
                         <p>Quantidade: {produtosViculados.length}</p>
+                        <div>
+
+                        </div>
                         <textarea rows={7} cols={40} value={produtosViculados.join(', ')} readOnly />
                     </div>
 
