@@ -21,17 +21,23 @@ export async function POST(req) {
 
 
 export async function PUT(req) {
+   
     try {
-        
+        await connectToDatabase();
 
-        await connectToDatabase(); // Certifique-se de que a conexão está ativa
-
-        const { _id, nome } = await req.json(); // Desestrutura os dados corretamente
+        const { _id, nome } = await req.json();
 
         if (!_id || !nome) {
-            return new NextResponse(JSON.stringify({ error: "ID ou nome ausente" }), { status: 400 });
+            return NextResponse.json({ error: "ID ou nome ausente" }, { status: 400 });
         }
 
+        // Verifica se já existe uma categoria com o mesmo nome (ignorando o ID atual)
+        const categoriaExistente = await Category.findOne({ nome, _id: { $ne: _id } });
+        if (categoriaExistente) {
+            return NextResponse.json({ error: "Categoria já cadastrada com esse nome" }, { status: 409 });
+        }
+
+        // Atualiza a categoria
         const categoriaAtualizada = await Category.findByIdAndUpdate(
             _id,
             { nome },
@@ -39,13 +45,13 @@ export async function PUT(req) {
         );
 
         if (!categoriaAtualizada) {
-            return new NextResponse(JSON.stringify({ error: "Categoria não encontrada" }), { status: 404 });
+            return NextResponse.json({ error: "Categoria não encontrada" }, { status: 404 });
         }
 
-        return new NextResponse(JSON.stringify({ message: "Categoria atualizada com sucesso", categoriaAtualizada }), { status: 200 });
+        return NextResponse.json({ message: "Categoria atualizada com sucesso", categoriaAtualizada }, { status: 200 });
     } catch (error) {
         console.error("Erro ao atualizar categoria:", error);
-        return new NextResponse(JSON.stringify({ error: "Erro interno no servidor" }), { status: 500 });
+        return NextResponse.json({ error: "Erro interno no servidor" }, { status: 500 });
     }
 }
 
@@ -53,8 +59,8 @@ export async function DELETE(req) {
    
     await connectToDatabase();
 
-    const { _id } = await req.json(); 
-    console.log(_id);
-    const categoriaExcluida = await Category.findByIdAndDelete(_id);
+    const id = await req.json(); 
+    console.log(id);
+    const categoriaExcluida = await Category.findByIdAndDelete(id);
     return new NextResponse(JSON.stringify({ message: "Categoria excluída com sucesso", categoriaExcluida }), { status: 200 });
 }
