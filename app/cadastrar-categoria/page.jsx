@@ -1,7 +1,13 @@
-import CadastrarCategoria from "../componentes/CadastrarCategoria"
+import CadastrarCategoria from "../componentes/CadastrarCategoria";
+import TitlePage from '../componentes/TitlePage'
 
 export default function page() {
     return (
-        <CadastrarCategoria />
+        <div>
+            <TitlePage titulo={'Cadastrar Categoria'} />
+
+<CadastrarCategoria />
+        </div>
+        
     )
 };

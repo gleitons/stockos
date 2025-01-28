@@ -11,14 +11,29 @@ export async function GET() {
     return new Response(JSON.stringify(categories), { status: 200 });
 }
 
-export async function POST(req) {   
+export async function POST(req) {
     await connectToDatabase();
-    const  name  = await req.json();
-    const category = new Category(name);
-    await category.save();
-    return new NextResponse(JSON.stringify(category), { status: 201 });
-}
 
+    // Extrai o campo "nome" da requisição
+    const { nome } = await req.json();
+
+    // Validação simples no backend
+    if (!nome || typeof nome !== 'string') {
+        return NextResponse.json({ error: "Nome inválido ou não fornecido" }, { status: 400 });
+    }
+
+    // Verifica se a categoria já existe
+    const categoriaExistente = await Category.findOne({ nome });
+    if (categoriaExistente) {
+        return NextResponse.json({ error: "Categoria já cadastrada com esse nome" }, { status: 409 });
+    }
+
+    // Cria e salva a nova categoria
+    const category = new Category({ nome });
+    await category.save();
+
+    return NextResponse.json(category, { status: 201 });
+}
 
 export async function PUT(req) {
    

@@ -3,11 +3,12 @@
 import { useState } from 'react';
 import { BsFillPencilFill } from 'react-icons/bs';
 import { IoSave } from 'react-icons/io5';
+import { MdCancel } from "react-icons/md";
 
 export default function Categoria({ obj }) {
-    const [show, setShow] = useState(false); // Controla a exibição do input
-    const [nomeCategoria, setNomeCategoria] = useState(obj.nome); // Gerencia o nome da categoria
-
+    const [show, setShow] = useState(false); 
+    const [nomeCategoria, setNomeCategoria] = useState(obj.nome); 
+    const [atualiaLabel, setAtualizaLabel] = useState(obj.nome)
     // Função para alternar a exibição do input
     const toggleInput = () => {
         setShow((prev) => !prev);
@@ -37,6 +38,7 @@ export default function Categoria({ obj }) {
             if (resposta.ok) {
                 alert('Categoria atualizada com sucesso!');
                 setShow(false); // Fecha o input após sucesso
+                setAtualizaLabel(nomeCategoria)
                 
             } else {
                 alert(dados.error || 'Erro ao atualizar categoria');
@@ -55,7 +57,7 @@ export default function Categoria({ obj }) {
                 onClick={toggleInput} // Alterna a exibição do input ao clicar
             >
                 <BsFillPencilFill aria-label="Editar Categoria" />
-                {obj.nome}
+                {atualiaLabel}
             </li>
 
             {/* Input exibido com base no estado */}
@@ -69,13 +71,24 @@ export default function Categoria({ obj }) {
                         placeholder="Novo nome da categoria"
                         aria-label="Digite o novo nome da categoria"
                     />
-                    <button
-                        onClick={atualizaCategoria}
-                        className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
-                        aria-label="Salvar categoria"
-                    >
-                        <IoSave />
-                    </button>
+                    <abbr title="Atualizar">
+                        <button
+                            onClick={atualizaCategoria}
+                            className="p-2 bg-blue-500 text-white rounded hover:bg-blue-600"
+                            aria-label="Salvar categoria"
+                        >
+                            <IoSave />
+                        </button>
+                    </abbr>
+                    <abbr title="Cancelar">
+                        <button
+                            onClick={toggleInput}
+                            className="p-2 bg-red-500 text-white rounded hover:bg-red-600"
+                            aria-label="Salvar categoria"
+                        >
+                            <MdCancel />
+                        </button>
+                    </abbr>
                 </div>
             )}
         </>
