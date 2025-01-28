@@ -5,6 +5,7 @@ import { useState, useEffect } from "react";
 import { IoMdCloseCircle } from "react-icons/io";
 import Image from "next/image";
 import GifLoad from "../componentes/GifLoad";
+import moment from "moment";
 
 
 export default function Page() {
@@ -14,7 +15,8 @@ export default function Page() {
     const [newCategory, setNewCategory] = useState(false);
     const [showProduto, setShowProduto] = useState([]);
     const [baseImagem, setBaseImagem] = useState('');
-    const [show, setShow] = useState(true)
+    const [show, setShow] = useState(true);
+    const [searchTerm, setSearchTerm] = useState(''); 
     const [isSubmitting, setIsSubmitting] = useState(false); // Estado para controlar o botão de submissão
 
     const [produto, setProduto] = useState({
@@ -154,20 +156,31 @@ export default function Page() {
         backgroundRepeat: 'no-repeat', // Evita repetição da imagem
         backgroundPosition: 'center' // Centraliza a imagem no contêiner
     };
+    const handleSearch = (e) => {
+        const value = e.target.value.toLowerCase();
+        setSearchTerm(value);
+        const filtered = showProduto.filter(produto =>
+            produto.nomeDoProduto.toLowerCase().includes(value)
+        );
+        setShowProduto(filtered);
+    };
     return (
-        <div className="relative">
+        <div className="relative bg-gray-50 min-h-screen text-gray-800 p-6">
 
             <TitlePage titulo='Editar Produto' />
             <div className="flex gap-10 w-full">
                 <div className="w-1/3">
-                    <h2>SELECIONE O PRODUTO</h2>
+                    <h2 className="text-xl font-semibold">SELECIONE O PRODUTO</h2>
                     <div>
-                        <input type="text" placeholder="Pesquise um Produto" />
+                        <input type="text" 
+                            placeholder="Pesquise um Produto"
+                            value={searchTerm}
+                            onChange={handleSearch} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-400 focus:outline-none"  />
                         <ul className="relative">
                             {show ? (
                                 <GifLoad /> // Mensagem de carregamento
                             ) : showProduto.map((e) => (
-                                <li className="hover:cursor-pointer" onClick={() => insereInformacoesProduct(e)} key={e._id}>{e.nomeDoProduto}</li>
+                                <li className="hover:cursor-pointer p-2 hover:bg-gray-100" onClick={() => insereInformacoesProduct(e)} key={e._id}>{e.nomeDoProduto}</li>
                             ))}
                         </ul>
                     </div>
@@ -242,7 +255,7 @@ export default function Page() {
                             <p> {produto.descricao}</p>
                         </div>
                         <p>Estoque: {produto.estoque}</p>
-                        <p>Validade: {produto.dataValidade}</p>
+                        <p>Validade: {moment(produto.dataValidade).utc().format('YYYY-MM-DD')}</p>
                     </div>
                 </div>
             </div>

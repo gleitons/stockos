@@ -14,16 +14,11 @@ export async function GET() {
 export async function POST(req) {
     await connectToDatabase();
 
-    // Extrai o campo "nome" da requisição
     const { nome } = await req.json();
-
-    // Validação simples no backend
-    if (!nome || typeof nome !== 'string') {
-        return NextResponse.json({ error: "Nome inválido ou não fornecido" }, { status: 400 });
-    }
 
     // Verifica se a categoria já existe
     const categoriaExistente = await Category.findOne({ nome });
+    console.log(categoriaExistente)
     if (categoriaExistente) {
         return NextResponse.json({ error: "Categoria já cadastrada com esse nome" }, { status: 409 });
     }
