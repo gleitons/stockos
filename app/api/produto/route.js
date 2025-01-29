@@ -7,6 +7,7 @@ export async function POST(req) {
     await connectToDatabase();
     const dados = await req.json();
     const produto = new Produto(dados);
+    console.log(produto)
     await produto.save();
     return new NextResponse(JSON.stringify(produto), { status: 200 });
 }
@@ -24,4 +25,13 @@ export async function PUT(req) {
     const  dado = await req.json();
     await Produto.findByIdAndUpdate(dado._id, dado);
     return new NextResponse(JSON.stringify({ message: 'Atualizando produto' }), { status: 200 });
+}
+
+export async function DELETE(req) {
+    console.log('iniciando')
+    await connectToDatabase();
+    const produto = await req.json();
+    console.log(produto._id)
+    await Produto.findByIdAndDelete(produto._id);
+    return new NextResponse(JSON.stringify({message: 'Sucesso ao Excluir'}), {status: 200})
 }

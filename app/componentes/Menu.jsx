@@ -24,6 +24,10 @@ export const menu = [
         link: '/editar-produto'
     },
     {
+        nome: 'Excluir Produtos',
+        link: '/excluir-produto'
+    },
+    {
         nome: 'Cadastrar Categoria',
         link: '/cadastrar-categoria'
     },

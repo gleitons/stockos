@@ -4,7 +4,7 @@ import Link from "next/link"
 
 export default function BaseOs({ apresentacao }) {
     return (
-        <div>
+        <div >
             <div className="w-full bg-gray-300">
                 <div className="flex align-middle items-center w-2/3 m-auto justify-between">
                     <div>
@@ -29,7 +29,7 @@ export default function BaseOs({ apresentacao }) {
 
                   
                 </div>
-                <div className="w-full">
+                <div className="bg-macosLight w-full">
                     {apresentacao}
                 </div>
             </div>

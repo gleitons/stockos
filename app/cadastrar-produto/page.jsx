@@ -13,7 +13,7 @@ import Image from "next/image";
 export default function page() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
-    const [categoria, setCategoria] = useState([]);
+    const [categorias, setCategorias] = useState([]);
     const [newCategory, setNewCategory] = useState(false);
     const [baseImagem, setBaseImagem] = useState('')
 
@@ -22,7 +22,7 @@ export default function page() {
         nomeDoProduto: '',
         descricao: '',
         estoque: '',
-        category: '',
+        categoria: '',
         dataValidade: '',
         imagem: baseImagem
     })
@@ -60,7 +60,7 @@ export default function page() {
             const data = await response.json();
             data.sort((a, b) => a.nome.localeCompare(b.nome))
             if (response.ok) {
-                setCategoria(data); // Define as categorias no estado
+                setCategorias(data); // Define as categorias no estado
             } else {
                 console.error('Erro ao buscar categorias:', data);
             }
@@ -129,10 +129,10 @@ export default function page() {
                 <form onSubmit={cadastraProduto} >
                     <div>
                         Categoria: *
-                        <select name="category" value={produto.categoy} onChange={geraObjeto}>
+                        <select name="categoria" value={produto.categoria} onChange={geraObjeto}>
                             <option value="">Selecione</option>
                             {
-                                categoria.map((e, index) => (
+                                categorias.map((e, index) => (
                                     <option key={index} value={e.nome}>{e.nome}</option>
                                 ))
                             }

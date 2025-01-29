@@ -6,18 +6,21 @@ import { IoMdCloseCircle } from "react-icons/io";
 import Image from "next/image";
 import GifLoad from "../componentes/GifLoad";
 import moment from "moment";
+import { FaPlusCircle } from "react-icons/fa";
+
 
 
 export default function Page() {
     const [selectedImage, setSelectedImage] = useState(null);
     const [previewImage, setPreviewImage] = useState(null);
-    const [categoria, setCategoria] = useState([]);
+    const [categorias, setCategorias] = useState([]);
     const [newCategory, setNewCategory] = useState(false);
     const [showProduto, setShowProduto] = useState([]);
     const [baseImagem, setBaseImagem] = useState('');
     const [show, setShow] = useState(true);
-    const [searchTerm, setSearchTerm] = useState(''); 
-    const [isSubmitting, setIsSubmitting] = useState(false); // Estado para controlar o botão de submissão
+    const [searchTerm, setSearchTerm] = useState('');
+    const [isSubmitting, setIsSubmitting] = useState(false);
+
 
     const [produto, setProduto] = useState({
         _id: '',
@@ -25,7 +28,7 @@ export default function Page() {
         nomeDoProduto: '',
         descricao: '',
         estoque: '',
-        category: '',
+        categoria: '',
         dataValidade: '',
         imagem: baseImagem
     });
@@ -66,12 +69,17 @@ export default function Page() {
     };
 
     const pegaCategorias = async () => {
+
         try {
             const response = await fetch('/api/categories');
             const data = await response.json();
             data.sort((a, b) => a.nome.localeCompare(b.nome));
             if (response.ok) {
-                setCategoria(data);
+                setCategorias(data);
+                setTimeout(() => {
+                    setShow(false)
+                }, 2000)
+
                 // setShow(false)
             } else {
                 console.error('Erro ao buscar categorias:', data);
@@ -79,7 +87,8 @@ export default function Page() {
         } catch (error) {
             console.error('Erro ao buscar categorias:', error);
         }
-        setShow(false)
+
+
     };
 
     const atualizarProduto = async (e) => {
@@ -105,7 +114,7 @@ export default function Page() {
                     nomeDoProduto: '',
                     descricao: '',
                     estoque: '',
-                    category: '',
+                    categoria: '',
                     dataValidade: '',
                     imagem: ''
                 });
@@ -129,6 +138,7 @@ export default function Page() {
     const novaCat = (e) => {
         e.preventDefault();
         setNewCategory(!newCategory);
+        pegaCategorias();
     };
 
     const insereInformacoesProduct = (e) => {
@@ -138,7 +148,7 @@ export default function Page() {
             nomeDoProduto: e.nomeDoProduto,
             descricao: e.descricao,
             estoque: Number(e.estoque),
-            category: e.category,
+            categoria: e.categoria,
             dataValidade: e.dataValidade,
             imagem: e.imagem
         });
@@ -162,20 +172,26 @@ export default function Page() {
         const filtered = showProduto.filter(produto =>
             produto.nomeDoProduto.toLowerCase().includes(value)
         );
-        setShowProduto(filtered);
+        if (value.length < 1) {
+            fetchProdutos();
+        } else {
+            setShowProduto(filtered);
+        }
+        
+
     };
     return (
         <div className="relative bg-gray-50 min-h-screen text-gray-800 p-6">
 
             <TitlePage titulo='Editar Produto' />
             <div className="flex gap-10 w-full">
-                <div className="w-1/3">
+                <div className="w-1/3 bg-white shadow-macos p-4 rounded-macos">
                     <h2 className="text-xl font-semibold">SELECIONE O PRODUTO</h2>
-                    <div>
-                        <input type="text" 
+                    <div>                        
+                        <input type="text"
                             placeholder="Pesquise um Produto"
                             value={searchTerm}
-                            onChange={handleSearch} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-400 focus:outline-none"  />
+                            onChange={handleSearch} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-400 focus:outline-none" />
                         <ul className="relative">
                             {show ? (
                                 <GifLoad /> // Mensagem de carregamento
@@ -185,37 +201,45 @@ export default function Page() {
                         </ul>
                     </div>
                 </div>
-                <div className="w-1/3">
-                    <form onSubmit={atualizarProduto}>
+                <div className="w-1/3 bg-white shadow-macos p-4 rounded-macos">
+                    <form onSubmit={atualizarProduto} className="space-y-3">
                         <div className="hidden">
                             id:
                             <input type="text" name="_id" value={produto._id} onChange={geraObjeto} placeholder="..." />
                         </div>
                         <div>
-                            Código de Barras:
-                            <input type="number" name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
+                            <label className="block text-sm font-medium"> Código de Barras:</label>
+                            <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
                         </div>
                         <div>
                             Nome do Produto: *
-                            <input type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
+                            <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
                         </div>
                         <div>
                             Descrição: *
-                            <input type="text" name="descricao" value={produto.descricao} onChange={geraObjeto} placeholder="Descreva brevemente o produto" />
+                            <textarea value={produto.descricao} className="w-full text-justify border border-macosBorder rounded-macos px-4 py-2" name="descricao" rows={5} onChange={geraObjeto} ></textarea>
+                            {/* <input type="text"  value={produto.descricao} placeholder="Descreva brevemente o produto" /> */}
                         </div>
                         <div>
                             Quantidade em Estoque: *
-                            <input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" />
+                            <input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="w-full border border-macosBorder rounded-macos px-4 py-2" />
                         </div>
                         <div>
                             Categoria: *
-                            <select name="category" value={produto.category} onChange={geraObjeto}>
-                                <option value="">Selecione</option>
-                                {categoria.map((e, index) => (
-                                    <option key={index} value={e.nome}>{e.nome}</option>
-                                ))}
-                            </select>
-                            <button onClick={novaCat}>Nova Categoria</button>
+
+                            <div className="flex items-center">
+                                <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="w-full border border-macosBorder rounded-macos px-4 py-2" >
+                                    <option value="">Selecione</option>
+                                    {categorias.map((e, index) => (
+                                        <option key={index} value={e.nome}>{e.nome}</option>
+                                    ))}
+                                </select>
+                                <div onClick={novaCat} className="bg-macosBlue w-fit text-white p-2  rounded-macos hover:opacity-90 items-center">
+                                    <FaPlusCircle />
+                                </div>
+
+
+                            </div>
                         </div>
                         <div>
                             Data de Validade:
@@ -244,19 +268,20 @@ export default function Page() {
                         </div>
                     )}
                 </div>
-                <div className="w-1/3">
-                    <div>
-                        <p>Código de Barras: {produto.codigoDeBarras}</p>
-                        <p>{produto.nomeDoProduto}</p>
+                <div className="w-1/3 bg-white shadow-macos p-4 rounded-macos">
+                   
+                        <h2 className="text-xl font-semibold">{produto.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
                         <div style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[360px] h-[200px] m-auto cover">
                         </div>
-                        <p>Descrição:</p>
-                        <div className="overflow-auto text-justify py-2 h-[150px]">
-                            <p> {produto.descricao}</p>
+                        <div className="space-y-2">
+                            <p className="text-sm">Código de Barras: {produto.codigoDeBarras}</p>
+                            <p className="text-lg font-semibold">{produto.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>
+                            <div className="w-full h-[200px] bg-gray-100 overflow-auto text-justify py-2  rounded-macos shadow-macos">{produto.descricao}</div>
                         </div>
+                       
                         <p>Estoque: {produto.estoque}</p>
                         <p>Validade: {moment(produto.dataValidade).utc().format('YYYY-MM-DD')}</p>
-                    </div>
+                   
                 </div>
             </div>
         </div>

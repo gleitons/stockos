@@ -24,7 +24,7 @@ export default async function page() {
 
             <p>Selecione a categoria</p>
 
-            <ul>
+            <ul className="h-screen pb-96 overflow-auto">
                 {
                     categorys.map(((e) => (
                         <EditarCategoria key={e._id} obj={e} />
