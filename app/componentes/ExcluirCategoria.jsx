@@ -24,8 +24,9 @@ export default function ExcluirCategoria({ obj }) {
     }
 
     return (
-        <>
-            <li className="bg-slate-400 flex w-1/3 my-2 mx-2 gap-10 p-1 items-center hover:cursor-default hover:bg-slate-300 select-none" onClick={() => excluir(obj._id)}><MdDelete />{obj.nome}</li>
+        <>  
+            <li  >{obj.nome}</li> 
+            <MdDelete className="bg-red-600 text-3xl rounded-md text-white flex w-fit my-2 mx-2 gap-10 p-1 items-center hover:cursor-pointer hover:bg-red-300 select-none" onClick={() => excluir(obj._id)} />
 
         </>
     )
