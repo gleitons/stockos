@@ -35,14 +35,17 @@ export default function Page() {
 
     // Função para selecionar ou desmarcar um produto
     const selecionaProduto = (produto) => {
+
         setProdutosViculados((prev) => {
             if (prev.includes(produto)) {
                 const cod = prev.filter((item) => item !== produto);
+                console.log(produtosViculados)
                 return cod
             } else {
                 return [...prev, produto];
             }
         });
+
     };
 
     const abrirVisualizador = (e) => {
@@ -64,25 +67,37 @@ export default function Page() {
     const handleSubmit = async () => {
         try {
             // Extrair o CNPJ da empresa selecionada
-            const cnpj = empresa.split(" - ")[0];
-            if (!cnpj || produtosViculados.length === 0) {
-                alert("Selecione uma empresa e pelo menos um produto!");
-                return;
-            }
+            // const cnpj = empresa.split(" - ")[0];
+            // if (!cnpj || produtosViculados.length === 0) {
+            //     alert("Selecione uma empresa e pelo menos um produto!");
+            //     return;
+            // }
+            const id = await empresa._id
+            const pVinculados = {
+                "_id": empresa._id,
+                "cnpj": empresa.cnpj,
+                "produtosViculados": produtosViculados,
+                "nomeEmpresa": empresa.nomeEmpresa,
+                "logradouro": empresa.logradouro,
+                "numero": empresa.numero,
+                "bairro": empresa.bairro,
+                "cidade": empresa.cidade,
+                "cep": empresa.cep,
+                "telefone": empresa.telefone,
+                "email": empresa.email,
+                "contato": empresa.contato,
 
-            // Configurar os dados para envio à API
-            const payload = {
-                cnpj,
-                produtosViculados, // Enviar os IDs dos produtos vinculados
             };
+            // Configurar os dados para envio à API
+          
 
             // Fazer a requisição para atualizar a empresa no backend
-            const response = await fetch('/api/fornecedor/update', {
+            const response = await fetch('/api/fornecedor', {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json',
                 },
-                body: JSON.stringify(payload),
+                body: JSON.stringify(pVinculados),
             });
 
             if (response.ok) {
@@ -150,10 +165,10 @@ export default function Page() {
                                 <input
                                     type="radio"
                                     name="empresasOptions"
-                                    checked={empresa === `${e.cnpj} - ${e.nomeEmpresa}`}
-                                    onChange={() => selecionaEmpresa(`${e.cnpj} - ${e.nomeEmpresa}`, e.produtosViculados)}
+                                    // checked={empresa === `${e.cnpj} - ${e.nomeEmpresa}`}
+                                    onChange={() => selecionaEmpresa(e, e.produtosViculados)}
                                 />
-                                <label onClick={() => selecionaEmpresa(`${e.cnpj} - ${e.nomeEmpresa}`, e.produtosViculados)}>
+                                <label onClick={() => selecionaEmpresa(e, e.produtosViculados)}>
                                     {e.nomeEmpresa}
                                 </label>
                                 <abbr title={`${e.cnpj} - ${e.nomeEmpresa}`}>
@@ -189,8 +204,8 @@ export default function Page() {
                                     <div className="bg-gray-300 px-1">
                                         <input
                                             type="checkbox"
-                                            onChange={() => selecionaProduto(e.codigoDeBarras)}
-                                            checked={produtosViculados.includes(e.codigoDeBarras)}
+                                            onChange={() => selecionaProduto(e._id)}
+                                            checked={produtosViculados.includes(e._id)}
                                         />
                                     </div>
                                     <label onClick={() => abrirVisualizador(e)} className="flex items-center gap-2 hover:cursor-pointer">
@@ -217,7 +232,7 @@ export default function Page() {
                 <div className="h-screen overflow-auto relative mt-11 w-1/3">
                     <div>
                         <p>Nome da Empresa</p>
-                        <input type="text" value={empresa} readOnly />
+                        <input type="text" value={empresa.nomeEmpresa} readOnly />
                     </div>
                     <div>
                         <button onClick={handleSubmit}>Associar</button>

@@ -10,7 +10,7 @@ const FornecedorSchema = new mongoose.Schema({
         unique: true
     },
     produtosViculados: {
-        type: [String]
+        type: [String], default: []
     },
     nomeEmpresa: {
         type: String,

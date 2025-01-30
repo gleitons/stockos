@@ -22,6 +22,7 @@ export async function GET() {
 export async function PUT(req) {
     await connectToDatabase();
     const fornecedor = await req.json();
+    console.log(fornecedor);
   
     await Fornecedor.findByIdAndUpdate(fornecedor._id, fornecedor);
     return new Response(JSON.stringify({ message: 'Fornecedor Atualizado' }), { status: 200 });
