@@ -149,7 +149,7 @@ export default function Page() {
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">Categoria: *</label>
                         <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <option value="">Selecione</option>
+                            <option >Selecione</option>
                             {categorias.map((e, index) => (
                                 <option key={index} value={e.nome}>{e.nome}</option>
                             ))}

@@ -6,15 +6,16 @@ export default async function page() {
         try {
             const resp = await fetch(`${initial}/api/categories`, { cache: 'no-store' })
             const data = await resp.json();
-            data.sort((a, b) => a.nome.localeCompare(b.nome))
+           
 
             if (resp.ok) {
+                data.sort((a, b) => a.nome.localeCompare(b.nome))
                 return data;
             } else {
                 console.log('Erro ao Chamar Categorias');
             }
         } catch (error) {
-            console.log('Erro');
+            return [];
         }
     }
     const categorys = await fetchCategory();

@@ -218,7 +218,6 @@ export default function Page() {
                         <div>
                             Descrição: *
                             <textarea value={produto.descricao} className="w-full text-justify border border-macosBorder rounded-macos px-4 py-2" name="descricao" rows={5} onChange={geraObjeto} ></textarea>
-                            {/* <input type="text"  value={produto.descricao} placeholder="Descreva brevemente o produto" /> */}
                         </div>
                         <div>
                             Quantidade em Estoque: *
@@ -226,10 +225,9 @@ export default function Page() {
                         </div>
                         <div>
                             Categoria: *
-
                             <div className="flex items-center">
                                 <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="w-full border border-macosBorder rounded-macos px-4 py-2" >
-                                    <option value="">Selecione</option>
+                                    <option>Selecione</option>
                                     {categorias.map((e, index) => (
                                         <option key={index} value={e.nome}>{e.nome}</option>
                                     ))}
@@ -237,8 +235,6 @@ export default function Page() {
                                 <div onClick={novaCat} className="bg-macosBlue w-fit text-white p-2  rounded-macos hover:opacity-90 items-center">
                                     <FaPlusCircle />
                                 </div>
-
-
                             </div>
                         </div>
                         <div>
