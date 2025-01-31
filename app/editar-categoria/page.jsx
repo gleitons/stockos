@@ -4,11 +4,11 @@ export default async function page() {
     const initial = process.env.LINK_BD;
     const fetchCategory = async () => {
         try {
-            const resp = await fetch(`${initial}/api/categories`, {cache: 'no-store'})
+            const resp = await fetch(`${initial}/api/categories`, { cache: 'no-store' })
             const data = await resp.json();
-            data.sort((a,b) => a.nome.localeCompare(b.nome))
+            data.sort((a, b) => a.nome.localeCompare(b.nome))
 
-            if(resp.ok) {
+            if (resp.ok) {
                 return data;
             } else {
                 console.log('Erro ao Chamar Categorias');
@@ -16,8 +16,8 @@ export default async function page() {
         } catch (error) {
             console.log('Erro');
         }
-       }
-       const categorys = await fetchCategory();
+    }
+    const categorys = await fetchCategory();
     return (
         <div>
             <TitlePage titulo={'Editar Categoria'} />
@@ -32,7 +32,7 @@ export default async function page() {
                 }
             </ul>
 
-          
+
         </div>
     )
 };

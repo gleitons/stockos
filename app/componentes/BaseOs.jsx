@@ -1,8 +1,8 @@
 'use client'
 import Image from "next/image";
 import Link from "next/link";
-import { useState } from "react"; 
-import {menu} from '@/app/componentes/Menu'
+import { useState } from "react";
+import { menu } from '@/app/componentes/Menu'
 export default function BaseOs({ apresentacao }) {
     const [openSubmenu, setOpenSubmenu] = useState(null); // Estado para controlar qual submenu está aberto
 
@@ -36,6 +36,15 @@ export default function BaseOs({ apresentacao }) {
                     <div className="mb-6">
                         <h3 className="text-lg font-semibold text-white">Menu</h3>
                     </div>
+
+                    <Link
+                        href={'/'}
+                        className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 cursor-pointer"
+                    >
+                        <span>Início</span>
+                        
+                    </Link>
+
                     {menu.map((e, index) => (
                         <div key={index} className="mb-2">
                             {/* Menu Principal */}
