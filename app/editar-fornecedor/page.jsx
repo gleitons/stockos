@@ -1,8 +1,11 @@
 import TitlePage from '../componentes/TitlePage';
 import EditarFornecedor from '../componentes/EditarFornecedor';
-import AtulizarFornecedor from '../componentes/AtualizaFornecedor';
+
+
 
 export default async function Page() {
+  
+  
     // Buscar dados diretamente no servidor
     const fetchFornecedores = async () => {
         try {
