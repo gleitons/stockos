@@ -4,7 +4,8 @@ import Link from "next/link";
 import { useState } from "react";
 import { menu } from '@/app/componentes/Menu'
 export default function BaseOs({ apresentacao }) {
-    const [openSubmenu, setOpenSubmenu] = useState(null); // Estado para controlar qual submenu está aberto
+    const [openSubmenu, setOpenSubmenu] = useState(null); 
+    const [menuAnimado, setMenuAnimado] = useState(<Image src='/logo.png' width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
 
     const toggleSubmenu = (index) => {
         if (openSubmenu === index) {
@@ -13,13 +14,25 @@ export default function BaseOs({ apresentacao }) {
             setOpenSubmenu(index); // Abre o submenu clicado
         }
     };
+    const animaLogo = () => {
+        setMenuAnimado(<Image src='/gif-load.gif' width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
+    }
+    const desaanimaLogo = () => {
+        setMenuAnimado(<Image src='/logo.png' width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
+    }
+
 
     return (
         <div className="min-h-screen bg-gray-100">
             <div className="w-full bg-gray-800 text-white shadow-lg">
                 <div className="flex items-center w-11/12 mx-auto py-3 justify-between">
                     <div className="flex items-center space-x-4 ">
-                        <Image src='/logo.png' width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />
+                        <Link href={'/'} onMouseOver={animaLogo} onMouseLeave={desaanimaLogo}>
+                            <div>
+                            {menuAnimado}
+                            </div>
+                        </Link>
+                        
                         <div>
                             <h2 className="text-xl font-semibold">Stock OS</h2>
                             <p className="text-sm text-gray-400">Sistema de Cadastro e Controle de Estoque</p>
