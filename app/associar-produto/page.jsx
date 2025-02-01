@@ -1,7 +1,6 @@
 'use client'
 import { useEffect, useState } from "react";
 import TitlePage from "../componentes/TitlePage";
-import { produtos } from "../base/Produtos";
 import { FaEye } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import Image from "next/image";
@@ -14,6 +13,7 @@ export default function Page() {
     const [mostraEmpresas, setMostraEmpresas] = useState([]);
     const [mostraProdutos, setMostraProdutos] = useState([]);
     const [selectedEmpresa, setSelectedEmpresa] = useState(null);
+    const [searchTerm, setSearchTerm] = useState('');
 
     const handleSelection = (e) => {
         setSelectedEmpresa(e.nomeEmpresa);
@@ -39,15 +39,15 @@ export default function Page() {
 
     const abrirVisualizador = (e) => {
         setDetalhes(
-            <div className="p-4">
+            <div className="p-4 m-4">
                 <p className="text-lg font-bold">{e.nomeDoProduto}</p>
                 <p className="text-sm text-gray-600">{e.codigoDeBarras}</p>
                 <div className="w-full my-4">
-                    <Image className="m-auto" src={e.imagem} width={300} height={200} alt={e.nomeDoProduto} />
+                    <Image className="m-auto" src={e.imagem} width={100} height={50} alt={e.nomeDoProduto} />
                 </div>
                 <p className="text-sm">Estoque: {e.estoque}</p>
                 <p className="text-sm">Validade: {e.validade}</p>
-                <p className="text-sm text-gray-700">{e.descricao}</p>
+                <p className="text-sm h-[50px] overflow-auto text-gray-700">{e.descricao}</p>
             </div>
         );
         setVisualizador(true);
@@ -123,13 +123,38 @@ export default function Page() {
         empresasCadastradas();
         produtosCadastrados();
     }, []);
+    const handleSearch = (e) => {
+      
+        const value = e.target.value.toLowerCase();
+        const cont = value.length;
+    
+        setSearchTerm(value);
+        const filtered = mostraProdutos.filter(produto =>
+            produto.nomeDoProduto.toLowerCase().includes(value)
+        );
+    
+        if (cont === 0) {
+            produtosCadastrados();
+        } else {
+            setMostraProdutos(filtered);
+            verifica.push(cont);
+            console.log(cont + ' - ' + verifica);
+        }
+    };
+    const handleKeyDown = (e) => {
+        if (e.key === 'Backspace') {
+            produtosCadastrados();
+        }
+    
+    };
+
 
     return (
-        <div className="p-4 bg-gray-100 min-h-screen">
+        <div className="bg-gray-100 min-h-screen">
             <TitlePage titulo='Associar Produto a Empresa' />
-            <div className="flex w-full gap-4">
+            <div className="flex w-full gap-1">
                 {/* Seção de Empresas */}
-                <div className="w-1/3 bg-white p-4 rounded-lg shadow">
+                <div className="w-1/2 bg-white p-2 rounded-lg shadow">
                     <div className="mb-4">
                         <p className="font-semibold mb-2">Buscar Empresa</p>
                         <input
@@ -138,7 +163,7 @@ export default function Page() {
                             className="w-full p-2 border border-gray-300 rounded"
                         />
                     </div>
-                    <div className="h-[80vh] overflow-auto">
+                    <div className="h-[200px] overflow-auto">
                         {mostraEmpresas.map((e, index) => (
                             <div
                                 key={index}
@@ -160,15 +185,47 @@ export default function Page() {
                             </div>
                         ))}
                     </div>
+                    <div className="mb-4">
+                        <p className="font-semibold mb-2">Nome da Empresa</p>
+                        <input
+                            type="text"
+                            value={empresa.nomeEmpresa || ''}
+                            readOnly
+                            className="w-full p-2 border border-gray-300 rounded bg-gray-100"
+                        />
+                    </div>
+                    <div className="mb-4">
+                        <button
+                            onClick={handleSubmit}
+                            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
+                        >
+                            Associar
+                        </button>
+                    </div>
+                    <div>
+                        <p className="font-semibold mb-2">Produtos Associados</p>
+                        <p className="text-sm text-gray-600">Quantidade: {produtosViculados.length}</p>
+                        <textarea
+                            rows={1}
+                            cols={1}
+                            value={produtosViculados.join(', ')}
+                            readOnly
+                            className="hidden w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2"
+                        />
+                    </div>
                 </div>
 
                 {/* Seção de Produtos */}
-                <div className="w-1/3 bg-white p-4 rounded-lg shadow">
+                <div className="w-1/2 bg-white p-4 rounded-lg shadow">
+                  
                     <div className="mb-4">
                         <p className="font-semibold mb-2">Buscar Produto</p>
                         <input
                             type="text"
                             placeholder="Nome do Produto"
+                            value={searchTerm}
+                            onChange={handleSearch}
+                            onKeyDown={handleKeyDown}
                             className="w-full p-2 border border-gray-300 rounded"
                         />
                     </div>
@@ -198,8 +255,8 @@ export default function Page() {
                         ))}
                         {visualizador && (
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
-                                <div className="bg-white p-4 rounded-lg w-1/3">
-                                    <div className="flex justify-between items-center mb-4">
+                                <div className="bg-white p-4 rounded-lg  w-1/3">
+                                    <div className="flex justify-between  items-center mb-4">
                                         <h2 className="text-xl font-bold">Detalhes do Produto</h2>
                                         <IoMdCloseCircle
                                             onClick={fecharBanner}
@@ -213,8 +270,7 @@ export default function Page() {
                     </div>
                 </div>
 
-                {/* Resumo e Botão de Submissão */}
-                <div className="w-1/3 bg-white p-4 rounded-lg shadow">
+                {/* <div className="w-1/3 bg-white p-4 rounded-lg shadow hidden">
                     <div className="mb-4">
                         <p className="font-semibold mb-2">Nome da Empresa</p>
                         <input
@@ -235,7 +291,7 @@ export default function Page() {
                     <div>
                         <p className="font-semibold mb-2">Produtos Associados</p>
                         <p className="text-sm text-gray-600">Quantidade: {produtosViculados.length}</p>
-                        <textarea 
+                        <textarea
                             rows={1}
                             cols={1}
                             value={produtosViculados.join(', ')}
@@ -243,7 +299,7 @@ export default function Page() {
                             className="hidden w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2"
                         />
                     </div>
-                </div>
+                </div> */}
             </div>
         </div>
     );

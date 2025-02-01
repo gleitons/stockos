@@ -51,16 +51,15 @@ export default function Categoria({ obj }) {
 
     return (
         <>
-            {/* Item da lista */}
+           
             <li
-                className="bg-slate-400 flex w-1/3 my-2 mx-2 gap-2 p-2 items-center hover:cursor-pointer hover:bg-slate-300 select-none"
-                onClick={toggleInput} // Alterna a exibição do input ao clicar
+                className="bg-slate-200 flex w-1/3 my-2 mx-2 gap-2 p-2 items-center hover:cursor-pointer hover:bg-slate-300  rounded-md select-none"
+                onClick={toggleInput} 
             >
                 <BsFillPencilFill aria-label="Editar Categoria" />
                 {atualiaLabel}
             </li>
 
-            {/* Input exibido com base no estado */}
             {show && (
                 <div className="mt-2 flex gap-2 items-center">
                     <input

@@ -77,7 +77,7 @@ export default function EditarFornecedor({ empresa }) {
 
     return (
         <>
-            <li onClick={() => preencheEmpresa(empresa)}>{empresa.nomeEmpresa}</li>
+            <li onClick={() => preencheEmpresa(empresa)} className="bg-gray-100 p-3 rounded-sm hover:bg-slate-200 hover:cursor-pointer">{empresa.nomeEmpresa}</li>
             {preenche && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">
@@ -96,7 +96,7 @@ export default function EditarFornecedor({ empresa }) {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">CNPJ</label>
-                                <input type="text" name="cnpj" value={dadosFornecedor.cnpj} onChange={adicionaInfo} placeholder="00.000.000/0000-00" className="mt-1 block w-full p-2 border border-gray-300 rounded-md" />
+                                <input readOnly type="text" name="cnpj" value={dadosFornecedor.cnpj} onChange={adicionaInfo} placeholder="00.000.000/0000-00" className="mt-1 bg-slate-100 block w-full p-2 border border-gray-300 rounded-md" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Nome da Empresa *</label>

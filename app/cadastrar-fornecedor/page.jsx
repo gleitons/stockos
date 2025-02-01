@@ -17,6 +17,7 @@ export default function Page() {
         contato: '',
         produtosViculados: [],
     });
+    const [encontra, setEncontra] = useState('hidden')
 
     const adicionaInfo = (e) => {
         setDadosFornecedor({ ...dadosFornecedor, [e.target.name]: e.target.value });
@@ -62,6 +63,7 @@ export default function Page() {
                     contato: '',
                     produtosViculados: [],
                 });
+                setEncontra('hidden')
             } else {
                 alert('Erro ao cadastrar fornecedor: ' + data.error);
             }
@@ -70,12 +72,45 @@ export default function Page() {
         }
     };
 
+    const verificaFornecedor = async (e) => {
+        e.preventDefault();     
+        const oCnpj = dadosFornecedor.cnpj
+        if (oCnpj == '') {
+            alert(`Por favor, informe o CNPJ`);
+            return;
+        }
+        console.log(oCnpj.toString().length)
+        if(oCnpj.toString().length < 18) {
+            alert(`Por favor, Digite no formato 00.000.000/0000-00`);
+            return;
+        }
+        try {
+            const resp = await fetch('/api/fornecedor', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(dadosFornecedor)
+            });
+           
+            const data = await resp.json();
+            
+            if (resp.status == 409) {
+                setEncontra('')
+            } else {
+                alert('Erro ao cadastrar Produto: ' + data.error);
+            }
+        } catch (error) {
+            console.error('Erro ao cadastrar produto:', error);
+        }
+    };
+
     return (
         <div className=" bg-gray-100 min-h-screen">
             <TitlePage titulo='Cadastro de Fornecedor' />
 
             <div className="bg-white p-6 rounded-lg shadow-md">
-                <form onSubmit={cadastrarFornecedor}>
+                <form onSubmit={verificaFornecedor}>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">CNPJ: *</label>
                         <input
@@ -86,9 +121,10 @@ export default function Page() {
                             placeholder="00.000.000/0000-00"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         />
+                        <button className="w-fit mt-5 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Verifica</button>
                     </div>
                     </form>
-                    <form onSubmit={cadastrarFornecedor}>
+                    <form onSubmit={cadastrarFornecedor} className={encontra}>
 
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">Nome da Empresa: *</label>

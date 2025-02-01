@@ -164,7 +164,8 @@ export default function Page() {
         backgroundImage: `url(${produto.imagem})`,
         backgroundSize: 'contain', // Ajusta a imagem para caber dentro do contêiner
         backgroundRepeat: 'no-repeat', // Evita repetição da imagem
-        backgroundPosition: 'center' // Centraliza a imagem no contêiner
+        backgroundPosition: 'center',
+        overflow: 'auto'// Centraliza a imagem no contêiner
     };
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
@@ -176,17 +177,17 @@ export default function Page() {
             fetchProdutos();
         } else {
             setShowProduto(filtered);
-        }
-        
+        }        
 
     };
     return (
-        <div className="relative bg-gray-50 min-h-screen text-gray-800 p-6">
+        <div className="relative bg-gray-50 min-h-screen text-gray-800 p-2">
 
             <TitlePage titulo='Editar Produto' />
-            <div className="flex gap-10 w-full">
-                <div className="w-1/3 bg-white shadow-macos p-4 rounded-macos">
-                    <h2 className="text-xl font-semibold">SELECIONE O PRODUTO</h2>
+            <div className="flex gap-2 w-full">
+                <div className="w-1/3 bg-white shadow-macos p-2 rounded-macos">
+                <label className="block text-sm font-medium">SELECIONE O PRODUTO:</label>
+                   
                     <div>                        
                         <input type="text"
                             placeholder="Pesquise um Produto"
@@ -196,12 +197,12 @@ export default function Page() {
                             {show ? (
                                 <GifLoad /> // Mensagem de carregamento
                             ) : showProduto.map((e) => (
-                                <li className="hover:cursor-pointer p-2 hover:bg-gray-100" onClick={() => insereInformacoesProduct(e)} key={e._id}>{e.nomeDoProduto}</li>
+                                <li className="hover:cursor-pointer bg-slate-100 my-2 rounded-md p-2 hover:bg-gray-100" onClick={() => insereInformacoesProduct(e)} key={e._id}>{e.nomeDoProduto}</li>
                             ))}
                         </ul>
                     </div>
                 </div>
-                <div className="w-1/3 bg-white shadow-macos p-4 rounded-macos">
+                <div className="w-1/3 bg-white shadow-macos rounded-macos">
                     <form onSubmit={atualizarProduto} className="space-y-3">
                         <div className="hidden">
                             id:
@@ -209,49 +210,51 @@ export default function Page() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium"> Código de Barras:</label>
-                            <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
+                            <input className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly  value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
                         </div>
-                        <div>
-                            Nome do Produto: *
-                            <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
-                        </div>
-                        <div>
-                            Descrição: *
-                            <textarea value={produto.descricao} className="w-full text-justify border border-macosBorder rounded-macos px-4 py-2" name="descricao" rows={5} onChange={geraObjeto} ></textarea>
-                        </div>
-                        <div>
-                            Quantidade em Estoque: *
-                            <input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="w-full border border-macosBorder rounded-macos px-4 py-2" />
-                        </div>
-                        <div>
-                            Categoria: *
-                            <div className="flex items-center">
-                                <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="w-full border border-macosBorder rounded-macos px-4 py-2" >
-                                    <option>Selecione</option>
-                                    {categorias.map((e, index) => (
-                                        <option key={index} value={e.nome}>{e.nome}</option>
-                                    ))}
-                                </select>
-                                <div onClick={novaCat} className="bg-macosBlue w-fit text-white p-2  rounded-macos hover:opacity-90 items-center">
-                                    <FaPlusCircle />
+                        <div className="h-[240px]  overflow-auto">
+                            <div>
+                                Nome do Produto: *
+                                <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
+                            </div>
+                            <div>
+                                Descrição: *
+                                <textarea value={produto.descricao} className="w-full text-justify border border-macosBorder rounded-macos px-4 py-2" name="descricao" rows={3} onChange={geraObjeto} ></textarea>
+                            </div>
+                            <div>
+                                Quantidade em Estoque: *
+                                <input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="w-full border border-macosBorder rounded-macos px-4 py-2" />
+                            </div>
+                            <div>
+                                Categoria: *
+                                <div className="flex items-center">
+                                    <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="w-full border border-macosBorder rounded-macos px-4 py-2" >
+                                        <option>Selecione</option>
+                                        {categorias.map((e, index) => (
+                                            <option key={index} value={e.nome}>{e.nome}</option>
+                                        ))}
+                                    </select>
+                                    <div onClick={novaCat} className="bg-macosBlue w-fit text-white p-2  rounded-macos hover:opacity-90 items-center">
+                                        <FaPlusCircle />
+                                    </div>
                                 </div>
+                            </div>
+                            <div>
+                                Data de Validade:
+                                <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" />
+                            </div>
+                            <div>
+                                Imagem do Produto:
+                                <input type="file" accept=".png, .jpeg, .jpg, .gif, .webp" onChange={handleImageChange} />
+                                {previewImage && (
+                                    <div className="hidden">
+                                        <Image src={previewImage != '' ? produto.imagem : previewImage} width={24} height={24} alt="Preview" className="w-24 h-24 object-cover" />
+                                    </div>
+                                )}
                             </div>
                         </div>
                         <div>
-                            Data de Validade:
-                            <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" />
-                        </div>
-                        <div>
-                            Imagem do Produto:
-                            <input type="file" accept=".png, .jpeg, .jpg, .gif, .webp" onChange={handleImageChange} />
-                            {previewImage && (
-                                <div>
-                                    <Image src={previewImage != '' ? produto.imagem : previewImage} width={24} height={24} alt="Preview" className="w-24 h-24 object-cover" />
-                                </div>
-                            )}
-                        </div>
-                        <div>
-                            <input type="submit" value="Atualizar" disabled={isSubmitting} />
+                            <input type="submit" className="bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600" value="Atualizar" disabled={isSubmitting} />
                         </div>
                     </form>
 
@@ -264,19 +267,18 @@ export default function Page() {
                         </div>
                     )}
                 </div>
-                <div className="w-1/3 bg-white shadow-macos p-4 rounded-macos">
-                   
+                <div className="w-1/3 bg-white shadow-macos p-4 overflow-hidden rounded-macos">                   
                         <h2 className="text-xl font-semibold">{produto.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
-                        <div style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[360px] h-[200px] m-auto cover">
+                        <div  style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[260px] h-[100px] m-auto overflow-auto cover">
                         </div>
-                        <div className="space-y-2">
+                        <div className="space-y-2 my-4">
                             <p className="text-sm">Código de Barras: {produto.codigoDeBarras}</p>
                             <p className="text-lg font-semibold">{produto.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>
-                            <div className="w-full h-[200px] bg-gray-100 overflow-auto text-justify py-2  rounded-macos shadow-macos">{produto.descricao}</div>
+                            <div className="w-full h-[100px] bg-gray-100 overflow-auto text-justify py-2  rounded-macos shadow-macos">{produto.descricao}</div>
                         </div>
                        
                         <p>Estoque: {produto.estoque}</p>
-                        <p>Validade: {moment(produto.dataValidade).utc().format('YYYY-MM-DD')}</p>
+                        <p>Validade: {moment(produto.dataValidade).utc().format('DD/MM/YYYY')}</p>
                    
                 </div>
             </div>

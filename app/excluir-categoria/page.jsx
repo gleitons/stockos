@@ -22,20 +22,14 @@ export default async function Page() {
     const showCategorias = await fetchCategoria();
 
     return (
-        <div className="p-8 bg-gray-100 min-h-screen">
-            {/* Título da Página */}
-            <div className="bg-white shadow-md rounded-2xl p-6 mb-6">
+        <div className="p-2 bg-gray-100 min-h-screen">
+            <div className="bg-white shadow-md">
                 <TitlePage titulo="Excluir Categoria" />
             </div>
-
-            {/* Subtítulo */}
-            <h2 className="text-2xl font-semibold text-gray-800 mb-4">Selecione a categoria</h2>
-
-            {/* Lista de Categorias */}
             <div className="bg-white shadow-lg rounded-2xl p-6 overflow-auto h-screen">
                 <ul className="divide-y divide-gray-200 pb-96">
                     {showCategorias.map((e) => (
-                        <li key={e._id} className="py-4 hover:bg-gray-50 transition">
+                        <li key={e._id} className="py-2 hover:bg-gray-50 transition">
                             <ExcluirCategoria obj={e} />
                         </li>
                     ))}
