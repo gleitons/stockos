@@ -4,7 +4,6 @@ import { FaArrowAltCircleLeft } from "react-icons/fa";
 
 export default function AtualizaFornecedor({daEmpresa}) {
    
-    console.log(daEmpresa)
     const [dadosFornecedor, setDadosFornecedor] = useState({
         cnpj: 123,
         nomeEmpresa: "daEmpresa",

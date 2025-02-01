@@ -132,13 +132,15 @@ export default function Page() {
     };
 
     return (
-        <div className="relative p-6 bg-gray-100 min-h-screen">
+        <div className="relative  bg-gray-100 min-h-screen">
             <TitlePage titulo='Cadastro de Produtos' />
             <div className="bg-white p-6 rounded-lg shadow-md">
                 <form onSubmit={verificaProduto} >
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Código de Barras:</label>
-                        <input type="number" required name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                    <div className="mb-4 flex">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Código de Barras:</label>
+                            <input type="number" required name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
                         <button className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Continuar</button>
                     </div>
 
@@ -146,38 +148,45 @@ export default function Page() {
 
 
                 <form onSubmit={cadastraProduto} className={encontra}>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Categoria: *</label>
-                        <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
-                            <option >Selecione</option>
-                            {categorias.map((e, index) => (
-                                <option key={index} value={e.nome}>{e.nome}</option>
-                            ))}
-                        </select>
-                        <button onClick={novaCat} className="mt-2 bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded">Nova Categoria</button>
-                    </div>
+                    
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">Nome do Produto: *</label>
                         <input type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                     </div>
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">Descrição: *</label>
-                        <input type="text" name="descricao" value={produto.descricao} onChange={geraObjeto} placeholder="Descreva brevemente o produto" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        <textarea  name="descricao" value={produto.descricao} onChange={geraObjeto} placeholder="Descreva brevemente o produto" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" ></textarea>
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Quantidade em Estoque: *</label>
-                        <input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                    <div className="flex flex-wrap justify-between">
+                        <div className="mb-4 flex">
+                            <div>
+                                <label className="block text-sm font-medium text-gray-700">Categoria: *</label>
+                                <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500">
+                                    <option >Selecione</option>
+                                    {categorias.map((e, index) => (
+                                        <option key={index} value={e.nome}>{e.nome}</option>
+                                    ))}
+                                </select>
+                            </div>
+                            <button onClick={novaCat} className=" bg-green-500 hover:bg-green-700 text-white font-bold  px-4 rounded">Nova Categoria</button>
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700">Quantidade em Estoque: *</label>
+                            <input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
+                        <div className="mb-4">
+                            <label className="block text-sm font-medium text-gray-700">Data de Validade:</label>
+                            <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                        </div>
                     </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Data de Validade:</label>
-                        <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
-                    </div>
-                    <div className="mb-4">
-                        <label className="block text-sm font-medium text-gray-700">Imagem do Produto:</label>
-                        <input type="file" accept=".png, .jpg, .gif, .webp" onChange={handleImageChange} className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
-                        <input className="invisible" type="text" name="imagem" value={baseImagem} />
+                    <div className="mb-4 flex justify-between w-full">
+                        <div>
+                            <label className="block text-sm font-medium text-gray-700">Imagem do Produto:</label>
+                            <input type="file" accept=".png, .jpg, .gif, .webp" onChange={handleImageChange} className="mt-1 block w-full text-sm text-gray-500 file:mr-4 file:py-2 file:px-4 file:rounded-full file:border-0 file:text-sm file:font-semibold file:bg-blue-50 file:text-blue-700 hover:file:bg-blue-100" />
+                            <input className="invisible" type="text" name="imagem" value={baseImagem} />
+                        </div>
                         {previewImage && (
-                            <div className="mt-4">
+                            <div className="mt-4 w-full flex">
                                 <Image src={previewImage} width={96} height={96} alt="Preview" className="w-24 h-24 object-cover rounded-md" />
                             </div>
                         )}

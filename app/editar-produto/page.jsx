@@ -78,7 +78,7 @@ export default function Page() {
                 setCategorias(data);
                 setTimeout(() => {
                     setShow(false)
-                }, 2000)
+                }, 1000)
 
                 // setShow(false)
             } else {
@@ -212,7 +212,7 @@ export default function Page() {
                             <label className="block text-sm font-medium"> Código de Barras:</label>
                             <input className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly  value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
                         </div>
-                        <div className="h-[240px]  overflow-auto">
+                        <div className="h-[340px]  overflow-auto">
                             <div>
                                 Nome do Produto: *
                                 <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
@@ -243,7 +243,7 @@ export default function Page() {
                                 Data de Validade:
                                 <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" />
                             </div>
-                            <div>
+                            <div className="p-2 text-sm">
                                 Imagem do Produto:
                                 <input type="file" accept=".png, .jpeg, .jpg, .gif, .webp" onChange={handleImageChange} />
                                 {previewImage && (

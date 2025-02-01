@@ -2,26 +2,26 @@ export const menu = [
     {
         nome: 'Fornecedor',
         submenus: [
-            { nome: 'Cadastrar Fornecedor', link: '/cadastrar-fornecedor' },
-            { nome: 'Editar Fornecedor', link: '/editar-fornecedor' },
-            { nome: 'Excluir Fornecedor', link: '/excluir-fornecedor' },
+            { nome: 'Cadastrar', link: '/cadastrar-fornecedor' },
+            { nome: 'Editar', link: '/editar-fornecedor' },
+            { nome: 'Excluir', link: '/excluir-fornecedor' },
             { nome: 'Associar Produto', link: '/associar-produto' },
         ],
     },
     {
         nome: 'Produtos',
         submenus: [
-            { nome: 'Cadastrar Produtos', link: '/cadastrar-produto' },
-            { nome: 'Editar Produtos', link: '/editar-produto' },
-            { nome: 'Excluir Produtos', link: '/excluir-produto' },
+            { nome: 'Cadastrar', link: '/cadastrar-produto' },
+            { nome: 'Editar', link: '/editar-produto' },
+            { nome: 'Excluir', link: '/excluir-produto' },
         ],
     },
     {
         nome: 'Categoria',
         submenus: [
-            { nome: 'Cadastrar Categoria', link: '/cadastrar-categoria' },
-            { nome: 'Editar Categoria', link: '/editar-categoria' },
-            { nome: 'Excluir Categoria', link: '/excluir-categoria' },
+            { nome: 'Cadastrar', link: '/cadastrar-categoria' },
+            { nome: 'Editar', link: '/editar-categoria' },
+            { nome: 'Excluir', link: '/excluir-categoria' },
         ],
     },
     {

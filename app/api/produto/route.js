@@ -8,7 +8,7 @@ export async function POST(req) {
     const dados = await req.json();
 
     const verifica = await Produto.findOne({ codigoDeBarras: dados.codigoDeBarras });
-    console.log(dados.nomeDoProduto)
+
     if (verifica) {
         return new NextResponse(
             JSON.stringify({ error: "Já existe um produto com este código de barras." }),
@@ -48,10 +48,10 @@ export async function PUT(req) {
 }
 
 export async function DELETE(req) {
-    console.log('iniciando')
+  
     await connectToDatabase();
     const produto = await req.json();
-    console.log(produto._id)
+
     await Produto.findByIdAndDelete(produto._id);
     return new NextResponse(JSON.stringify({ message: 'Sucesso ao Excluir' }), { status: 200 })
 }

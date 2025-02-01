@@ -25,10 +25,10 @@ export default async function page() {
 
             <p>Selecione a categoria</p>
 
-            <ul className="h-screen pb-96 overflow-auto">
+            <ul className="h-screen pb-96 overflow-auto justify-between flex flex-wrap">
                 {
-                    categorys.map(((e) => (
-                        <EditarCategoria key={e._id} obj={e} />
+                    categorys.map(((e, index) => (
+                        <EditarCategoria key={e._id} obj={e} numero={index} />
                     )))
                 }
             </ul>

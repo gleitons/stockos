@@ -79,7 +79,7 @@ export default function Page() {
             alert(`Por favor, informe o CNPJ`);
             return;
         }
-        console.log(oCnpj.toString().length)
+    
         if(oCnpj.toString().length < 18) {
             alert(`Por favor, Digite no formato 00.000.000/0000-00`);
             return;

@@ -16,7 +16,6 @@ export default function BaseOs({ apresentacao }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
-            {/* Header */}
             <div className="w-full bg-gray-800 text-white shadow-lg">
                 <div className="flex items-center w-11/12 mx-auto py-3 justify-between">
                     <div className="flex items-center space-x-4 ">
@@ -29,10 +28,10 @@ export default function BaseOs({ apresentacao }) {
                 </div>
             </div>
 
-            {/* Main Content */}
+           
             <div className="flex">
-                {/* Sidebar */}
-                <div className="bg-gray-900 text-gray-300 w-64 min-h-screen p-4 shadow-lg">
+                
+                <div className="bg-gray-900 text-gray-300 w-52 min-h-screen p-4 shadow-lg">
                     <div className="mb-6">
                         <h3 className="text-lg font-semibold text-white">Menu</h3>
                     </div>
@@ -46,7 +45,7 @@ export default function BaseOs({ apresentacao }) {
                     </Link>
 
                     {menu.map((e, index) => (
-                        <div key={index} className="mb-2">
+                        <div key={index} className="mb-2 bg-gray-800 rounded-md">
                             {/* Menu Principal */}
                             <div
                                 onClick={() => toggleSubmenu(index)}
@@ -66,7 +65,7 @@ export default function BaseOs({ apresentacao }) {
 
                             {/* Submenu */}
                             {openSubmenu === index && (
-                                <div className="pl-4 mt-2 space-y-1">
+                                <div className="pl-4 mt-2 space-y-1 ">
                                     {e.submenus.map((submenu, subIndex) => (
                                         <Link
                                             key={subIndex}

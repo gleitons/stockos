@@ -18,7 +18,7 @@ export async function POST(req) {
 
     // Verifica se a categoria já existe
     const categoriaExistente = await Category.findOne({ nome });
-    console.log(categoriaExistente)
+  
     if (categoriaExistente) {
         return NextResponse.json({ error: "Categoria já cadastrada com esse nome" }, { status: 409 });
     }
@@ -70,7 +70,7 @@ export async function DELETE(req) {
     await connectToDatabase();
 
     const id = await req.json(); 
-    console.log(id);
+
     const categoriaExcluida = await Category.findByIdAndDelete(id);
     return new NextResponse(JSON.stringify({ message: "Categoria excluída com sucesso", categoriaExcluida }), { status: 200 });
 }

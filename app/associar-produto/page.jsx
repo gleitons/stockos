@@ -12,12 +12,16 @@ export default function Page() {
     const [produtosViculados, setProdutosViculados] = useState([]);
     const [mostraEmpresas, setMostraEmpresas] = useState([]);
     const [mostraProdutos, setMostraProdutos] = useState([]);
+    const [pesquisaProdutos, setPesquisaProdutos] = useState([]);
+    const [pesquisaEmpresa, setPesquisaEmpresa] = useState([]);
     const [selectedEmpresa, setSelectedEmpresa] = useState(null);
+    const [pesquisandoEmpresa, setPesquisandoEmpresa] = useState('');    
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSelection = (e) => {
         setSelectedEmpresa(e.nomeEmpresa);
         selecionaEmpresa(e);
+       
     };
 
     const selecionaEmpresa = (empresaSelecionada) => {
@@ -28,8 +32,14 @@ export default function Page() {
     };
 
     const selecionaProduto = (produto) => {
+        if(!selectedEmpresa) {
+            alert('*ATENÇÃO - Selecione uma empresa antes de selecionar um produto');
+            return
+        }
         setProdutosViculados((prev) => {
+            
             if (prev.includes(produto)) {
+                
                 return prev.filter((item) => item !== produto);
             } else {
                 return [...prev, produto];
@@ -54,6 +64,7 @@ export default function Page() {
     };
 
     const handleSubmit = async () => {
+
         try {
             const pVinculados = {
                 "_id": empresa._id,
@@ -101,6 +112,7 @@ export default function Page() {
             const data = await resp.json();
             if (resp.ok) {
                 setMostraEmpresas(data);
+                setPesquisaEmpresa(data);
             }
         } catch (error) {
             console.log(error);
@@ -113,6 +125,7 @@ export default function Page() {
             const produt = await resp.json();
             if (resp.ok) {
                 setMostraProdutos(produt);
+                setPesquisaProdutos(produt)
             }
         } catch (error) {
             console.log(error);
@@ -123,42 +136,52 @@ export default function Page() {
         empresasCadastradas();
         produtosCadastrados();
     }, []);
-    const handleSearch = (e) => {
-      
+
+    const handleSearch = (e) => {      
         const value = e.target.value.toLowerCase();
-        const cont = value.length;
-    
         setSearchTerm(value);
         const filtered = mostraProdutos.filter(produto =>
             produto.nomeDoProduto.toLowerCase().includes(value)
         );
-    
-        if (cont === 0) {
-            produtosCadastrados();
-        } else {
-            setMostraProdutos(filtered);
-            verifica.push(cont);
-            console.log(cont + ' - ' + verifica);
-        }
-    };
-    const handleKeyDown = (e) => {
-        if (e.key === 'Backspace') {
-            produtosCadastrados();
-        }
-    
+        setMostraProdutos(filtered);
+       
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Backspace') {
+            setMostraEmpresas(pesquisaEmpresa);            
+        }    
+    };
+
+    const searchEmpresaInput = (e) => {      
+        const value = e.target.value.toLowerCase();
+
+        setPesquisandoEmpresa(value);
+        const filtered = mostraEmpresas.filter(empresa => empresa.nomeEmpresa.toLowerCase().includes(value) );
+       
+        setMostraEmpresas(filtered);
+       
+    };
+
+    const  buscaFornec = (e) => {
+
+        if (e.key === 'Backspace') {
+            setMostraEmpresas(pesquisaEmpresa);            
+        }
+    }
 
     return (
         <div className="bg-gray-100 min-h-screen">
             <TitlePage titulo='Associar Produto a Empresa' />
             <div className="flex w-full gap-1">
-                {/* Seção de Empresas */}
                 <div className="w-1/2 bg-white p-2 rounded-lg shadow">
                     <div className="mb-4">
                         <p className="font-semibold mb-2">Buscar Empresa</p>
                         <input
                             type="text"
+                            value={pesquisandoEmpresa}
+                            onChange={searchEmpresaInput}
+                            onKeyUp={buscaFornec}
                             placeholder="Pesquisar Empresa"
                             className="w-full p-2 border border-gray-300 rounded"
                         />
@@ -174,6 +197,7 @@ export default function Page() {
                                     name="empresasOptions"
                                     checked={selectedEmpresa === e.nomeEmpresa}
                                     onChange={() => handleSelection(e)}
+                                    onKeyUp={() => buscaFornec(e)}
                                     className="cursor-pointer"
                                 />
                                 <label onClick={() => handleSelection(e)} className="cursor-pointer flex-1">
@@ -214,8 +238,6 @@ export default function Page() {
                         />
                     </div>
                 </div>
-
-                {/* Seção de Produtos */}
                 <div className="w-1/2 bg-white p-4 rounded-lg shadow">
                   
                     <div className="mb-4">
