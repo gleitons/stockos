@@ -15,13 +15,13 @@ export default function Page() {
     const [pesquisaProdutos, setPesquisaProdutos] = useState([]);
     const [pesquisaEmpresa, setPesquisaEmpresa] = useState([]);
     const [selectedEmpresa, setSelectedEmpresa] = useState(null);
-    const [pesquisandoEmpresa, setPesquisandoEmpresa] = useState('');    
+    const [pesquisandoEmpresa, setPesquisandoEmpresa] = useState('');
     const [searchTerm, setSearchTerm] = useState('');
 
     const handleSelection = (e) => {
         setSelectedEmpresa(e.nomeEmpresa);
         selecionaEmpresa(e);
-       
+
     };
 
     const selecionaEmpresa = (empresaSelecionada) => {
@@ -32,14 +32,14 @@ export default function Page() {
     };
 
     const selecionaProduto = (produto) => {
-        if(!selectedEmpresa) {
+        if (!selectedEmpresa) {
             alert('*ATENÇÃO - Selecione uma empresa antes de selecionar um produto');
             return
         }
         setProdutosViculados((prev) => {
-            
+
             if (prev.includes(produto)) {
-                
+
                 return prev.filter((item) => item !== produto);
             } else {
                 return [...prev, produto];
@@ -53,7 +53,7 @@ export default function Page() {
                 <p className="text-lg font-bold">{e.nomeDoProduto}</p>
                 <p className="text-sm text-gray-600">{e.codigoDeBarras}</p>
                 <div className="w-full my-4">
-                    <Image className="m-auto" src={e.imagem} width={100} height={50} alt={e.nomeDoProduto} />
+                    <Image className="m-auto" src={e.imagem} width={200} height={150} alt={e.nomeDoProduto} />
                 </div>
                 <p className="text-sm">Estoque: {e.estoque}</p>
                 <p className="text-sm">Validade: {e.validade}</p>
@@ -63,7 +63,11 @@ export default function Page() {
         setVisualizador(true);
     };
 
-    const handleSubmit = async () => {
+    const viculaProdutos = async () => {
+        if (!selectedEmpresa) {
+            alert('*ATENÇÃO - Selecione uma empresa antes de Associar um produto');
+            return
+        }
 
         try {
             const pVinculados = {
@@ -137,36 +141,37 @@ export default function Page() {
         produtosCadastrados();
     }, []);
 
-    const handleSearch = (e) => {      
+    const filtroProduto = (e) => {
         const value = e.target.value.toLowerCase();
         setSearchTerm(value);
         const filtered = mostraProdutos.filter(produto =>
             produto.nomeDoProduto.toLowerCase().includes(value)
         );
         setMostraProdutos(filtered);
-       
+
     };
 
-    const handleKeyDown = (e) => {
+    const buscaProdutoRapido = (e) => {
+        console.log(' ola')
         if (e.key === 'Backspace') {
-            setMostraEmpresas(pesquisaEmpresa);            
-        }    
+            setMostraProdutos(pesquisaProdutos);
+        }
     };
 
-    const searchEmpresaInput = (e) => {      
+    const searchEmpresaInput = (e) => {
         const value = e.target.value.toLowerCase();
 
         setPesquisandoEmpresa(value);
-        const filtered = mostraEmpresas.filter(empresa => empresa.nomeEmpresa.toLowerCase().includes(value) );
-       
+        const filtered = mostraEmpresas.filter(empresa => empresa.nomeEmpresa.toLowerCase().includes(value));
+
         setMostraEmpresas(filtered);
-       
+
     };
 
-    const  buscaFornec = (e) => {
+    const buscaFornec = (e) => {
 
         if (e.key === 'Backspace') {
-            setMostraEmpresas(pesquisaEmpresa);            
+            setMostraEmpresas(pesquisaEmpresa);
         }
     }
 
@@ -220,7 +225,7 @@ export default function Page() {
                     </div>
                     <div className="mb-4">
                         <button
-                            onClick={handleSubmit}
+                            onClick={viculaProdutos}
                             className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
                         >
                             Associar
@@ -239,20 +244,20 @@ export default function Page() {
                     </div>
                 </div>
                 <div className="w-1/2 bg-white p-4 rounded-lg shadow">
-                  
+
                     <div className="mb-4">
                         <p className="font-semibold mb-2">Buscar Produto</p>
                         <input
                             type="text"
                             placeholder="Nome do Produto"
                             value={searchTerm}
-                            onChange={handleSearch}
-                            onKeyDown={handleKeyDown}
+                            onChange={filtroProduto}
+                            onKeyUp={buscaProdutoRapido}
                             className="w-full p-2 border border-gray-300 rounded"
                         />
                     </div>
                     <div className="h-[80vh] overflow-auto">
-                        <div className="flex w-full text-center gap-10 mb-2">
+                        <div className="flex bg-gray-300 w-full text-center gap-10 mb-2">
                             <div className="bg-gray-300 px-1 rounded">
                                 <p className="text-center text-sm">M</p>
                             </div>
@@ -260,21 +265,24 @@ export default function Page() {
                                 <p>Visualizar</p>
                             </div>
                         </div>
-                        {mostraProdutos.map((e, index) => (
-                            <div key={index} className="flex items-center gap-2 p-2 hover:bg-gray-100 rounded">
-                                <div className="bg-gray-300 px-1 rounded">
-                                    <input
-                                        type="checkbox"
-                                        onChange={() => selecionaProduto(e._id)}
-                                        checked={produtosViculados.includes(e._id)}
-                                        className="cursor-pointer"
-                                    />
+                        <div className="max-h-[400px] overflow-auto">
+                            {mostraProdutos.map((e, index) => (
+                                <div key={index} className="flex items-center gap-2 p-2 my-2 rounded-md border-b-gray-500 bg-gray-100 hover:bg-gray-200 ">
+                                    <div className="bg-gray-300 px-1 rounded">
+                                        <input
+                                            type="checkbox"
+                                            onChange={() => selecionaProduto(e._id)}
+                                            checked={produtosViculados.includes(e._id)}
+                                            className="cursor-pointer"
+                                        />
+                                    </div>
+                                    <label onClick={() => abrirVisualizador(e)} className="flex items-center gap-2 cursor-pointer flex-1">
+                                        {e.codigoDeBarras} - {e.nomeDoProduto} <FaEye className="text-gray-600 hover:text-gray-800" />
+                                    </label>
                                 </div>
-                                <label onClick={() => abrirVisualizador(e)} className="flex items-center gap-2 cursor-pointer flex-1">
-                                    {e.codigoDeBarras} - {e.nomeDoProduto} <FaEye className="text-gray-600 hover:text-gray-800" />
-                                </label>
-                            </div>
-                        ))}
+                            ))}
+                        </div>
+
                         {visualizador && (
                             <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center">
                                 <div className="bg-white p-4 rounded-lg  w-1/3">
@@ -292,36 +300,7 @@ export default function Page() {
                     </div>
                 </div>
 
-                {/* <div className="w-1/3 bg-white p-4 rounded-lg shadow hidden">
-                    <div className="mb-4">
-                        <p className="font-semibold mb-2">Nome da Empresa</p>
-                        <input
-                            type="text"
-                            value={empresa.nomeEmpresa || ''}
-                            readOnly
-                            className="w-full p-2 border border-gray-300 rounded bg-gray-100"
-                        />
-                    </div>
-                    <div className="mb-4">
-                        <button
-                            onClick={handleSubmit}
-                            className="w-full bg-blue-500 text-white p-2 rounded hover:bg-blue-600"
-                        >
-                            Associar
-                        </button>
-                    </div>
-                    <div>
-                        <p className="font-semibold mb-2">Produtos Associados</p>
-                        <p className="text-sm text-gray-600">Quantidade: {produtosViculados.length}</p>
-                        <textarea
-                            rows={1}
-                            cols={1}
-                            value={produtosViculados.join(', ')}
-                            readOnly
-                            className="hidden w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2"
-                        />
-                    </div>
-                </div> */}
+
             </div>
         </div>
     );

@@ -20,7 +20,7 @@ export async function POST(req) {
 
         } else {
             const produto = new Produto(dados);
-
+            console.log(produto)
             await produto.save();
             return new NextResponse(JSON.stringify(produto), { status: 200 });
         }

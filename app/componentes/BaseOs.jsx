@@ -33,10 +33,12 @@ export default function BaseOs({ apresentacao }) {
                             </div>
                         </Link>
                         
-                        <div>
-                            <h2 className="text-xl font-semibold">Stock OS</h2>
-                            <p className="text-sm text-gray-400">Sistema de Cadastro e Controle de Estoque</p>
-                        </div>
+                        <Link href={'/'}>
+                            <div>
+                                <h2 className="text-xl font-semibold">Stock OS</h2>
+                                <p className="text-sm text-gray-400">Sistema de Cadastro e Controle de Estoque</p>
+                            </div>
+                        </Link>
                     </div>
                 </div>
             </div>
@@ -51,7 +53,7 @@ export default function BaseOs({ apresentacao }) {
 
                     <Link
                         href={'/'}
-                        className="flex items-center justify-between p-2 rounded-lg hover:bg-gray-700 hover:text-white transition-colors duration-200 cursor-pointer"
+                        className="flex items-center justify-between p-2  mb-2 bg-gray-800 rounded-md hover:bg-gray-700 hover:text-white transition-colors duration-200 cursor-pointer"
                     >
                         <span>Início</span>
                         

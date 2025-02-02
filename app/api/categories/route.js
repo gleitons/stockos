@@ -16,15 +16,13 @@ export async function POST(req) {
 
     const { nome } = await req.json();
 
-    // Verifica se a categoria já existe
     const categoriaExistente = await Category.findOne({ nome });
   
     if (categoriaExistente) {
         return NextResponse.json({ error: "Categoria já cadastrada com esse nome" }, { status: 409 });
     }
-
-    // Cria e salva a nova categoria
     const category = new Category({ nome });
+    console.log(category)
     await category.save();
 
     return NextResponse.json(category, { status: 201 });

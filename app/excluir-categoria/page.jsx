@@ -27,9 +27,9 @@ export default async function Page() {
                 <TitlePage titulo="Excluir Categoria" />
             </div>
             <div className="bg-white shadow-lg rounded-2xl p-6 overflow-auto h-screen">
-                <ul className="divide-y divide-gray-200 pb-96">
+                <ul className="divide-y divide-gray-200 pb-96 flex flex-wrap justify-between ">
                     {showCategorias.map((e) => (
-                        <li key={e._id} className="py-2 hover:bg-gray-50 transition">
+                        <li key={e._id} className="py-2 hover:bg-gray-50 w-1/4 text-center items-center bg-slate-300 m-2  transition">
                             <ExcluirCategoria obj={e} />
                         </li>
                     ))}

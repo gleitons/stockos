@@ -33,4 +33,11 @@ export const menu = [
             { nome: 'Produtos Vinculados', link: '/excluir-categoria' },
         ],
     },
+    {
+        nome: 'Confirgurações',
+        submenus: [
+            { nome: 'Resetar Banco de Dados', link: '/resetar-bd' },
+           
+        ],
+    },
 ];

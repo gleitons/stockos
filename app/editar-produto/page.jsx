@@ -42,6 +42,21 @@ export default function Page() {
             const resp = await fetch('/api/produto');
             const data = await resp.json();
             if (resp.ok) {
+                data.sort((a, b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto));
+                console.log(data)
+                if (data.length == []) {
+                    setShowProduto([{
+                        _id: '',
+                        codigoDeBarras: '',
+                        nomeDoProduto: 'Nenhum Produto Cadastrado',
+                        descricao: '',
+                        estoque: '',
+                        categoria: '',
+                        dataValidade: '',
+                        imagem: baseImagem
+                    }]);
+                    return
+                }
                 setShowProduto(data);
             }
         } catch (error) {
@@ -75,6 +90,8 @@ export default function Page() {
             const data = await response.json();
             data.sort((a, b) => a.nome.localeCompare(b.nome));
             if (response.ok) {
+
+
                 setCategorias(data);
                 setTimeout(() => {
                     setShow(false)
@@ -177,7 +194,7 @@ export default function Page() {
             fetchProdutos();
         } else {
             setShowProduto(filtered);
-        }        
+        }
 
     };
     return (
@@ -185,18 +202,18 @@ export default function Page() {
 
             <TitlePage titulo='Editar Produto' />
             <div className="flex gap-2 w-full">
-                <div className="w-1/3 bg-white shadow-macos p-2 rounded-macos">
-                <label className="block text-sm font-medium">SELECIONE O PRODUTO:</label>
-                   
-                    <div>                        
+                <div className="w-1/3 bg-white shadow-macos p-2 rounded-macos max-h-[500px] overflow-auto">
+                    <label className="block text-sm font-medium">SELECIONE O PRODUTO:</label>
+
+                    <div>
                         <input type="text"
                             placeholder="Pesquise um Produto"
                             value={searchTerm}
                             onChange={handleSearch} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-400 focus:outline-none" />
                         <ul className="relative">
                             {show ? (
-                                <GifLoad /> // Mensagem de carregamento
-                            ) : showProduto.map((e) => (
+                                <GifLoad />
+                            ) : showProduto?.map((e) => (
                                 <li className="hover:cursor-pointer bg-slate-100 my-2 rounded-md p-2 hover:bg-gray-100" onClick={() => insereInformacoesProduct(e)} key={e._id}>{e.nomeDoProduto}</li>
                             ))}
                         </ul>
@@ -210,7 +227,7 @@ export default function Page() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium"> Código de Barras:</label>
-                            <input className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly  value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
+                            <input className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
                         </div>
                         <div className="h-[340px]  overflow-auto">
                             <div>
@@ -267,19 +284,19 @@ export default function Page() {
                         </div>
                     )}
                 </div>
-                <div className="w-1/3 bg-white shadow-macos p-4 overflow-hidden rounded-macos">                   
-                        <h2 className="text-xl font-semibold">{produto.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
-                        <div  style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[260px] h-[100px] m-auto overflow-auto cover">
-                        </div>
-                        <div className="space-y-2 my-4">
-                            <p className="text-sm">Código de Barras: {produto.codigoDeBarras}</p>
-                            <p className="text-lg font-semibold">{produto.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>
-                            <div className="w-full h-[100px] bg-gray-100 overflow-auto text-justify py-2  rounded-macos shadow-macos">{produto.descricao}</div>
-                        </div>
-                       
-                        <p>Estoque: {produto.estoque}</p>
-                        <p>Validade: {moment(produto.dataValidade).utc().format('DD/MM/YYYY')}</p>
-                   
+                <div className="w-1/3 bg-white shadow-macos p-4 overflow-hidden rounded-macos">
+                    <h2 className="text-xl font-semibold">{produto.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
+                    <div style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[260px] h-[100px] m-auto overflow-auto cover">
+                    </div>
+                    <div className="space-y-2 my-4">
+                        <p className="text-sm">Código de Barras: {produto.codigoDeBarras}</p>
+                        <p className="text-lg font-semibold">{produto.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>
+                        <div className="w-full h-[100px] bg-gray-100 overflow-auto text-justify py-2  rounded-macos shadow-macos">{produto.descricao}</div>
+                    </div>
+
+                    <p>Estoque: {produto.estoque}</p>
+                    <p>Validade: {moment(produto.dataValidade).utc().format('DD/MM/YYYY')}</p>
+
                 </div>
             </div>
         </div>
