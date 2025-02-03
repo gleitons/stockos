@@ -25,15 +25,6 @@ export const menu = [
         ],
     },
     {
-        nome: 'Relatórios',
-        submenus: [
-            { nome: 'Relatório de Produtos', link: '/cadastrar-categoria' },
-            { nome: 'Relatório de Fornecedores', link: '/editar-categoria' },
-            { nome: 'Relatório de Categorias', link: '/excluir-categoria' },
-            { nome: 'Produtos Vinculados', link: '/excluir-categoria' },
-        ],
-    },
-    {
         nome: 'Confirgurações',
         submenus: [
             { nome: 'Resetar Banco de Dados', link: '/resetar-bd' },
