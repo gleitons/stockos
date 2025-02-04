@@ -42,7 +42,7 @@ export default function ExcluirFornecedor({ fornec }) {
 
     return (
         <>
-            {/* Item da lista */}
+        
             <li
                 onClick={abreDeleted}
                 className="bg-gray-200 p-3 my-2 mx-2 rounded-lg hover:bg-gray-300 cursor-pointer transition-colors duration-200 select-none"
@@ -50,11 +50,11 @@ export default function ExcluirFornecedor({ fornec }) {
                 {fornec.cnpj} - {fornec.nomeEmpresa}
             </li>
 
-            {/* Modal de Exclusão */}
+       
             {mostrar && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-lg shadow-lg w-full max-w-md p-6">
-                        {/* Botão de voltar */}
+                      
                         <div
                             onClick={abreDeleted}
                             className="text-3xl text-gray-600 hover:text-gray-800 cursor-pointer mb-4"
@@ -62,7 +62,7 @@ export default function ExcluirFornecedor({ fornec }) {
                             <IoArrowBackCircleSharp />
                         </div>
 
-                        {/* Formulário de Exclusão */}
+                   
                         <form onSubmit={deleteFornecedor} className="space-y-4">
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">CNPJ:</label>
@@ -84,7 +84,6 @@ export default function ExcluirFornecedor({ fornec }) {
                                 />
                             </div>
 
-                            {/* Botões de Ação */}
                             <div className="flex gap-4 mt-6">
                                 <button
                                     type="submit"

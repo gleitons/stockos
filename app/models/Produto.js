@@ -1,6 +1,6 @@
 import mongoose from "mongoose";
 
-// Schema para o Produto
+
 const ProdutoSchema = new mongoose.Schema({
     codigoDeBarras: {
         type: String,

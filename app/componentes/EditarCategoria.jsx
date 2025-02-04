@@ -9,17 +9,17 @@ export default function Categoria({ obj, numero }) {
     const [show, setShow] = useState(false); 
     const [nomeCategoria, setNomeCategoria] = useState(obj.nome); 
     const [atualiaLabel, setAtualizaLabel] = useState(obj.nome)
-    // Função para alternar a exibição do input
+   
     const toggleInput = () => {
         setShow((prev) => !prev);
     };
 
-    // Função para atualizar o estado do nome da categoria
+   
     const carregaNome = (e) => {
         setNomeCategoria(e.target.value);
     };
 
-    // Função para atualizar a categoria no servidor
+ 
     const atualizaCategoria = async () => {
         if (nomeCategoria.trim() === obj.nome.trim()) {
             alert('O nome da categoria não foi alterado.');
@@ -37,7 +37,7 @@ export default function Categoria({ obj, numero }) {
 
             if (resposta.ok) {
                 alert('Categoria atualizada com sucesso!');
-                setShow(false); // Fecha o input após sucesso
+                setShow(false); 
                 setAtualizaLabel(nomeCategoria)
                 
             } else {
@@ -53,7 +53,7 @@ export default function Categoria({ obj, numero }) {
         <>
            
             <li
-                className="bg-slate-200  w-1/4 my-2 mx-2  p-2  hover:cursor-pointer hover:bg-slate-300  rounded-md select-none"
+                className="bg-slate-200  w-1/4  mx-2 h-[50px]  p-2  hover:cursor-pointer hover:bg-slate-300  rounded-md select-none"
                 onClick={toggleInput} 
             >
                 <div className='flex items-center gap-2'>
@@ -64,7 +64,7 @@ export default function Categoria({ obj, numero }) {
             </li>
             {show && (
                 <div className="fixed inset-0 bg-black bg-opacity-60 flex items-center justify-center p-4">
-                    <div className='bg-white p-2 min-h-[200px] w-[300px] rounded-md'>
+                    <div className='bg-white p-2 min-h-[100px] w-[300px] rounded-md'>
                         <p className='text-xl text-center'>Edite o nome da categoria</p>
                         <p className='text-gray-400 text-center'>Nome Anterior: {obj.nome}</p>
                         <input

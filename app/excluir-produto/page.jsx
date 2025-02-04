@@ -7,6 +7,7 @@ export default async function page() {
             const data = await resp.json();
 
             if (resp.ok) {
+                data.sort((a,b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto))
                 return data
             } else {
                 console.log('Erro ao solicitar Produtos');

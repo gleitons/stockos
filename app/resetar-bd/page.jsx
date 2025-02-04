@@ -6,20 +6,7 @@ import { fornecedores } from '../componentes/associar/Fornecedores';
 import Image from 'next/image';
 
 export default async function page() {
-    // const fetchFornecedor = async () => {
-    //     const url = process.env.LINK_BD
-    //     try {
-    //         const response = await fetch(`${url}/api/fornecedor`, { cache: 'no-store' }); // 'no-store' para SSR dinâmico
-    //         if (!response.ok) {
-    //             throw new Error('Erro ao buscar fornecedores');
-    //         }
-    //         return await response.json();
-    //     } catch (error) {
-
-    //         return []; // Retorna array vazio em caso de erro
-    //     }
-    // }
-    // const fornecedor = await fetchFornecedor();
+   
     return (
         <div className='relative'>
             <TitlePage titulo={'Resetar banco de Dados'} />

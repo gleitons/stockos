@@ -2,16 +2,17 @@ import TitlePage from '../componentes/TitlePage'
 import ExcluirFornecedor from '../componentes/ExcluirFornecedor'
 
 export default async function page() {
+    const url = process.env.LINK_BD
     const fetchFornecedor = async () => {
         try {
-            const response = await fetch('http://localhost:3000/api/fornecedor', { cache: 'no-store' }); // 'no-store' para SSR dinâmico
+            const response = await fetch(`${url}/api/fornecedor`, { cache: 'no-store' }); 
             if (!response.ok) {
                  throw new Error('Erro ao buscar fornecedores');
             }
             return await response.json();
         } catch (error) {
             
-            return []; // Retorna array vazio em caso de erro
+            return []; 
         }
     }
     const fornecedor = await fetchFornecedor();

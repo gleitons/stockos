@@ -41,20 +41,3 @@ export const produtos = [
 
   }
 ];
-
-/*
-[
-{
-nomeProduto: "Produto Completo",
-codBarras:"23421",
-descricao: "Rua/Avenida",
-estoque: 23,
-categoria: "centro",
-validade: "Lagoa dos Patos",
-imagemProduto: "https://static.wixstatic.com/media/a21bd45505714dc2a8b9693c49ddd117.jpg/v1/fill/w_568,h_378,al_c,q_80,usm_0.66_1.00_0.01,enc_auto/a21bd45505714dc2a8b9693c49ddd117.jpg",
-
-}
-
-
-]
-*/

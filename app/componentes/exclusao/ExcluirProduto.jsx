@@ -1,9 +1,8 @@
 'use client'
 
-import { useState } from "react"
 
 export default function ExcluirProduto({ product }) {
-    const [show, setShow] = useState(false);
+    
 
     const excluirProduto = async (e) => {
         const texto = `Deseja EXCLUIR o produto " ${e.nomeDoProduto} " PERMANENTEMENTE?`;

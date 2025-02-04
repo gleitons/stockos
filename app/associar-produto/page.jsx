@@ -152,7 +152,7 @@ export default function Page() {
     };
 
     const buscaProdutoRapido = (e) => {
-        console.log(' ola')
+      
         if (e.key === 'Backspace') {
             setMostraProdutos(pesquisaProdutos);
         }

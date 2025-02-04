@@ -26,7 +26,6 @@ export default function Page() {
     const cadastrarFornecedor = async (e) => {
         e.preventDefault();
 
-        // Validação simples para campos obrigatórios
         const camposObrigatorios = [
             'cnpj', 'nomeEmpresa', 'logradouro', 'numero', 'bairro', 'cidade', 'cep', 'telefone', 'email', 'contato'
         ];
@@ -49,7 +48,7 @@ export default function Page() {
 
             if (resp.ok) {
                 alert('Fornecedor cadastrado com sucesso');
-                // Limpar o formulário após o cadastro
+               
                 setDadosFornecedor({
                     cnpj: '',
                     nomeEmpresa: '',

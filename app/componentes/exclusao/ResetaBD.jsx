@@ -13,6 +13,8 @@ export default function ResetaBD() {
 
 
     const adicionaProdutos = async () => {
+        serV1(() => Math.floor(Math.random() * 9))
+        serV2(() => Math.floor(Math.random() * 9))
         const dosProdutos = produtos;
         for (let i = 0; i < dosProdutos.length; i++) {
             try {
@@ -29,7 +31,7 @@ export default function ResetaBD() {
                     const porcentagem = (i * 1) / produtos.length
 
                     setContador(() => (porcentagem * 100).toFixed(2))
-                    console.log(porcentagem.toFixed(2))
+                   
                     if (porcentagem.toFixed((2)) == 0.93) {
                         setContador(100);
                         setTimeout(() => {
@@ -70,7 +72,6 @@ export default function ResetaBD() {
                     const porcentagem = (i * 1.25) / fornecedores.length
 
                     setContador(() => (porcentagem * 100).toFixed(2))
-                    console.log(porcentagem.toFixed(2))
                     if (porcentagem.toFixed((2)) == 0.93) {
                         setContador(100);
                         setTimeout(() => {
@@ -110,7 +111,7 @@ export default function ResetaBD() {
                     const porcentagem = (i * 1.2) / categorias.length
 
                     setContador(() => (porcentagem * 100).toFixed(2))
-                    console.log(porcentagem.toFixed(2))
+                
                     if (porcentagem.toFixed((2)) == 0.96) {
                         setContador(100);
                         setTimeout(() => {
@@ -139,7 +140,7 @@ export default function ResetaBD() {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify({ nomeColecao: nomeC }) // Envia como objeto
+                body: JSON.stringify({ nomeColecao: nomeC }) 
             });
 
             if (resp.ok) {

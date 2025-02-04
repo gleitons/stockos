@@ -63,7 +63,7 @@ export default function EditarFornecedor({ empresa }) {
                 alert('Erro ao atualizar fornecedor: ' + data.message);
             }
         } catch (error) {
-            // console.error('Erro ao atualizar fornecedor:', error);
+            console.error('Erro ao atualizar fornecedor:', error);
         }
     };
 

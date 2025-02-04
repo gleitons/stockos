@@ -6,7 +6,7 @@ import { NextResponse } from 'next/server';
 export async function POST(req) {
     await connectToDatabase();
     const dados = await req.json();
-    console.log(dados)
+    
     const verifica = await Fornecedor.findOne({ cnpj: dados.cnpj });
  
 
@@ -18,7 +18,7 @@ export async function POST(req) {
 
         } else {
             const fornecedor = new Fornecedor(dados);
-            console.log(fornecedor)
+        
             await fornecedor.save();
             return new NextResponse(JSON.stringify(fornecedor), { status: 200 });
         }

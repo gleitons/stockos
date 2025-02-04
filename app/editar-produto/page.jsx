@@ -43,7 +43,7 @@ export default function Page() {
             const data = await resp.json();
             if (resp.ok) {
                 data.sort((a, b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto));
-                console.log(data)
+          
                 if (data.length == []) {
                     setShowProduto([{
                         _id: '',
@@ -97,7 +97,7 @@ export default function Page() {
                     setShow(false)
                 }, 1000)
 
-                // setShow(false)
+              
             } else {
                 console.error('Erro ao buscar categorias:', data);
             }
@@ -179,10 +179,10 @@ export default function Page() {
     }
     const fundoProduto = {
         backgroundImage: `url(${produto.imagem})`,
-        backgroundSize: 'contain', // Ajusta a imagem para caber dentro do contêiner
-        backgroundRepeat: 'no-repeat', // Evita repetição da imagem
+        backgroundSize: 'contain', 
+        backgroundRepeat: 'no-repeat',
         backgroundPosition: 'center',
-        overflow: 'auto'// Centraliza a imagem no contêiner
+        overflow: 'auto'
     };
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();

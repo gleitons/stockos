@@ -11,7 +11,7 @@ export default function EditCategory({ atualiza, category, existingCategories })
     const [valor, setValor] = useState(category.nome);
     const [icon, setIcon] = useState();
 
-    //<BsFillPencilFill />
+
 
 
     const atualizarCategory = async (newCategoryName) => {
@@ -75,7 +75,7 @@ export default function EditCategory({ atualiza, category, existingCategories })
                     headers: {
                         'Content-Type': 'application/json',
                     },
-                    body: JSON.stringify(categoryId), // Envia o ID da categoria
+                    body: JSON.stringify(categoryId), 
                 });
 
                 if (response.ok) {                   

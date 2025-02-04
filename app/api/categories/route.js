@@ -22,7 +22,7 @@ export async function POST(req) {
         return NextResponse.json({ error: "Categoria já cadastrada com esse nome" }, { status: 409 });
     }
     const category = new Category({ nome });
-    console.log(category)
+   
     await category.save();
 
     return NextResponse.json(category, { status: 201 });
@@ -39,17 +39,16 @@ export async function PUT(req) {
             return NextResponse.json({ error: "ID ou nome ausente" }, { status: 400 });
         }
 
-        // Verifica se já existe uma categoria com o mesmo nome (ignorando o ID atual)
         const categoriaExistente = await Category.findOne({ nome, _id: { $ne: _id } });
         if (categoriaExistente) {
             return NextResponse.json({ error: "Categoria já cadastrada com esse nome" }, { status: 409 });
         }
 
-        // Atualiza a categoria
+ 
         const categoriaAtualizada = await Category.findByIdAndUpdate(
             _id,
             { nome },
-            { new: true } // Retorna o documento atualizado
+            { new: true } 
         );
 
         if (!categoriaAtualizada) {

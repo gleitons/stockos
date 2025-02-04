@@ -2,9 +2,10 @@ import TitlePage from "../componentes/TitlePage";
 import ExcluirCategoria from "../componentes/ExcluirCategoria";
 
 export default async function Page() {
+    const url = process.env.LINK_BD
     const fetchCategoria = async () => {
         try {
-            const resp = await fetch("http://localhost:3000/api/categories", { cache: "no-store" });
+            const resp = await fetch(`${url}/api/categories`, { cache: "no-store" });
             const data = await resp.json();
             if (resp.ok) {
                 data.sort((a, b) => a.nome.localeCompare(b.nome));
