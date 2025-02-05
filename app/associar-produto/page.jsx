@@ -218,7 +218,8 @@ export default function Page() {
                         <p className="font-semibold mb-2">Nome da Empresa</p>
                         <input
                             type="text"
-                            defaultValue={empresa?.nomeEmpresa || ''}
+                            required
+                            defaultValue={empresa.nomeEmpresa}
                             readOnly
                             className="w-full p-2 border border-gray-300 rounded bg-gray-100"
                         />
@@ -234,13 +235,16 @@ export default function Page() {
                     <div>
                         <p className="font-semibold mb-2">Produtos Associados</p>
                         <p className="text-sm text-gray-600">Quantidade: {produtosViculados.length}</p>
-                        <textarea
-                            rows={1}
+                        <div className="hidden">
+                            <textarea  rows={1}
                             cols={1}
                             defaultValue={produtosViculados.join(', ')}
                             readOnly
-                            className="hidden w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2"
-                        />
+                            className=" w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2">
+                            
+                            </textarea>
+                        </div>
+                      
                     </div>
                 </div>
                 <div className="w-1/2 bg-white p-4 rounded-lg shadow">

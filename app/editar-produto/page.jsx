@@ -7,6 +7,8 @@ import Image from "next/image";
 import GifLoad from "../componentes/GifLoad";
 import moment from "moment";
 import { FaPlusCircle } from "react-icons/fa";
+import { FaEye } from "react-icons/fa";
+
 
 
 
@@ -200,7 +202,7 @@ export default function Page() {
 
             <TitlePage titulo='Editar Produto' />
             <div className="flex gap-2 w-full">
-                <div className="w-1/3 bg-white shadow-macos p-2 rounded-macos max-h-[500px] overflow-auto">
+                <div className="w-1/3 bg-white shadow-macos p-2 rounded-macos ">
                     <label className="block text-sm font-medium">SELECIONE O PRODUTO:</label>
 
                     <div>
@@ -208,11 +210,11 @@ export default function Page() {
                             placeholder="Pesquise um Produto"
                             value={searchTerm}
                             onChange={handleSearch} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-400 focus:outline-none" />
-                        <ul className="relative">
+                        <ul className="relative max-h-[500px] overflow-auto">
                             {show ? (
                                 <GifLoad />
                             ) : showProduto?.map((e) => (
-                                <li className="hover:cursor-pointer bg-slate-100 my-2 rounded-md p-2 hover:bg-gray-100" onClick={() => insereInformacoesProduct(e)} key={e._id}>{e.nomeDoProduto}</li>
+                                <li className="hover:cursor-pointer flex items-center gap-5 hover:bg-slate-200 bg-slate-100 my-2 rounded-md p-2 " onClick={() => insereInformacoesProduct(e)} key={e._id}><FaEye onMouseOver={() => insereInformacoesProduct(e)} className="bg-blue-700 text-white rounded-lg hover:bg-blue-300" />{e.nomeDoProduto}</li>
                             ))}
                         </ul>
                     </div>
@@ -225,12 +227,12 @@ export default function Page() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium"> Código de Barras:</label>
-                            <input className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly value={produto?.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
+                            <input required className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly value={produto?.codigoDeBarras} />
                         </div>
                         <div className="h-[340px]  overflow-auto">
                             <div>
                                 Nome do Produto: *
-                                <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" value={produto?.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
+                                <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" required value={produto?.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
                             </div>
                             <div>
                                 Descrição: *
@@ -238,7 +240,7 @@ export default function Page() {
                             </div>
                             <div>
                                 Quantidade em Estoque: *
-                                <input type="number" name="estoque" value={produto?.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="w-full border border-macosBorder rounded-macos px-4 py-2" />
+                                <input type="number" required name="estoque" value={produto?.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="w-full border border-macosBorder rounded-macos px-4 py-2" />
                             </div>
                             <div>
                                 Categoria: *
