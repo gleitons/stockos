@@ -218,7 +218,7 @@ export default function Page() {
                         <p className="font-semibold mb-2">Nome da Empresa</p>
                         <input
                             type="text"
-                            value={empresa?.nomeEmpresa || ''}
+                            defaultValue={empresa?.nomeEmpresa || ''}
                             readOnly
                             className="w-full p-2 border border-gray-300 rounded bg-gray-100"
                         />
@@ -237,7 +237,7 @@ export default function Page() {
                         <textarea
                             rows={1}
                             cols={1}
-                            value={produtosViculados.join(', ')}
+                            defaultValue={produtosViculados.join(', ')}
                             readOnly
                             className="hidden w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2"
                         />

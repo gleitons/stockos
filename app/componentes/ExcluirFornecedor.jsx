@@ -68,8 +68,8 @@ export default function ExcluirFornecedor({ fornec }) {
                                 <label className="block text-sm font-medium text-gray-700">CNPJ:</label>
                                 <input
                                     type="text"
-                                    value={fornec.cnpj}
-                                    readOnly
+                                    defaultValue={fornec.cnpj}
+                                   
                                     className="w-full p-2 mt-1 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
@@ -78,8 +78,8 @@ export default function ExcluirFornecedor({ fornec }) {
                                 <label className="block text-sm font-medium text-gray-700">Nome:</label>
                                 <input
                                     type="text"
-                                    value={fornec.nomeEmpresa}
-                                    readOnly
+                                    defaultValue={fornec.nomeEmpresa}
+                                    
                                     className="w-full p-2 mt-1 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>
