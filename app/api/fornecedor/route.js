@@ -42,7 +42,7 @@ export async function PUT(req) {
     
   
     await Fornecedor.findByIdAndUpdate(fornecedor._id, fornecedor);
-    return new Response(JSON.stringify({ message: 'Fornecedor Atualizado' }), { status: 200 });
+    return new NextResponse(JSON.stringify({ message: 'Fornecedor Atualizado' }), { status: 200 });
 }
 
 export async function DELETE(req) {

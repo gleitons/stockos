@@ -2,10 +2,10 @@ import TitlePage from "../componentes/TitlePage";
 import ExcluirCategoria from "../componentes/ExcluirCategoria";
 
 export default async function Page() {
-    const url = process.env.LINK_BD
+    const url = process.env.LINK_BD;
     const fetchCategoria = async () => {
         try {
-            const resp = await fetch(`${url}/api/categories`, { cache: "no-store" });
+            const resp = await fetch(`${url}/api/categories`);
             const data = await resp.json();
             if (resp.ok) {
                 data.sort((a, b) => a.nome.localeCompare(b.nome));
@@ -21,6 +21,7 @@ export default async function Page() {
     };
 
     const showCategorias = await fetchCategoria();
+    console.log(await showCategorias)
 
     return (
         <div className="p-2 bg-gray-100 min-h-screen">
@@ -29,8 +30,8 @@ export default async function Page() {
             </div>
             <div className="bg-white shadow-lg rounded-2xl p-6 overflow-auto h-screen">
                 <ul className="divide-y divide-gray-200 pb-96 flex flex-wrap justify-between ">
-                    {showCategorias.map((e) => (
-                        <li key={e._id} className="py-2 hover:bg-gray-50 w-1/4 text-center items-center bg-slate-300 m-2  transition">
+                    {showCategorias.map((e, index) => (
+                        <li key={index} className="py-2 hover:bg-gray-50 w-1/4 text-center items-center bg-slate-300 m-2  transition">
                             <ExcluirCategoria obj={e} />
                         </li>
                     ))}

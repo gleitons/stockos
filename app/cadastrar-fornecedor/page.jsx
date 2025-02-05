@@ -115,7 +115,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="cnpj"
-                            value={dadosFornecedor.cnpj}
+                            value={dadosFornecedor?.cnpj}
                             onChange={adicionaInfo}
                             placeholder="00.000.000/0000-00"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -130,7 +130,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="nomeEmpresa"
-                            value={dadosFornecedor.nomeEmpresa}
+                            value={dadosFornecedor?.nomeEmpresa}
                             onChange={adicionaInfo}
                             placeholder="Insira o nome da empresa"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -142,7 +142,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="logradouro"
-                            value={dadosFornecedor.logradouro}
+                            value={dadosFornecedor?.logradouro}
                             onChange={adicionaInfo}
                             placeholder="Insira o endereço completo da empresa"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -154,7 +154,7 @@ export default function Page() {
                         <input
                             type="number"
                             name="numero"
-                            value={dadosFornecedor.numero}
+                            value={dadosFornecedor?.numero}
                             onChange={adicionaInfo}
                             placeholder="Insira o número"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -166,7 +166,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="bairro"
-                            value={dadosFornecedor.bairro}
+                            value={dadosFornecedor?.bairro}
                             onChange={adicionaInfo}
                             placeholder="Insira o bairro da empresa"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -178,7 +178,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="cep"
-                            value={dadosFornecedor.cep}
+                            value={dadosFornecedor?.cep}
                             onChange={adicionaInfo}
                             placeholder="Insira o CEP"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -190,7 +190,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="cidade"
-                            value={dadosFornecedor.cidade}
+                            value={dadosFornecedor?.cidade}
                             onChange={adicionaInfo}
                             placeholder="Insira a cidade"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -202,7 +202,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="telefone"
-                            value={dadosFornecedor.telefone}
+                            value={dadosFornecedor?.telefone}
                             onChange={adicionaInfo}
                             placeholder="Insira o telefone"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -214,7 +214,7 @@ export default function Page() {
                         <input
                             type="email"
                             name="email"
-                            value={dadosFornecedor.email}
+                            value={dadosFornecedor?.email}
                             onChange={adicionaInfo}
                             placeholder="exemplo@fornecedor.com"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
@@ -226,7 +226,7 @@ export default function Page() {
                         <input
                             type="text"
                             name="contato"
-                            value={dadosFornecedor.contato}
+                            value={dadosFornecedor?.contato}
                             onChange={adicionaInfo}
                             placeholder="Nome do contato principal"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"

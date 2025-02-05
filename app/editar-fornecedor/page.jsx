@@ -1,18 +1,20 @@
 import TitlePage from '../componentes/TitlePage';
 import EditarFornecedor from '../componentes/EditarFornecedor';
+export const dynamic = "force-dynamic"; 
 
 export default async function Page() {
-    const url = process.env.LINK_BD
+    
     const fetchFornecedores = async () => {
         try {
-            const response = await fetch(`${url}/api/fornecedor`, { cache: 'no-store' }); 
+            const url = process.env.LINK_BD;
+            const response = await fetch(`${url}/api/fornecedor`, {cache: 'no-store'});
             if (!response.ok) {
                 throw new Error('Erro ao buscar fornecedores');
             }
             return await response.json();
         } catch (error) {
             console.error(error);
-            return []; 
+            return [];
         }
     };
 
@@ -23,7 +25,7 @@ export default async function Page() {
             <TitlePage titulo="Editar Fornecedor" />
 
             <div className="flex gap-10 mt-6">
-             
+
                 <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Lista de Fornecedores:</h2>
                     {fornecedores.length > 0 ? (

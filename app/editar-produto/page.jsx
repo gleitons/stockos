@@ -20,6 +20,7 @@ export default function Page() {
     const [show, setShow] = useState(true);
     const [searchTerm, setSearchTerm] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const [produtosFast, setProdutosFast] = useState();
 
 
     const [produto, setProduto] = useState({
@@ -58,6 +59,7 @@ export default function Page() {
                     return
                 }
                 setShowProduto(data);
+                setProdutosFast(data)
             }
         } catch (error) {
             console.error('Erro ao buscar produtos:', error);
@@ -113,7 +115,7 @@ export default function Page() {
         setIsSubmitting(true);
 
         try {
-            const resp = await fetch(`/api/produto/`, {
+            const resp = await fetch(`/api/produto`, {
                 method: 'PUT',
                 headers: {
                     'Content-Type': 'application/json'
@@ -187,14 +189,10 @@ export default function Page() {
     const handleSearch = (e) => {
         const value = e.target.value.toLowerCase();
         setSearchTerm(value);
-        const filtered = showProduto.filter(produto =>
+        const filtered = produtosFast.filter(produto =>
             produto.nomeDoProduto.toLowerCase().includes(value)
         );
-        if (value.length < 1) {
-            fetchProdutos();
-        } else {
-            setShowProduto(filtered);
-        }
+        setShowProduto(filtered);
 
     };
     return (
@@ -223,29 +221,29 @@ export default function Page() {
                     <form onSubmit={atualizarProduto} className="space-y-3">
                         <div className="hidden">
                             id:
-                            <input type="text" name="_id" value={produto._id} onChange={geraObjeto} placeholder="..." />
+                            <input type="text" name="_id" value={produto?._id} onChange={geraObjeto} placeholder="..." />
                         </div>
                         <div>
                             <label className="block text-sm font-medium"> Código de Barras:</label>
-                            <input className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
+                            <input className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly value={produto?.codigoDeBarras} onChange={geraObjeto} placeholder="789123" />
                         </div>
                         <div className="h-[340px]  overflow-auto">
                             <div>
                                 Nome do Produto: *
-                                <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" value={produto.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
+                                <input className="w-full border border-macosBorder rounded-macos px-4 py-2" type="text" name="nomeDoProduto" value={produto?.nomeDoProduto} onChange={geraObjeto} placeholder="Insira o nome do produto" />
                             </div>
                             <div>
                                 Descrição: *
-                                <textarea value={produto.descricao} className="w-full text-justify border border-macosBorder rounded-macos px-4 py-2" name="descricao" rows={3} onChange={geraObjeto} ></textarea>
+                                <textarea value={produto?.descricao} className="w-full text-justify border border-macosBorder rounded-macos px-4 py-2" name="descricao" rows={3} onChange={geraObjeto} ></textarea>
                             </div>
                             <div>
                                 Quantidade em Estoque: *
-                                <input type="number" name="estoque" value={produto.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="w-full border border-macosBorder rounded-macos px-4 py-2" />
+                                <input type="number" name="estoque" value={produto?.estoque} onChange={geraObjeto} placeholder="Quantidade disponível" className="w-full border border-macosBorder rounded-macos px-4 py-2" />
                             </div>
                             <div>
                                 Categoria: *
                                 <div className="flex items-center">
-                                    <select name="categoria" value={produto.categoria} onChange={geraObjeto} className="w-full border border-macosBorder rounded-macos px-4 py-2" >
+                                    <select name="categoria" value={produto?.categoria} onChange={geraObjeto} className="w-full border border-macosBorder rounded-macos px-4 py-2" >
                                         <option>Selecione</option>
                                         {categorias.map((e, index) => (
                                             <option key={index} value={e.nome}>{e.nome}</option>
@@ -258,7 +256,7 @@ export default function Page() {
                             </div>
                             <div>
                                 Data de Validade:
-                                <input type="date" name="dataValidade" value={produto.dataValidade} onChange={geraObjeto} placeholder="Validade" />
+                                <input type="date" name="dataValidade" value={produto?.dataValidade} onChange={geraObjeto} placeholder="Validade" />
                             </div>
                             <div className="p-2 text-sm">
                                 Imagem do Produto:
@@ -285,16 +283,16 @@ export default function Page() {
                     )}
                 </div>
                 <div className="w-1/3 bg-white shadow-macos p-4 overflow-hidden rounded-macos">
-                    <h2 className="text-xl font-semibold">{produto.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
-                    <div style={produto.imagem == '' ? fundoImagem : fundoProduto} className="w-[260px] h-[100px] m-auto overflow-auto cover">
+                    <h2 className="text-xl font-semibold">{produto?.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
+                    <div style={produto?.imagem == '' ? fundoImagem : fundoProduto} className="w-[260px] h-[100px] m-auto overflow-auto cover">
                     </div>
                     <div className="space-y-2 my-4">
-                        <p className="text-sm">Código de Barras: {produto.codigoDeBarras}</p>
-                        <p className="text-lg font-semibold">{produto.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>
-                        <div className="w-full h-[100px] bg-gray-100 overflow-auto text-justify py-2  rounded-macos shadow-macos">{produto.descricao}</div>
+                        <p className="text-sm">Código de Barras: {produto?.codigoDeBarras}</p>
+                        <p className="text-lg font-semibold">{produto?.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>
+                        <div className="w-full h-[100px] bg-gray-100 overflow-auto text-justify py-2  rounded-macos shadow-macos">{produto?.descricao}</div>
                     </div>
 
-                    <p>Estoque: {produto.estoque}</p>
+                    <p>Estoque: {produto?.estoque}</p>
                     <p>Validade: {moment(produto.dataValidade).utc().format('DD/MM/YYYY')}</p>
 
                 </div>

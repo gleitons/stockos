@@ -1,9 +1,10 @@
 import TitlePage from "../componentes/TitlePage";
 import ExcluirProduto from "../componentes/exclusao/ExcluirProduto";
 export default async function page() {
+    const url = process.env.LINK_BD;
     const buscaProdutos = async () => {
         try {
-            const resp = await fetch(`${process.env.LINK_BD}/api/produto`, {cache: 'no-store'});
+            const resp = await fetch(`${url}/api/produto`);
             const data = await resp.json();
 
             if (resp.ok) {
@@ -18,6 +19,7 @@ export default async function page() {
         }
 
     }
+    console.log(url)
     const produtos = await buscaProdutos();
     return (
         <div className="relative bg-gray-50 min-h-screen text-gray-800 p-6">

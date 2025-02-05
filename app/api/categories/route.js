@@ -8,7 +8,7 @@ import Category from '../../models/Category';
 export async function GET() {
     await connectToDatabase();
     const categories = await Category.find({});
-    return new Response(JSON.stringify(categories), { status: 200 });
+    return new NextResponse(JSON.stringify(categories), { status: 200 });
 }
 
 export async function POST(req) {

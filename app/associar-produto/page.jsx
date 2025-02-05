@@ -218,7 +218,7 @@ export default function Page() {
                         <p className="font-semibold mb-2">Nome da Empresa</p>
                         <input
                             type="text"
-                            value={empresa.nomeEmpresa || ''}
+                            value={empresa?.nomeEmpresa || ''}
                             readOnly
                             className="w-full p-2 border border-gray-300 rounded bg-gray-100"
                         />

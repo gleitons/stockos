@@ -3,7 +3,7 @@ import Image from "next/image";
 import Link from "next/link";
 import { useState } from "react";
 import { menu } from '@/app/componentes/Menu';
-import { AiOutlineCiCircle } from "react-icons/ai";
+
 export default function BaseOs({ apresentacao }) {
     const [openSubmenu, setOpenSubmenu] = useState(null);
     const [menuAnimado, setMenuAnimado] = useState(<Image src='/logo.png' width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
@@ -16,19 +16,16 @@ export default function BaseOs({ apresentacao }) {
         }
     };
     const animaLogo = () => {
-        setMenuAnimado(<Image src='/gif-load.gif' width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
+        setMenuAnimado(<Image src='/gif-load.gif' quality={80} width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
     }
     const desaanimaLogo = () => {
-        setMenuAnimado(<Image src='/logo.png' width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
+        setMenuAnimado(<Image src='/logo.png' quality={60} width={50} height={50} alt="Logo" className="rounded-lg bg-white p-1" />)
     }
 
 
     return (
         <div className="min-h-screen bg-gray-100 min-w-[992px]">
-            <div className="fixed bottom-4 left-1/2 -translate-x-1/2 max-w-[991px] bg-yellow-500 text-black p-4 rounded-lg flex items-center gap-2 shadow-lg  border border-yellow-700">
-                <AiOutlineCiCircle className="text-2xl text-yellow-900" />
-                <span className="font-semibold">Atenção, utilize resolução acima de 992px</span>
-            </div>
+            
             <div className="w-full bg-gray-800 text-white shadow-lg">
                 <div className="flex items-center w-11/12 mx-auto py-3 justify-between">
                     <div className="flex items-center space-x-4 ">
@@ -110,6 +107,7 @@ export default function BaseOs({ apresentacao }) {
 
 
                 <div className="flex-1 bg-gray-50 p-6">
+                    
                     {apresentacao}
                 </div>
             </div>
