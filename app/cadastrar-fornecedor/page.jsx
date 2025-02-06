@@ -130,9 +130,10 @@ export default function Page() {
                         <input
                             type="text"
                             name="nomeEmpresa"
+                            maxLength={32}
                             value={dadosFornecedor?.nomeEmpresa}
                             onChange={adicionaInfo}
-                            placeholder="Insira o nome da empresa"
+                            placeholder="Insira o nome da empresa - Max: 32 Caracteres"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         />
                     </div>

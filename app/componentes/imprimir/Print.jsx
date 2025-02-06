@@ -55,8 +55,10 @@ const Print = ({ fornecedor, produtos }) => {
       }
     });
 
+    vinculos.sort((a,b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto))
+
     setLoadItem(vinculos);
-    console.log(vinculos)
+   
     return vinculos;
 
   };

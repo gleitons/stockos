@@ -227,7 +227,7 @@ export default function Page() {
                         </div>
                         <div>
                             <label className="block text-sm font-medium"> Código de Barras:</label>
-                            <input required className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly value={produto?.codigoDeBarras} />
+                            <input required className="w-full border bg-slate-100 border-macosBorder rounded-macos px-4 py-2" type="number" name="codigoDeBarras" readOnly defaultValue={produto?.codigoDeBarras} />
                         </div>
                         <div className="h-[340px]  overflow-auto">
                             <div>

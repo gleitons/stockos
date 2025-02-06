@@ -96,7 +96,7 @@ export default function EditarFornecedor({ empresa }) {
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">CNPJ</label>
-                                <input readOnly type="text" name="cnpj" defaultValue={dadosFornecedor.cnpj}  className="mt-1 bg-slate-100 block w-full p-2 border border-gray-300 rounded-md" />
+                                <input  type="text" name="cnpj" defaultValue={dadosFornecedor.cnpj}  className="mt-1 bg-slate-100 block w-full p-2 border border-gray-300 rounded-md" />
                             </div>
                             <div>
                                 <label className="block text-sm font-medium text-gray-700">Nome da Empresa *</label>

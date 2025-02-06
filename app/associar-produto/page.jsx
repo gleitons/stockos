@@ -239,7 +239,7 @@ export default function Page() {
                             <textarea  rows={1}
                             cols={1}
                             defaultValue={produtosViculados.join(', ')}
-                            readOnly
+                            
                             className=" w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2">
                             
                             </textarea>
