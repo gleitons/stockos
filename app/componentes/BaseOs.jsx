@@ -28,8 +28,8 @@ export default function BaseOs({ apresentacao }) {
             
             <div className="w-full bg-gray-800 text-white shadow-lg">
                 <div className="flex items-center w-11/12 mx-auto py-3 justify-between">
-                    <div className="flex items-center space-x-4 ">
-                        <Link href={'/'} onMouseOver={animaLogo} onMouseLeave={desaanimaLogo}>
+                    <div onMouseOver={animaLogo} onMouseLeave={desaanimaLogo} className="flex items-center space-x-4 ">
+                        <Link href={'/'} >
                             <div>
                                 {menuAnimado}
                             </div>

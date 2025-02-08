@@ -53,6 +53,8 @@ export default function ResetaBD() {
 
     }
     const adicionaFornecedor = async () => {
+        serV1(() => Math.floor(Math.random() * 9))
+        serV2(() => Math.floor(Math.random() * 9))
         const dosFornecedores = fornecedores;
 
         for (let i = 0; i < dosFornecedores.length; i++) {
@@ -94,6 +96,8 @@ export default function ResetaBD() {
 
     }
     const adicionaCategoria = async () => {
+        serV1(() => Math.floor(Math.random() * 9))
+        serV2(() => Math.floor(Math.random() * 9))
         const dosCategorias = categorias;
 
         for (let i = 0; i < dosCategorias.length; i++) {
