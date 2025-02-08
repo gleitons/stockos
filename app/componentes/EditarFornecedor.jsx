@@ -77,7 +77,7 @@ export default  function EditarFornecedor({ empresa }) {
 
     return (
         <>
-            <li onClick={() => preencheEmpresa(empresa)} className="bg-gray-100 p-3 rounded-sm hover:bg-slate-200 hover:cursor-pointer">{empresa.nomeEmpresa}</li>
+            <li onClick={() => preencheEmpresa(empresa)} className="bg-gray-100 p-3 rounded-sm hover:bg-slate-200 hover:cursor-pointer">{empresa.nomeEmpresa.toLowerCase().split(' ').map(e => e.charAt(0).toUpperCase() + e.slice(1)).join(' ')}</li>
             {preenche && (
                 <div className="fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center p-4">
                     <div className="bg-white rounded-lg shadow-lg p-6 w-full max-w-2xl">

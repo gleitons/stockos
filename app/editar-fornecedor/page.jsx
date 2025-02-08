@@ -1,7 +1,12 @@
 import TitlePage from '../componentes/TitlePage';
 import EditarFornecedor from '../componentes/EditarFornecedor';
 export const dynamic = "force-dynamic";
+import Link from 'next/link';
 
+export const metadata = {
+    title: 'StockOs - Editar Fornecedor',
+    description: 'Criado por Gleiton Aparecido Soares de Souza - Cursos GranCursos - Analise e desenvolvimento de sistemas - ADS',
+}
 
 const fetchFornecedores = async () => {
     try {
@@ -11,7 +16,7 @@ const fetchFornecedores = async () => {
             throw new Error('Erro ao buscar fornecedores');
         }
         const fornec = await response.json();
-        fornec.sort((a,b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
+        fornec.sort((a, b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
         return await fornec;
     } catch (error) {
         console.error(error);
@@ -20,7 +25,7 @@ const fetchFornecedores = async () => {
 };
 export default async function Page() {
 
-   
+
 
     const fornecedores = await fetchFornecedores();
 
@@ -47,9 +52,26 @@ export default async function Page() {
                     )}
                 </div>
 
-                <div className="flex-1 bg-white p-6 rounded-lg shadow-md">
+                <div className="flex-1 bg-white p-6 rounded-lg shadow-md border border-gray-100">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Detalhes do Fornecedor</h2>
-                    <p className="text-gray-600">Selecione um fornecedor para editar ou visualizar detalhes.</p>
+                    <p className="text-gray-600 mb-6">Selecione um fornecedor para editar ou visualizar detalhes.</p>
+
+                    <div className="flex gap-4 mb-6">
+                        <Link href="/cadastrar-fornecedor">
+                            <button className="bg-blue-500 text-white px-4 py-2 rounded-lg hover:bg-blue-600 transition duration-300">
+                                Cadastrar Fornecedor
+                            </button>
+                        </Link>
+                        <Link href="/excluir-fornecedor">
+                            <button className="bg-red-500 text-white px-4 py-2 rounded-lg hover:bg-red-600 transition duration-300">
+                                Excluir Fornecedor
+                            </button>
+                        </Link>
+                    </div>
+
+                    <p className="text-gray-700">
+                        Fornecedores Cadastrados: <span className="font-semibold text-custom-gray-dark">{fornecedores.length}</span>
+                    </p>
                 </div>
             </div>
         </div>

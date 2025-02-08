@@ -53,7 +53,7 @@ export default function Categoria({ obj, numero }) {
         <>
            
             <li
-                className="bg-slate-200  w-fit  mx-2 h-[50px]  p-2  hover:cursor-pointer hover:bg-slate-300  rounded-md select-none"
+                className="bg-slate-200 m-2  w-[300px]  h-[40px]  p-2  hover:cursor-pointer hover:bg-slate-300  rounded-md select-none"
                 onClick={toggleInput} 
             >
                 <div className='flex items-center gap-2'>

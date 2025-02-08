@@ -1,5 +1,11 @@
 import EditarCategoria from "../componentes/EditarCategoria"
 import TitlePage from "../componentes/TitlePage"
+
+export const metadata = {
+    title: 'StockOs - Editar Categoria',
+    description: 'Criado por Gleiton Aparecido Soares de Souza - Cursos GranCursos - Analise e desenvolvimento de sistemas - ADS',
+}
+
 const initial = process.env.LINK_BD;
 const fetchCategory = async () => {
     try {
@@ -26,7 +32,7 @@ export default async function page() {
 
             <p>Selecione a categoria</p>
 
-            <ul className="h-screen pb-96 overflow-auto justify-between flex flex-wrap">
+            <ul className="overflow-auto justify-between flex flex-wrap">
                 {
                     categorys.map(((e, index) => (
                         <EditarCategoria key={e._id} obj={e} numero={index} />

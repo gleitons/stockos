@@ -23,7 +23,7 @@ const fetchFornecedores = async () => {
 const fetchProdutos = async () => {
   try {
     const resp = await fetch(`${initial}/api/produto`, {
-      cache: "no-store",
+      cache: 'no-cache',
     });
     const data = await resp.json();
 

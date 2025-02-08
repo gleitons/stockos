@@ -7,7 +7,7 @@ import { match } from "assert";
 export default function ResetaBD() {
     const [contador, setContador] = useState(0);
     const [resposta, setResposta] = useState('');
-    const [mensagem, setMensagem] = useState('Mensagem aqui');
+    const [mensagem, setMensagem] = useState('Faça o calculo e insira para resetar');
     const [v1, serV1] = useState(() => Math.floor(Math.random() * 9))
     const [v2, serV2] = useState(() => Math.floor(Math.random() * 9))
 

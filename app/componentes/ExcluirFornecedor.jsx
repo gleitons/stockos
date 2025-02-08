@@ -47,7 +47,7 @@ export default function ExcluirFornecedor({ fornec }) {
                 onClick={abreDeleted}
                 className="bg-gray-200 p-3 my-2 mx-2 rounded-lg hover:bg-gray-300 cursor-pointer transition-colors duration-200 select-none"
             >
-                {fornec.cnpj} - {fornec.nomeEmpresa}
+                {fornec.cnpj} - {fornec.nomeEmpresa.toLowerCase().split(' ').map(e => e.charAt(0).toUpperCase() + e.slice(1)).join(' ')}
             </li>
 
        

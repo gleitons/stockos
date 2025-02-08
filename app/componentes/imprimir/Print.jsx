@@ -4,6 +4,7 @@ import Image from 'next/image';
 import generatePDF, { Margin } from 'react-to-pdf';
 import moment from 'moment';
 import { useState } from 'react';
+import InfoFooter from '../InfoFooter'
 
 const imprimeRelatorio = () => document.getElementById('conteudo');
 
@@ -99,6 +100,12 @@ const Print = ({ fornecedor }) => {
                     </tr>
                   ))}
                 </tbody>
+                <tfoot>
+                  <tr>
+                    <td colSpan={6}> <InfoFooter /></td>
+                  </tr>
+                 
+                </tfoot>
               </table>
             </div>
           </div>

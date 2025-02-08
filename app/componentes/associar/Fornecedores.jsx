@@ -1,5 +1,17 @@
 export const fornecedores = [
     {
+        cnpj: '12.345.678/0001-80',
+        nomeEmpresa: 'DA TERRINHA COMERCIO DE ALIMENTOS LTDA',
+        logradouro: 'Rua das Indústrias',
+        numero: '1200',
+        bairro: 'Centro',
+        cidade: 'São Paulo',
+        cep: '01000-000',
+        telefone: '(11) 98765-4321',
+        email: 'sac@tapiocadaterrinha.com.br',
+        contato: 'Carlos Silva',
+        produtosViculados: []
+    },{
         cnpj: '12.345.678/0001-90',
         nomeEmpresa: 'Alimentos Brasil Ltda',
         logradouro: 'Rua das Indústrias',

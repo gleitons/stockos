@@ -3,5 +3,7 @@ export const categorias = [
     { nome: 'BEBIDA' },
     { nome: 'LIMPEZA' },
     { nome: 'LATICÍNIO' },
-    { nome: 'HIGIENE' }
+    { nome: 'HIGIENE' },
+    { nome: 'BRINQUEDO' }
+
 ];

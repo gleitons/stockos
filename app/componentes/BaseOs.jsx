@@ -97,10 +97,10 @@ export default function BaseOs({ apresentacao }) {
                         </div>
                     ))}
                     <Link
-                        href={'/relatorio'}
+                        href={'/resetar-bd'}
                         className="flex items-center justify-between p-2  mb-2 bg-gray-800 rounded-md hover:bg-gray-700 hover:text-white transition-colors duration-200 cursor-pointer"
                     >
-                        <span>Relatórios</span>
+                        <span>Configurações</span>
 
                     </Link>
                 </div>

@@ -25,9 +25,9 @@ export const menu = [
         ],
     },
     {
-        nome: 'Confirgurações',
+        nome: 'Relatórios',
         submenus: [
-            { nome: 'Resetar Banco de Dados', link: '/resetar-bd' },
+            { nome: 'Produtos Vinculados', link: '/relatorio' },
            
         ],
     },
