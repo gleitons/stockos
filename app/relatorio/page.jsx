@@ -1,6 +1,4 @@
 import TitlePage from '../componentes/TitlePage'
-import { fornecedores } from '../componentes/associar/Fornecedores';
-import Print from '../componentes/imprimir/Print';
 import Pdf from '../componentes/relatorio/Pdf'
 
 
