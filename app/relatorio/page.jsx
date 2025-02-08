@@ -39,10 +39,10 @@ export default async function page() {
     const vinculados = []
     const fornecedores = await pegaFornecedores();
     const produtoss = await pegaProdutos();
-    // console.log(fornecedores)
+   
     const togetter = () => {
         fornecedores.forEach((fornecedor) => {
-            //   console.log(`Verificando fornecedor: ${fornecedor._id}`);
+          
 
             const produtosVinculados = (fornecedor.produtosViculados || []).map(produtoId => {
                 const produtoCompleto = produtoss.find(produto => produto._id === produtoId);
@@ -68,6 +68,7 @@ export default async function page() {
                 produtos: produtosVinculados,
             });
         });
+        vinculados.sort((a,b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
         return vinculados;
     };
 
@@ -82,6 +83,7 @@ export default async function page() {
 
     }
     const contagem = await verCategorias();
+   
     const pVinc = togetter();
     
    
@@ -90,9 +92,9 @@ export default async function page() {
         <div>
             <TitlePage titulo={'Relatórios de Produtos Associados'} />
             <div className='flex gap-10'>
-                <div>
+                <div className='w-1/3 '>
                     <h2>Selecione a Empresa</h2>
-                    <div>
+                    <div className='h-[400px] overflow-auto bg-slate-300 p-3 rounded-md'>
                         {pVinc.map((e, index) => (
                             <Pdf key={index}  produtosV={e} />
                         ))}
@@ -107,6 +109,7 @@ export default async function page() {
                                 {categoria}: {quantidade}
                             </li>
                         ))}
+                        Quantidade de Categorias Cadastradas: {Object.entries(contagem).length}
                     </div>
                 </div>
             </div>

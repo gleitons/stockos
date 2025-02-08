@@ -4,6 +4,7 @@ import TitlePage from "../componentes/TitlePage";
 import { FaEye } from "react-icons/fa";
 import { IoMdCloseCircle } from "react-icons/io";
 import Image from "next/image";
+import Carregando from '../componentes/Carregando'
 
 export default function Page() {
     const [empresa, setEmpresa] = useState("Selecione a Empresa");
@@ -16,7 +17,9 @@ export default function Page() {
     const [pesquisaEmpresa, setPesquisaEmpresa] = useState([]);
     const [selectedEmpresa, setSelectedEmpresa] = useState(null);
     const [pesquisandoEmpresa, setPesquisandoEmpresa] = useState('');
+    const [showEmpresas, setShowEmpresas] = useState(false)
     const [searchTerm, setSearchTerm] = useState('');
+    const [oLoad, setOLoad] = useState(false)
 
     const handleSelection = (e) => {
         setSelectedEmpresa(e.nomeEmpresa);
@@ -111,15 +114,29 @@ export default function Page() {
     };
 
     const empresasCadastradas = async () => {
+        setOLoad(<Carregando />)
         try {
             const resp = await fetch('/api/fornecedor');
             const data = await resp.json();
+            
             if (resp.ok) {
+                data.sort((a,b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
                 setMostraEmpresas(data);
                 setPesquisaEmpresa(data);
+                setShowEmpresas(true)
+                
             }
+           
+            setOLoad(false)
         } catch (error) {
             console.log(error);
+            const orr = [{
+                nomeEmpresa: 'Recarregue a pagina por favor',
+                cnpj: '404'
+            }]
+            console.log(orr)
+            setMostraEmpresas(orr);
+            setOLoad(false)
         }
     };
 
@@ -177,6 +194,7 @@ export default function Page() {
 
     return (
         <div className="bg-gray-100 min-h-screen">
+            {oLoad}
             <TitlePage titulo='Associar Produto a Empresa' />
             <div className="flex w-full gap-1">
                 <div className="w-1/2 bg-white p-2 rounded-lg shadow">
@@ -192,7 +210,7 @@ export default function Page() {
                         />
                     </div>
                     <div className="h-[200px] overflow-auto">
-                        {mostraEmpresas.map((e, index) => (
+                        {showEmpresas && (mostraEmpresas.map((e, index) => (
                             <div
                                 key={index}
                                 className={`flex items-center gap-2 p-2 rounded ${selectedEmpresa === e.nomeEmpresa ? "bg-gray-200" : "hover:bg-gray-100"}`}
@@ -206,13 +224,13 @@ export default function Page() {
                                     className="cursor-pointer"
                                 />
                                 <label onClick={() => handleSelection(e)} className="cursor-pointer flex-1">
-                                    {e.nomeEmpresa}
+                                    {e.nomeEmpresa.toLowerCase().split(' ').map(e => e.charAt(0).toUpperCase() + e.slice(1)).join(' ')}
                                 </label>
                                 <abbr title={`${e.cnpj} - ${e.nomeEmpresa}`}>
                                     <FaEye className="cursor-pointer text-gray-600 hover:text-gray-800" />
                                 </abbr>
                             </div>
-                        ))}
+                        )))}
                     </div>
                     <div className="mb-4">
                         <p className="font-semibold mb-2">Nome da Empresa</p>

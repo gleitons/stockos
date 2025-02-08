@@ -1,11 +1,9 @@
 'use client';
 
 import Image from 'next/image';
-
 import generatePDF, { Margin } from 'react-to-pdf';
 import moment from 'moment';
 import { useState } from 'react';
-import Carregando from '../Carregando'
 
 const imprimeRelatorio = () => document.getElementById('conteudo');
 
@@ -19,46 +17,39 @@ const personalizar = {
   },
 };
 
+const Print = ({ fornecedor }) => {
+  const [show, setShow] = useState(true); // Estado para controlar a exibição do conteúdo
 
-const Print = ({ fornecedor, condition }) => {
-  const [show, setShow] = useState(true);
-  const [products, setProducts] = useState([])
-
-
-
-
-  if (condition === true) {
-
-    // console.log('pega')
-    // setTimeout(() => {
-    //    generatePDF(imprimeRelatorio, personalizar);
-
-    // }, 500);
-  }
   const ImprimirPDF = () => {
-    setTimeout(() => {
-       generatePDF(imprimeRelatorio, personalizar);
+    generatePDF(imprimeRelatorio, personalizar);
+  
+  };
 
-    }, 500);
-  }
   const closeVisualizador = () => {
-    setShow(false)
-  }
-  const fechaPop = () => {
-    setShow(false)
-  }
+    setShow(false); // Fecha o conteúdo
+  };
+
   return (
     <>
-      {show &&
-        (<div className='w-full h-full bg-slate-700 p-10 fixed left-0 top-0 overflow-auto'>
-          <div className="flex justify-center items-center ">
+      {show && (
+        <div className='w-full h-full bg-slate-700 p-10 fixed left-0 top-0 overflow-auto'>
+          <div className="flex justify-center items-center">
             <div className="flex gap-4 mb-2">
-              <button className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 " onClick={ImprimirPDF} > Imprimir </button>
-
-              <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 " onClick={closeVisualizador} > Fechar </button>
+              <button
+                className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600"
+                onClick={ImprimirPDF}
+              >
+                Imprimir
+              </button>
+              <button
+                className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+                onClick={closeVisualizador}
+              >
+                Fechar
+              </button>
             </div>
           </div>
-          <div onClick={fechaPop} id="conteudo" className={`w-[794px] m-auto  bg-white shadow-lg mx-auto p-8`}>
+          <div id="conteudo" className={`w-[794px] m-auto bg-white shadow-lg mx-auto p-8`}>
             <div className="w-full">
               <table className="w-full border-collapse border border-gray-300">
                 <thead>
@@ -111,8 +102,8 @@ const Print = ({ fornecedor, condition }) => {
               </table>
             </div>
           </div>
-        </div>)}
-
+        </div>
+      )}
     </>
   );
 };

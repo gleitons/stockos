@@ -10,7 +10,9 @@ const fetchFornecedores = async () => {
         if (!response.ok) {
             throw new Error('Erro ao buscar fornecedores');
         }
-        return await response.json();
+        const fornec = await response.json();
+        fornec.sort((a,b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
+        return await fornec;
     } catch (error) {
         console.error(error);
         return [];
@@ -23,7 +25,7 @@ export default async function Page() {
     const fornecedores = await fetchFornecedores();
 
     return (
-        <div className="p-6 bg-gray-100 min-h-screen">
+        <div className=" bg-gray-100 min-h-screen">
             <TitlePage titulo="Editar Fornecedor" />
 
             <div className="flex gap-10 mt-6">
@@ -31,7 +33,7 @@ export default async function Page() {
                 <div className="w-full max-w-3xl bg-white p-6 rounded-lg shadow-md">
                     <h2 className="text-xl font-semibold text-gray-800 mb-4">Lista de Fornecedores:</h2>
                     {fornecedores.length > 0 ? (
-                        <ul className="space-y-4">
+                        <ul className="space-y-4 h-[400px] overflow-auto pb-52">
                             {fornecedores.map((fornecedor, index) => (
                                 <EditarFornecedor
                                     empresa={fornecedor}

@@ -198,7 +198,7 @@ export default function Page() {
 
     };
     return (
-        <div className="relative bg-gray-50 min-h-screen text-gray-800 p-2">
+        <div className="relative min-h-screen text-gray-800 ">
 
             <TitlePage titulo='Editar Produto' />
             <div className="flex gap-2 w-full">
@@ -210,7 +210,7 @@ export default function Page() {
                             placeholder="Pesquise um Produto"
                             value={searchTerm}
                             onChange={handleSearch} className="w-full border border-gray-300 rounded-lg px-4 py-2 focus:ring focus:ring-blue-400 focus:outline-none" />
-                        <ul className="relative max-h-[500px] overflow-auto">
+                        <ul className="relative max-h-[500px] overflow-auto pb-80">
                             {show ? (
                                 <GifLoad />
                             ) : showProduto?.map((e) => (
