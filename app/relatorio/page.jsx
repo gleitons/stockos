@@ -1,56 +1,90 @@
 import TitlePage from '../componentes/TitlePage'
+import { fornecedores } from '../componentes/associar/Fornecedores';
 import Print from '../componentes/imprimir/Print';
+import Pdf from '../componentes/relatorio/Pdf'
 
 
-// const url = process.env.LINK_BD;
+const url = process.env.LINK_BD;
 
-// const pegaFornecedores = async () => {
-//     try {
+const pegaFornecedores = async () => {
+    try {
 
-//         const resp = await fetch(`${url}/api/fornecedor`);
-//         const data = await resp.json();
-//         if (resp.ok) {
-//             data.sort(async (a, b) => await a.nomeEmpresa.localeCompare(b.nomeEmpresa))
-//             return data
-//         }
+        const resp = await fetch(`${url}/api/fornecedor`);
+        const data = await resp.json();
+        if (resp.ok) {
+            data.sort(async (a, b) => await a.nomeEmpresa.localeCompare(b.nomeEmpresa))
+            return data
+        }
 
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
-// const pegaProdutos = async () => {
-//     try {
+    } catch (error) {
+        console.log(error)
+    }
+}
+const pegaProdutos = async () => {
+    try {
 
-//         const resp = await fetch(`${url}/api/produto`);
-//         const data = await resp.json();
-//         if(resp.ok) {
-//             data.sort(async (a, b) => await a.nomeDoProduto.localeCompare(b.nomeDoProduto));
-//             return data
-//         }
-       
-//     } catch (error) {
-//         console.log(error)
-//     }
-// }
+        const resp = await fetch(`${url}/api/produto`);
+        const data = await resp.json();
+        if (resp.ok) {
+            data.sort(async (a, b) => await a.nomeDoProduto.localeCompare(b.nomeDoProduto));
+            return data
+        }
 
-export default async  function page() {
+    } catch (error) {
+        console.log(error)
+    }
+}
+
+export default async function page() {
+    const vinculados = []
+    const fornecedores = await pegaFornecedores();
+    const produtoss = await pegaProdutos();
+    // console.log(fornecedores)
+    const togetter = () => {
+        fornecedores.forEach((fornecedor) => {
+            //   console.log(`Verificando fornecedor: ${fornecedor._id}`);
+
+            const produtosVinculados = (fornecedor.produtosViculados || []).map(produtoId => {
+                const produtoCompleto = produtoss.find(produto => produto._id === produtoId);
+
+                if (produtoCompleto) {
+
+                    const product = {
+                        'nomeDoProduto': produtoCompleto.nomeDoProduto,
+                        'estoque': produtoCompleto.estoque,
+                        'categoria': produtoCompleto.categoria,
+                        'dataValidade': produtoCompleto.dataValidade,
+                        'imagem': produtoCompleto.imagem,
+
+                    }
+
+                    return product
+                }
+            }).filter(Boolean); // Remove valores nulos caso o produto não seja encontrado
+
+            
+            vinculados.push({
+                ...fornecedor,
+                produtos: produtosVinculados,
+            });
+        });
+        return vinculados;
+    };
+
+    const verCategorias = async () => {
+        const categorias = await produtoss.map(e => e.categoria);
+        categorias.sort();
+
+        return categorias.reduce((cont, catego) => {
+            cont[catego] = (cont[catego] || 0) + 1;
+            return cont;
+        }, {})
+
+    }
+    const contagem = await verCategorias();
+    const pVinc = togetter();
+    
    
-    // const fornecedores = await  pegaFornecedores();
-    // const produtoss = await pegaProdutos();
-
-    // console.log(produtoss)
-
-    // const verCategorias = async () => {
-    //     const categorias = await produtoss.map(e => e.categoria);
-    //     categorias.sort();
-
-    //    return categorias.reduce((cont, catego) => {
-    //         cont[catego] = (cont[catego] || 0) + 1;
-    //         return cont;
-    //     }, {})
-        
-    // }
-    // const contagem = await verCategorias()
 
     return (
         <div>
@@ -59,18 +93,20 @@ export default async  function page() {
                 <div>
                     <h2>Selecione a Empresa</h2>
                     <div>
-                        {/* <Print fornecedor={await fornecedores} produtos={await produtoss} /> */}
+                        {pVinc.map((e, index) => (
+                            <Pdf key={index}  produtosV={e} />
+                        ))}
 
                     </div>
                 </div>
                 <div>
                     <h2>*CATEGORIAS CADASTRADAS E VINCULADAS: </h2>
                     <div>
-                        {/* {Object.entries(contagem).map(([categoria, quantidade]) => (
+                        {Object.entries(contagem).map(([categoria, quantidade]) => (
                             <li key={categoria} className="p-2 border rounded-md">
                                 {categoria}: {quantidade}
                             </li>
-                        ))} */}
+                        ))}
                     </div>
                 </div>
             </div>

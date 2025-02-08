@@ -1,27 +1,27 @@
 import TitlePage from "../componentes/TitlePage";
 import ExcluirCategoria from "../componentes/ExcluirCategoria";
 
-const url = process.env.LINK_BD;
-const fetchCategoria = async () => {
+const initial = process.env.LINK_BD;
+const fetchCategory = async () => {
     try {
-        const resp = await fetch(`${url}/api/categories`);
+        const resp = await fetch(`${initial}/api/categories`, { cache: 'no-store' })
         const data = await resp.json();
+       
+
         if (resp.ok) {
-            await data.sort((a, b) => a.nome.localeCompare(b.nome));
+            data.sort((a, b) => a.nome.localeCompare(b.nome))
             return data;
         } else {
-            console.log("Erro ao solicitar categorias");
-            return [];
+            console.log('Erro ao Chamar Categorias');
         }
     } catch (error) {
-        console.log("Erro ao pegar categorias");
         return [];
     }
-};
+}
 export default async function page() {
    
 
-    const showCategorias = await fetchCategoria();
+    const showCategorias = await fetchCategory();
    
 
     return (

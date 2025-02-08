@@ -69,6 +69,7 @@ export default function ExcluirFornecedor({ fornec }) {
                                 <input
                                     type="text"
                                     defaultValue={fornec.cnpj}
+                                    readOnly
                                    
                                     className="w-full p-2 mt-1 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                                 />
@@ -79,7 +80,7 @@ export default function ExcluirFornecedor({ fornec }) {
                                 <input
                                     type="text"
                                     defaultValue={fornec.nomeEmpresa}
-                                    
+                                    readOnly
                                     className="w-full p-2 mt-1 border border-gray-300 rounded-lg outline-none focus:ring-2 focus:ring-blue-500"
                                 />
                             </div>

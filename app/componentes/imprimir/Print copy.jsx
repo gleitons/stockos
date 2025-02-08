@@ -1,11 +1,10 @@
 'use client';
 
 import Image from 'next/image';
-
-import generatePDF, { Margin } from 'react-to-pdf';
-import moment from 'moment';
 import { useState } from 'react';
 import Carregando from '../Carregando'
+import generatePDF, { Margin } from 'react-to-pdf';
+import moment from 'moment';
 
 const imprimeRelatorio = () => document.getElementById('conteudo');
 
@@ -20,45 +19,72 @@ const personalizar = {
 };
 
 
-const Print = ({ fornecedor, condition }) => {
-  const [show, setShow] = useState(true);
-  const [products, setProducts] = useState([])
+const Print = ({ fornecedor, produtos }) => {
 
+  const [load, setLod] = useState(false)
+  const [imprimir, setImprimir] = useState(false);
+  const [mostra, setMostra] = useState('hidden');
+  const [loadItem, setLoadItem] = useState([]);
+  const [oForn, setOForn] = useState(null);
 
+  const geraImprime = (pro, forne) => {
+    setLod(true)
+    organizaProdutos(forne)
 
+    setOForn(forne);
+    setImprimir(true);
+    setMostra('');
 
-  if (condition === true) {
-
-    // console.log('pega')
-    // setTimeout(() => {
-    //    generatePDF(imprimeRelatorio, personalizar);
-
-    // }, 500);
-  }
-  const ImprimirPDF = () => {
     setTimeout(() => {
-       generatePDF(imprimeRelatorio, personalizar);
+      generatePDF(imprimeRelatorio, personalizar);
+      setLod(false)
+    }, 2000);
 
-    }, 500);
-  }
-  const closeVisualizador = () => {
-    setShow(false)
-  }
-  const fechaPop = () => {
-    setShow(false)
-  }
+    setTimeout(() => setMostra('hidden'), 4000);
+  };
+ 
+
+  const organizaProdutos = (fornec) => {
+    let vinculos = [];
+
+    
+    fornec.produtosViculados.forEach((p) => {
+      const produtoEncontrado = produtos.find((e) => e._id === p);
+      if (produtoEncontrado) {
+        vinculos.push(produtoEncontrado);
+      }
+    });
+
+    vinculos.sort((a,b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto))
+
+    setLoadItem(vinculos);
+   
+    return vinculos;
+
+  };
+
+  
   return (
     <>
-      {show &&
-        (<div className='w-full h-full bg-slate-700 p-10 fixed left-0 top-0 overflow-auto'>
-          <div className="flex justify-center items-center ">
-            <div className="flex gap-4 mb-2">
-              <button className="px-6 py-2 bg-blue-500 text-white rounded-lg hover:bg-blue-600 " onClick={ImprimirPDF} > Imprimir </button>
+      <ul>
+       {
+        load && (
+          <Carregando />
+        )
+       }
+       
+        {fornecedor.map((e) => (
+          <li
+            key={e._id}
+            onClick={() => geraImprime(loadItem, e)}
+            className="cursor-pointer my-2 p-2 px-4 rounded-lg bg-blue-50 text-blue-700 hover:bg-blue-100 transition-colors duration-200 ease-in-out"
+          >
+            {e.nomeEmpresa}
+          </li>
+        ))}
 
-              <button className="px-6 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600 " onClick={closeVisualizador} > Fechar </button>
-            </div>
-          </div>
-          <div onClick={fechaPop} id="conteudo" className={`w-[794px] m-auto  bg-white shadow-lg mx-auto p-8`}>
+        {imprimir && oForn && (
+          <div id="conteudo" className={`w-[794px] ${mostra} bg-white shadow-lg mx-auto p-8`}>
             <div className="w-full">
               <table className="w-full border-collapse border border-gray-300">
                 <thead>
@@ -70,7 +96,7 @@ const Print = ({ fornecedor, condition }) => {
                         </div>
                         <div className="text-end">
                           <h2 className="text-xl font-bold text-center text-gray-800">
-                            RELATÓRIO DE PRODUTOS VINCULADOS: {fornecedor.nomeEmpresa.toUpperCase()}
+                            RELATÓRIO DE PRODUTOS VINCULADOS: {oForn.nomeEmpresa.toUpperCase()}
                           </h2>
                         </div>
                       </div>
@@ -80,7 +106,7 @@ const Print = ({ fornecedor, condition }) => {
                 <tbody>
                   <tr>
                     <td colSpan={6} className="text-center py-2 bg-gray-200 font-semibold text-gray-700">
-                      FORNECEDOR: {fornecedor.nomeEmpresa.toUpperCase()} - {fornecedor.produtos.length} Produtos Vinculados
+                      FORNECEDOR: {oForn.nomeEmpresa.toUpperCase()} - {loadItem.length} Produtos Vinculados
                     </td>
                   </tr>
                   <tr className="bg-gray-50">
@@ -91,7 +117,8 @@ const Print = ({ fornecedor, condition }) => {
                     <td className="px-4 py-2 font-medium text-gray-700 border border-gray-300">Estoque</td>
                     <td className="px-4 py-2 font-medium text-gray-700 border border-gray-300">Imagem</td>
                   </tr>
-                  {fornecedor.produtos.map((d, i) => (
+
+                  {loadItem.map((d, i) => (
                     <tr key={i} className={i % 2 === 0 ? 'bg-white' : 'bg-gray-50'}>
                       <td className="px-4 py-2 text-gray-700 border border-gray-300 text-center">{i + 1}</td>
                       <td className="px-4 py-2 text-gray-700 border border-gray-300">{d.nomeDoProduto}</td>
@@ -111,8 +138,8 @@ const Print = ({ fornecedor, condition }) => {
               </table>
             </div>
           </div>
-        </div>)}
-
+        )}
+      </ul>
     </>
   );
 };

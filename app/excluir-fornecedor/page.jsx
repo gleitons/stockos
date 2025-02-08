@@ -22,7 +22,7 @@ export default async function page() {
 
             <div className='flex gap-10'>
                 <div>
-                    <ul>
+                    <ul  className="relative h-[400px] pb-56 overflow-auto">
                         {
                             fornecedor.map((e, index) => (
                                 <ExcluirFornecedor key={index} fornec={e} />

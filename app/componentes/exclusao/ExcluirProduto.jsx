@@ -1,5 +1,5 @@
 'use client'
-
+import Image from "next/image";
 
 export default function ExcluirProduto({ product }) {
     
@@ -33,7 +33,7 @@ export default function ExcluirProduto({ product }) {
     
     return (
         <>
-            <li onClick={() => excluirProduto(product)} className="hover:cursor-pointer p-2 hover:bg-gray-100" >{product.nomeDoProduto}</li>
+            <li onClick={() => excluirProduto(product)} className="hover:cursor-pointer p-2 hover:bg-gray-100 flex justify-between items-center border-y-macosGray" >{product.nomeDoProduto} <div><Image src={product.imagem} width={50} height={50} alt={product.nomeDoProduto}    /></div></li>
 
         </>
 

@@ -1,22 +1,24 @@
 import TitlePage from '../componentes/TitlePage';
 import EditarFornecedor from '../componentes/EditarFornecedor';
-export const dynamic = "force-dynamic"; 
+export const dynamic = "force-dynamic";
 
-export default async function Page() {
-    
-    const fetchFornecedores = async () => {
-        try {
-            const url = process.env.LINK_BD;
-            const response = await fetch(`${url}/api/fornecedor`, {cache: 'no-store'});
-            if (!response.ok) {
-                throw new Error('Erro ao buscar fornecedores');
-            }
-            return await response.json();
-        } catch (error) {
-            console.error(error);
-            return [];
+
+const fetchFornecedores = async () => {
+    try {
+        const url = process.env.LINK_BD;
+        const response = await fetch(`${url}/api/fornecedor`, { cache: 'no-store' });
+        if (!response.ok) {
+            throw new Error('Erro ao buscar fornecedores');
         }
-    };
+        return await response.json();
+    } catch (error) {
+        console.error(error);
+        return [];
+    }
+};
+export default async function Page() {
+
+   
 
     const fornecedores = await fetchFornecedores();
 
