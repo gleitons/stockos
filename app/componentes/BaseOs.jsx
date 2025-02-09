@@ -82,7 +82,7 @@ export default function BaseOs({ apresentacao }) {
 
 
                             {openSubmenu === index && (
-                                <div className="pl-4 mt-2 space-y-1 ">
+                                <div className="pl-4 mt-2 space-y-1 anim ">
                                     {e.submenus.map((submenu, subIndex) => (
                                         <Link
                                             key={subIndex}

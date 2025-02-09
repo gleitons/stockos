@@ -15,4 +15,16 @@
   .scrollbar-macos:hover::-webkit-scrollbar-thumb {
     background-color: #9ca3af;
   }
-  
+
+  .anim {
+    animation: desce linear 200ms ;
+  }
+  @keyframes desce {
+    from {
+      margin-top: -50%;
+      opacity: 0;
+    }
+    40% {
+      opacity: 0;
+    }
+  }

@@ -9,12 +9,12 @@ export const metadata = {
 const initial = process.env.LINK_BD;
 const fetchCategory = async () => {
     try {
-        const resp = await fetch(`${initial}/api/categories`, { cache: 'no-store' })
+        const resp = await fetch(`${initial}/api/categories`)
         const data = await resp.json();
-       
+        data.sort((a, b) => a.nome.localeCompare(b.nome))
 
         if (resp.ok) {
-            data.sort((a, b) => a.nome.localeCompare(b.nome))
+           
             return data;
         } else {
             console.log('Erro ao Chamar Categorias');

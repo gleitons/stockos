@@ -6,6 +6,9 @@ import { fornecedores } from '../componentes/associar/Fornecedores';
 import Image from 'next/image';
 
 export default async function page() {
+     fornecedores.sort((a,b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
+     produtos.sort((a,b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto))
+     categorias.sort((a,b) => a.nome.localeCompare(b.nome))
 
     return (
         <div className='relative'>
@@ -22,7 +25,7 @@ export default async function page() {
                         <h2 className="text-lg font-semibold text-custom-gray-dark py-2">Ver Fornecedores</h2>
                         <ul>
                             {fornecedores.map((e) => (
-                                <li key={e.cnpj} className="py-1 text-custom-gray-dark">{e.nomeEmpresa}</li>
+                                <li key={e.cnpj} className="py-1 text-custom-gray-dark">{e.nomeEmpresa.toLowerCase().split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1)).join(' ')}</li>
                             ))}
                         </ul>
                     </div>
