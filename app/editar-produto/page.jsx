@@ -8,6 +8,7 @@ import GifLoad from "../componentes/GifLoad";
 import moment from "moment";
 import { FaPlusCircle } from "react-icons/fa";
 import { FaEye } from "react-icons/fa";
+import { MdDeleteForever } from "react-icons/md";;
 
 
 
@@ -23,6 +24,7 @@ export default function Page() {
     const [searchTerm, setSearchTerm] = useState('');
     const [isSubmitting, setIsSubmitting] = useState(false);
     const [produtosFast, setProdutosFast] = useState();
+    const [fmg, setFmg] = useState('/logo.png')
 
 
     const [produto, setProduto] = useState({
@@ -178,7 +180,7 @@ export default function Page() {
     };
     
     const fundoImagem = {
-        backgroundImage: 'url(/logo.png)',
+        backgroundImage:`url(/logo.png)`,
         backgroundSize: 'cover'
 
     }
@@ -198,6 +200,17 @@ export default function Page() {
         setShowProduto(filtered);
 
     };
+    const limparImagem = (e) => {
+        console.log(produto.imagem)
+        e.preventDefault()
+       
+        setProduto(prevState => ({
+            ...prevState,
+            imagem: '/produto-sos.jpg'
+        }));
+        
+    }
+
     return (
         <div className="relative min-h-screen text-gray-800 ">
 
@@ -215,7 +228,7 @@ export default function Page() {
                             {show ? (
                                 <GifLoad />
                             ) : showProduto?.map((e) => (
-                                <li className="hover:cursor-pointer flex items-center gap-5 hover:bg-slate-200 bg-slate-100 my-2 rounded-md p-2 " onClick={() => insereInformacoesProduct(e)} key={e._id}><FaEye onMouseOver={() => insereInformacoesProduct(e)} className="bg-blue-700 text-white rounded-sm  hover:bg-blue-300 " /> {e.nomeDoProduto}</li>
+                                <li className="hover:cursor-pointer flex items-center gap-5 hover:bg-slate-200 bg-slate-100 my-2 rounded-md p-2 " onClick={() => insereInformacoesProduct(e)} key={e._id}><FaEye onMouseOver={() => insereInformacoesProduct(e)} className="bg-blue-700 text-white rounded-sm  hover:bg-blue-300 " /> {e.nomeDoProduto.toLowerCase().split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1)).join(' ')}</li>
                             ))}
                         </ul>
                     </div>
@@ -289,6 +302,7 @@ export default function Page() {
                     <h2 className="text-xl font-semibold">{produto?.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
                     <div style={produto?.imagem == '' ? fundoImagem : fundoProduto} className="w-[260px] h-[100px] m-auto overflow-auto cover">
                     </div>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onClick={limparImagem}><MdDeleteForever /></button>
                     <div className="space-y-2 my-4">
                         <p className="text-sm">Código de Barras: {produto?.codigoDeBarras}</p>
                         <p className="text-lg font-semibold">{produto?.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>

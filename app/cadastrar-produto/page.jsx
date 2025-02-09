@@ -130,7 +130,7 @@ export default function Page() {
             pegaCategorias();
         }
     };
-
+  
     return (
         <div className="relative  bg-gray-100 min-h-screen">
             <TitlePage titulo='Cadastro de Produtos' />
