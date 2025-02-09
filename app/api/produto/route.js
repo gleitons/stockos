@@ -47,7 +47,8 @@ export async function DELETE(req) {
   
     await connectToDatabase();
     const produto = await req.json();
+   
 
-    await Produto.findByIdAndDelete(produto._id);
+    await Produto.findByIdAndDelete(produto);
     return new NextResponse(JSON.stringify({ message: 'Sucesso ao Excluir' }), { status: 200 })
 }

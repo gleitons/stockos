@@ -6,9 +6,8 @@ const buscaProdutos = async () => {
     try {
         const resp = await fetch(`${initial}/api/produto`, { cache: 'no-store' })
         const data = await resp.json();       
-
-        if (resp.ok) {
-            data.sort((a,b) =>  a.nomeDoProduto.localeCompare(b.nomeDoProduto))
+        data.sort((a,b) =>  a.nomeDoProduto.localeCompare(b.nomeDoProduto))
+        if (resp.ok) {            
             return data;
         } else {
             console.log('Erro ao solicitar Produtos');
@@ -32,7 +31,7 @@ export default async function page() {
                 <div>
                     <ul className="relative h-[400px] pb-56 overflow-auto">
                         {produtos.map((e, index) => (
-                           <ExcluirProduto key={index} product={e} />
+                           <ExcluirProduto key={index} id={e._id} nome={e.nomeDoProduto} imagem={e.imagem} />
                         ))}
                     </ul>
                 </div>

@@ -51,12 +51,13 @@ export default function Page() {
     };
 
     const abrirVisualizador = (e) => {
+        const verificaImagem = e.imagem == '' ? '/produto-sos.jpg' : e.imagem
         setDetalhes(
             <div className="p-4 m-4">
                 <p className="text-lg font-bold">{e.nomeDoProduto}</p>
                 <p className="text-sm text-gray-600">{e.codigoDeBarras}</p>
                 <div className="w-full my-4">
-                    <Image className="m-auto" src={e.imagem} width={200} height={150} alt={e.nomeDoProduto} />
+                    <Image className="m-auto" src={verificaImagem} width={200} height={150} alt={e.nomeDoProduto} />
                 </div>
                 <p className="text-sm">Estoque: {e.estoque}</p>
                 <p className="text-sm">Validade: {e.validade}</p>

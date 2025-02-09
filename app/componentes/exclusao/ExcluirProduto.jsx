@@ -1,11 +1,11 @@
 'use client'
 import Image from "next/image";
 
-export default function ExcluirProduto({ product }) {
+export default function ExcluirProduto({ id, nome, imagem }) {
     
 
     const excluirProduto = async (e) => {
-        const texto = `Deseja EXCLUIR o produto " ${e.nomeDoProduto} " PERMANENTEMENTE?`;
+        const texto = `Deseja EXCLUIR o produto " ${nome} " PERMANENTEMENTE?`;
         if(confirm(texto) == true) {     
         try {
             const resp = await fetch('/api/produto', {
@@ -13,9 +13,9 @@ export default function ExcluirProduto({ product }) {
                 headers: {
                     'Content-Type': 'application/json'
                 },
-                body: JSON.stringify(e)
+                body: JSON.stringify(id)
             });
-            const data = resp.json();
+           
             if(resp.ok) {
                 alert('EXCLUIDO COM SUCESSO!');
                 location.reload();
@@ -33,7 +33,7 @@ export default function ExcluirProduto({ product }) {
     
     return (
         <>
-            <li onClick={() => excluirProduto(product)} className="hover:cursor-pointer p-2 hover:bg-gray-100 flex justify-between items-center border-y-macosGray" >{product.nomeDoProduto} <div><Image src={product.imagem} width={50} height={50} alt={product.nomeDoProduto}    /></div></li>
+            <li onClick={() => excluirProduto(id)} className="hover:cursor-pointer p-2 hover:bg-gray-100 flex justify-between items-center border-y-macosGray" >{nome} <div><Image src={imagem} width={50} height={50} alt={nome}    /></div></li>
 
         </>
 

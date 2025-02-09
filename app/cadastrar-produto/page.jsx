@@ -20,7 +20,7 @@ export default function Page() {
         estoque: '',
         categoria: '',
         dataValidade: '',
-        imagem: baseImagem
+        imagem: baseImagem == '' ? '/produto-sos.jpg' : baseImagem
     });
 
     const geraObjeto = (e) => {

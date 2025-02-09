@@ -48,6 +48,7 @@ export async function PUT(req) {
 export async function DELETE(req) {
     await connectToDatabase();   
     const { id } = await req.json();
+  
 
     await Fornecedor.findByIdAndDelete(id);
     return new NextResponse(JSON.stringify({ message: 'Fornecedor deletedo' }), { status: 200 });

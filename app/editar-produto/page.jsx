@@ -176,6 +176,7 @@ export default function Page() {
         setPreviewImage(true)
         pegaCategorias();
     };
+    
     const fundoImagem = {
         backgroundImage: 'url(/logo.png)',
         backgroundSize: 'cover'
@@ -214,7 +215,7 @@ export default function Page() {
                             {show ? (
                                 <GifLoad />
                             ) : showProduto?.map((e) => (
-                                <li className="hover:cursor-pointer flex items-center gap-5 hover:bg-slate-200 bg-slate-100 my-2 rounded-md p-2 " onClick={() => insereInformacoesProduct(e)} key={e._id}><FaEye onMouseOver={() => insereInformacoesProduct(e)} className="bg-blue-700 text-white rounded-lg hover:bg-blue-300" />{e.nomeDoProduto}</li>
+                                <li className="hover:cursor-pointer flex items-center gap-5 hover:bg-slate-200 bg-slate-100 my-2 rounded-md p-2 " onClick={() => insereInformacoesProduct(e)} key={e._id}><FaEye onMouseOver={() => insereInformacoesProduct(e)} className="bg-blue-700 text-white rounded-sm  hover:bg-blue-300 " /> {e.nomeDoProduto}</li>
                             ))}
                         </ul>
                     </div>
