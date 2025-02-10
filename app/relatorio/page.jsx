@@ -1,5 +1,6 @@
 import TitlePage from '../componentes/TitlePage';
 import Pdf from '../componentes/relatorio/Pdf';
+import CAtualizar from '../componentes/CAtualizar'
 
 const url = process.env.LINK_BD;
 
@@ -50,7 +51,9 @@ export default async function Page() {
             <TitlePage titulo="Relatórios de Produtos Associados" />
             <div className="flex gap-10">
                 <div className="w-1/3">
+                   
                     <h2>Selecione a Empresa</h2>
+                    <CAtualizar />
                     <div className="h-[400px] overflow-auto bg-slate-300 p-3 rounded-md">
                         {vinculados.map((fornecedor, index) => (
                             <Pdf key={index} produtosV={fornecedor} />
