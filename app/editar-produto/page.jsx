@@ -302,7 +302,7 @@ export default function Page() {
                     <h2 className="text-xl font-semibold">{produto?.nomeDoProduto == '' ? 'Detalhes do Produto' : produto.nomeDoProduto}</h2>
                     <div style={produto?.imagem == '' ? fundoImagem : fundoProduto} className="w-[260px] h-[100px] m-auto overflow-auto cover">
                     </div>
-                    <button className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600" onClick={limparImagem}><MdDeleteForever /></button>
+                    <button className="bg-red-500 text-white px-4 py-2 rounded-md flex items-center gap-6 hover:bg-red-600" onClick={limparImagem}><MdDeleteForever />Delete Imagem</button>
                     <div className="space-y-2 my-4">
                         <p className="text-sm">Código de Barras: {produto?.codigoDeBarras}</p>
                         <p className="text-lg font-semibold">{produto?.categoria == '' ? 'Selecione a categoria' : produto.categoria}</p>

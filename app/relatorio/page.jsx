@@ -7,10 +7,10 @@ const url = process.env.LINK_BD;
 const pegaFornecedores = async () => {
     try {
 
-        const resp = await fetch(`${url}/api/fornecedor`);
+        const resp = await fetch(`${url}/api/fornecedor`, { cache: 'no-store' });
         const data = await resp.json();
         if (resp.ok) {
-            data.sort(async (a, b) => await a.nomeEmpresa.localeCompare(b.nomeEmpresa))
+            data.sort( (a, b) =>  a.nomeEmpresa.localeCompare(b.nomeEmpresa))
             return data
         }
 
@@ -21,10 +21,10 @@ const pegaFornecedores = async () => {
 const pegaProdutos = async () => {
     try {
 
-        const resp = await fetch(`${url}/api/produto`);
+        const resp = await fetch(`${url}/api/produto`, { cache: 'no-store' });
         const data = await resp.json();
         if (resp.ok) {
-            data.sort(async (a, b) => await a.nomeDoProduto.localeCompare(b.nomeDoProduto));
+            data.sort( (a, b) =>  a.nomeDoProduto.localeCompare(b.nomeDoProduto));
             return data
         }
 
@@ -35,8 +35,8 @@ const pegaProdutos = async () => {
 
 export default async function page() {
     const vinculados = []
-    const fornecedores = await pegaFornecedores();
-    const produtoss = await pegaProdutos();
+    const [fornecedores, produtoss] = await Promise.all([pegaFornecedores(), pegaProdutos()]);
+
    
     const togetter = () => {
         fornecedores.forEach((fornecedor) => {

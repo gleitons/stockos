@@ -3,45 +3,9 @@ import { menuModulos } from "./componentes/modulos/MenuModulos";
 import ButtonResolution from "./componentes/ButtonResolution";
 import InfoEmpPro from './componentes/InfoEmpPro' 
 
-// const initial = process.env.LINK_BD;
-// const fetchFornecedores = async () => {
-//   try {
-//     const resp = await fetch(`${initial}/api/fornecedor`, {
-//       cache: "no-store",
-//     });
-//     const data = await resp.json();
 
-//     if (resp.ok) {
-//       return data;
-//     } else {
-//       console.log("Erro ao Chamar Categorias");
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return [];
-//   }
-// };
-// const fetchProdutos = async () => {
-//   try {
-//     const resp = await fetch(`${initial}/api/produto`, {
-//       cache: 'no-cache',
-//     });
-//     const data = await resp.json();
-
-//     if (resp.ok) {
-//       return data;
-//     } else {
-//       console.log("Erro ao Chamar Categorias");
-//     }
-//   } catch (error) {
-//     console.log(error);
-//     return [];
-//   }
-// };
 
 export default async function Home() {
-  // const fornecedores = await fetchFornecedores();
-  // const produtos = await fetchProdutos();
  
   return (
     <div className="flex gap-2">

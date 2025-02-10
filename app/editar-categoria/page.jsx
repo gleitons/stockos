@@ -9,7 +9,7 @@ export const metadata = {
 const initial = process.env.LINK_BD;
 const fetchCategory = async () => {
     try {
-        const resp = await fetch(`${initial}/api/categories`)
+        const resp = await fetch(`${initial}/api/categories`, { cache: 'no-store' })
         const data = await resp.json();
         data.sort((a, b) => a.nome.localeCompare(b.nome))
 
