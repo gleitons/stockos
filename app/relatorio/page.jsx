@@ -18,7 +18,7 @@ const pegaFornecedores = async () => {
 
 const pegaProdutos = async () => {
     try {
-        const resp = await fetch(`${url}/api/produto`, {cache: 'no-store'} );
+        const resp = await fetch(`${url}api/produto`, {cache: 'no-store'} );
         if (!resp.ok) throw new Error("Erro ao buscar produtos");
         const data = await resp.json();
         data.sort((a, b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto));
