@@ -48,7 +48,7 @@ export default function Page() {
 
             if (resp.ok) {
                 alert('Fornecedor cadastrado com sucesso');
-               
+
                 setDadosFornecedor({
                     cnpj: '',
                     nomeEmpresa: '',
@@ -72,14 +72,14 @@ export default function Page() {
     };
 
     const verificaFornecedor = async (e) => {
-        e.preventDefault();     
+        e.preventDefault();
         const oCnpj = dadosFornecedor.cnpj
         if (oCnpj == '') {
             alert(`Por favor, informe o CNPJ`);
             return;
         }
-    
-        if(oCnpj.toString().length < 18) {
+
+        if (oCnpj.toString().length < 18) {
             alert(`Por favor, Digite no formato 00.000.000/0000-00`);
             return;
         }
@@ -91,9 +91,9 @@ export default function Page() {
                 },
                 body: JSON.stringify(dadosFornecedor)
             });
-           
+
             const data = await resp.json();
-            
+
             if (resp.status == 409) {
                 setEncontra('')
             } else {
@@ -116,14 +116,15 @@ export default function Page() {
                             type="text"
                             name="cnpj"
                             value={dadosFornecedor?.cnpj}
+                            maxLength={18}
                             onChange={adicionaInfo}
                             placeholder="00.000.000/0000-00"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"
                         />
                         <button className="w-fit mt-5 bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline">Verifica</button>
                     </div>
-                    </form>
-                    <form onSubmit={cadastrarFornecedor} className={encontra}>
+                </form>
+                <form onSubmit={cadastrarFornecedor} className={encontra}>
 
                     <div className="mb-4">
                         <label className="block text-sm font-medium text-gray-700">Nome da Empresa: *</label>
