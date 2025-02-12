@@ -17,7 +17,8 @@ export default function Page() {
         contato: '',
         produtosViculados: [],
     });
-    const [encontra, setEncontra] = useState('hidden')
+    const [encontra, setEncontra] = useState('hidden');
+    const [fechaCampo, setFechaCampo] = useState(false)
 
     const adicionaInfo = (e) => {
         setDadosFornecedor({ ...dadosFornecedor, [e.target.name]: e.target.value });
@@ -78,6 +79,10 @@ export default function Page() {
             alert(`Por favor, informe o CNPJ`);
             return;
         }
+        if (!/^\d{2}\.\d{3}\.\d{3}\/\d{4}-\d{2}$/.test(oCnpj)) {
+            alert('Por favor, insira um valor válido -  Digite no formato 00.000.000/0000-00');
+            return;
+        }
 
         if (oCnpj.toString().length < 18) {
             alert(`Por favor, Digite no formato 00.000.000/0000-00`);
@@ -96,6 +101,7 @@ export default function Page() {
 
             if (resp.status == 409) {
                 setEncontra('')
+                setFechaCampo(true)
             } else {
                 alert('Erro ao cadastrar Produto: ' + data.error);
             }
@@ -117,6 +123,7 @@ export default function Page() {
                             name="cnpj"
                             value={dadosFornecedor?.cnpj}
                             maxLength={18}
+                            readOnly={fechaCampo}
                             onChange={adicionaInfo}
                             placeholder="00.000.000/0000-00"
                             className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500"

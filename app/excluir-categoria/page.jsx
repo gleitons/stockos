@@ -18,11 +18,10 @@ const fetchCategory = async () => {
         return [];
     }
 }
-export default async function page() {
-   
+export default async function page() {   
 
-    const showCategorias = await fetchCategory();
-   
+    const showCategorias = await fetchCategory();   
+    showCategorias.sort((a, b) => a.nome.localeCompare(b.nome))
 
     return (
         <div className="p-2 bg-gray-100 min-h-screen">

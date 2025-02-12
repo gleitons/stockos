@@ -7,6 +7,7 @@ import Image from "next/image";
 
 export default function Page() {
     const [selectedImage, setSelectedImage] = useState(null);
+    const [codigo, setCodigo] = useState('')
     const [previewImage, setPreviewImage] = useState(null);
     const [categorias, setCategorias] = useState([]);
     const [newCategory, setNewCategory] = useState(false);
@@ -104,6 +105,7 @@ export default function Page() {
             
             if (resp.status == 409) {
                 setEncontra('')
+                setCodigo(true)
             } else {
                 alert('Erro ao cadastrar Produto: ' + data.error);
             }
@@ -139,7 +141,7 @@ export default function Page() {
                     <div className="mb-4 flex">
                         <div>
                             <label className="block text-sm font-medium text-gray-700">Código de Barras:</label>
-                            <input type="number" required name="codigoDeBarras" value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
+                            <input type="number" required name="codigoDeBarras" readOnly={codigo} value={produto.codigoDeBarras} onChange={geraObjeto} placeholder="789123" className="mt-1 block w-full px-3 py-2 border border-gray-300 rounded-md shadow-sm focus:outline-none focus:ring-indigo-500 focus:border-indigo-500" />
                         </div>
                         <button className="mt-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">Continuar</button>
                     </div>
@@ -195,6 +197,7 @@ export default function Page() {
                         <input type="submit" value="Cadastrar" className="bg-indigo-500 hover:bg-indigo-700 text-white font-bold py-2 px-4 rounded" />
                     </div>
                 </form>
+                <button onClick={() => location.reload()} className={`bg-blue-500 hover:bg-blue-700 ${encontra} text-white font-bold py-2 px-4 rounded`}>Novo Produto</button>
                 {newCategory && (
                     <div className="w-full absolute left-0 top-0 p-10 bg-white h-screen">
                         <div onClick={novaCat} className="text-3xl hover:cursor-pointer w-fit text-red-500"><IoMdCloseCircle /></div>

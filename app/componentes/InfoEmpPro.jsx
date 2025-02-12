@@ -8,6 +8,7 @@ export const Load = () => {
 export default function InfoEmpPro() {
     const [fornecedores, setFornecedores] = useState([])
     const [produtos, setProdutos] = useState([])
+    const [verI, setVerI] = useState('hidden')
     const fetchFornecedores = async () => {
         try {
             const resp = await fetch(`https://stockos.vercel.app/api/fornecedor`);
@@ -24,12 +25,14 @@ export default function InfoEmpPro() {
         }
     };
     const fetchProdutos = async () => {
+      
         try {
             const resp = await fetch(`https://stockos.vercel.app/api/produto`);
             const data = await resp.json();
+          
 
             if (resp.ok) {
-                setProdutos(data)
+                setProdutos(data.length)
             } else {
                 console.log("Erro ao Chamar Produtos");
             }
@@ -39,17 +42,21 @@ export default function InfoEmpPro() {
         }
     };
     useEffect( () => {
+      fetchProdutos();
         fetchFornecedores();
-        fetchProdutos();
+       
     }, []);
+    const verItens = () => {
+      setVerI('')
+    }
     return (
         <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
         <p className="text-gray-800 text-lg font-semibold flex items-center">
           📊 <span className="text-blue-600 ml-2">Atualmente você possui:</span>
         </p>
-      
-        <div className="mt-4 space-y-3">
-          {/* Fornecedores */}
+        <button onClick={verItens} className="hover:cursor-pointer bg-gray-200 w-full text-center p-2 hover:bg-gray-100  items-center border-y-macosGray">Ver itens</button>
+        <div className={`mt-4 space-y-3 ${verI}`}>
+         
           <p className="text-gray-700 flex items-center">
             🏢
             <span className="ml-2 flex items-center">
@@ -60,12 +67,12 @@ export default function InfoEmpPro() {
             </span>
           </p>
       
-          {/* Produtos */}
+         
           <p className="text-gray-700 flex items-center">
             🛒
             <span className="ml-2 flex items-center">
               <span className="w-14 text-center font-medium text-green-500">
-                {produtos.length ? produtos.length : <Load />}
+              {produtos != '' ? produtos : <Load />}
               </span>
               <span className="ml-1">produtos</span>
             </span>
