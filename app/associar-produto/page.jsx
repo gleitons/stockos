@@ -119,15 +119,15 @@ export default function Page() {
         try {
             const resp = await fetch('/api/fornecedor');
             const data = await resp.json();
-            
+
             if (resp.ok) {
-                data.sort((a,b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
+                data.sort((a, b) => a.nomeEmpresa.localeCompare(b.nomeEmpresa))
                 setMostraEmpresas(data);
                 setPesquisaEmpresa(data);
                 setShowEmpresas(true)
-                
+
             }
-           
+
             setOLoad(false)
         } catch (error) {
             console.log(error);
@@ -146,7 +146,7 @@ export default function Page() {
             const resp = await fetch('/api/produto');
             const produt = await resp.json();
             if (resp.ok) {
-                produt.sort((a,b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto))
+                produt.sort((a, b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto))
                 setMostraProdutos(produt);
                 setPesquisaProdutos(produt)
             }
@@ -171,7 +171,7 @@ export default function Page() {
     };
 
     const buscaProdutoRapido = (e) => {
-      
+
         if (e.key === 'Backspace') {
             setMostraProdutos(pesquisaProdutos);
         }
@@ -256,15 +256,15 @@ export default function Page() {
                         <p className="font-semibold mb-2">Produtos Associados</p>
                         <p className="text-sm text-gray-600">Quantidade: {produtosViculados.length}</p>
                         <div className="hidden">
-                            <textarea  rows={1}
-                            cols={1}
-                            defaultValue={produtosViculados.join(', ')}
-                            
-                            className=" w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2">
-                            
+                            <textarea rows={1}
+                                cols={1}
+                                defaultValue={produtosViculados.join(', ')}
+
+                                className=" w-full p-2 border border-gray-300 rounded bg-gray-100 mt-2">
+
                             </textarea>
                         </div>
-                      
+
                     </div>
                 </div>
                 <div className="w-1/2 bg-white p-4 rounded-lg shadow">
@@ -285,11 +285,19 @@ export default function Page() {
                             <div className="bg-gray-300 px-1 rounded">
                                 <p className="text-center text-sm">M</p>
                             </div>
+
                             <div className="text-center">
                                 <p>Visualizar</p>
                             </div>
                         </div>
                         <div className="max-h-[400px] overflow-auto">
+                            {mostraProdutos.length <= 0 && (
+                                <button className="bg-blue-600 hover:bg-blue-700 text-white font-medium py-2 px-4 rounded-lg shadow-md transition duration-300 ease-in-out transform hover:scale-105 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-opacity-50">
+                                    Atualizar Produtos
+                                </button>
+                            )}
+
+
                             {mostraProdutos.map((e, index) => (
                                 <div key={index} className="flex items-center gap-2 p-2 my-2 rounded-md border-b-gray-500 bg-gray-100 hover:bg-gray-200 ">
                                     <div className="bg-gray-300 px-1 rounded">
