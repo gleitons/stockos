@@ -1,39 +1,47 @@
+# 🧾 StockOS
 
-Projeto 
+**StockOS** é um sistema web de gerenciamento de estoque simples, moderno e responsivo. A aplicação permite o controle de produtos, categorias e geração de relatórios em PDF — tudo com uma interface clara e objetiva.
 
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+🔗 Acesse o projeto em produção: [https://stockos.vercel.app](https://stockos.vercel.app)
 
-## Getting Started
+---
 
-First, run the development server:
+## 🚀 Tecnologias Utilizadas
 
+- [Next.js 15](https://nextjs.org/)
+- [React 19](https://reactjs.org/)
+- [TypeScript + JavaScript](https://www.typescriptlang.org/)
+- [Tailwind CSS](https://tailwindcss.com/)
+- [MongoDB](https://www.mongodb.com/) + [Mongoose](https://mongoosejs.com/)
+- [Moment.js](https://momentjs.com/) (manipulação de datas)
+- [React Icons](https://react-icons.github.io/react-icons/)
+- [react-to-pdf](https://www.npmjs.com/package/react-to-pdf) (geração de PDFs)
+
+---
+
+## ⚙️ Funcionalidades
+
+- ✅ Cadastro, edição e exclusão de produtos
+- ✅ Gerenciamento de categorias
+- ✅ Histórico de movimentações de estoque
+- ✅ Relatórios e exportação em PDF
+- ✅ Interface 100% responsiva
+- ✅ Integração com MongoDB
+
+---
+
+## 🛠️ Como rodar o projeto localmente
+
+## Preciso melhorar os nomes demais, mas vou estudando de acordo.
 ```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# Clone o repositório
+git clone https://github.com/seu-usuario/stockos.git
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+# Acesse a pasta do projeto
+cd stockos
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+# Instale as dependências
+npm install
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
-
-## Learn More
-
-To learn more about Next.js, take a look at the following resources:
-
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
-
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
-
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+# Configure suas variáveis de ambiente
+cp .env.example .env

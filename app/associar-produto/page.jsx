@@ -146,6 +146,7 @@ export default function Page() {
             const resp = await fetch('/api/produto');
             const produt = await resp.json();
             if (resp.ok) {
+                produt.sort((a,b) => a.nomeDoProduto.localeCompare(b.nomeDoProduto))
                 setMostraProdutos(produt);
                 setPesquisaProdutos(produt)
             }
@@ -300,7 +301,7 @@ export default function Page() {
                                         />
                                     </div>
                                     <label onClick={() => abrirVisualizador(e)} className="flex items-center gap-2 cursor-pointer flex-1">
-                                        {e.codigoDeBarras} - {e.nomeDoProduto} <FaEye className="text-gray-600 hover:text-gray-800" />
+                                        {e.codigoDeBarras} - {e.nomeDoProduto.toLowerCase().split(' ').map((e) => e.charAt(0).toUpperCase() + e.slice(1)).join(' ')} <FaEye className="text-gray-600 hover:text-gray-800" />
                                     </label>
                                 </div>
                             ))}
