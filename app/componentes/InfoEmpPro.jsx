@@ -1,5 +1,5 @@
 'use client'
-import { useState } from "react";
+import { useState, useEffect} from "react";
 export const Load = () => {
   return (
     <div className="w-4 h-4 border-4 border-blue-500 border-t-transparent rounded-full animate-spin"></div>
@@ -47,6 +47,10 @@ export default function InfoEmpPro() {
     fetchFornecedores();
     setVerI('')
   }
+  useEffect(() => {
+    fetchFornecedores();
+    fetchProdutos();
+  }, []);
   return (
     <div className="bg-white p-6 rounded-lg shadow-md border border-gray-100">
       <p className="text-gray-800 text-lg font-semibold flex items-center">
